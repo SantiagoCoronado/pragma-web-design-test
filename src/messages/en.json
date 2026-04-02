@@ -1,0 +1,182 @@
+{
+  "Navbar": {
+    "services": "Services",
+    "about": "About",
+    "caseStudies": "Case Studies",
+    "contact": "Contact",
+    "admin": "Admin"
+  },
+  "Hero": {
+    "title": "Pragmatic AI Solutions",
+    "titleAccent": "for Real-World Impact",
+    "subtitle": "We build intelligent systems that transform how businesses operate. From custom AI solutions to full-stack web development, PRAGMA delivers technology that works.",
+    "cta": "Get a Free Consultation",
+    "ctaSecondary": "View Our Work"
+  },
+  "Services": {
+    "title": "What We Do",
+    "subtitle": "End-to-end technology solutions designed to give your business a competitive edge.",
+    "aiConsulting": {
+      "title": "AI Consulting & Strategy",
+      "description": "Strategic guidance to identify high-impact AI opportunities, build roadmaps, and align technology with your business goals."
+    },
+    "customAI": {
+      "title": "Custom AI Solutions",
+      "description": "Purpose-built AI systems — from chatbots and recommendation engines to computer vision and NLP pipelines."
+    },
+    "automation": {
+      "title": "Process Automation",
+      "description": "Streamline operations with intelligent automation that reduces costs, eliminates errors, and frees your team for higher-value work."
+    },
+    "analytics": {
+      "title": "Data Analytics & BI",
+      "description": "Turn raw data into actionable insights with custom dashboards, predictive models, and data infrastructure."
+    },
+    "webDev": {
+      "title": "Web Development",
+      "description": "Modern, performant web applications built with cutting-edge technologies. From landing pages to complex platforms."
+    },
+    "uiux": {
+      "title": "UI/UX Consulting",
+      "description": "User-centered design that converts. We craft intuitive interfaces backed by research, testing, and iterative refinement."
+    }
+  },
+  "About": {
+    "title": "Why PRAGMA",
+    "subtitle": "We take a pragmatic approach to technology — no buzzwords, no over-engineering. Just solutions that deliver measurable results.",
+    "diff1Title": "Results-Driven",
+    "diff1Desc": "Every project starts with your business objectives. We measure success by impact, not lines of code.",
+    "diff2Title": "Full-Stack Expertise",
+    "diff2Desc": "From AI research to production deployment, our team covers the entire technology spectrum.",
+    "diff3Title": "Transparent Process",
+    "diff3Desc": "Clear communication, realistic timelines, and no surprises. You always know where your project stands.",
+    "statProjects": "Projects Delivered",
+    "statClients": "Happy Clients",
+    "statYears": "Years Experience"
+  },
+  "CaseStudies": {
+    "title": "Our Work",
+    "subtitle": "Real projects, real results. Here's how we've helped businesses leverage technology.",
+    "viewDetails": "View Details",
+    "case1": {
+      "title": "AI-Powered Customer Support",
+      "description": "Reduced response time by 70% with a custom NLP chatbot that handles 80% of inquiries autonomously.",
+      "client": "FinTech Startup"
+    },
+    "case2": {
+      "title": "Predictive Maintenance Platform",
+      "description": "ML-driven system that predicts equipment failures 48 hours in advance, saving $2M annually.",
+      "client": "Manufacturing Corp"
+    },
+    "case3": {
+      "title": "E-Commerce Recommendation Engine",
+      "description": "Personalized product recommendations that increased average order value by 35%.",
+      "client": "Retail Brand"
+    }
+  },
+  "Testimonials": {
+    "title": "What Our Clients Say"
+  },
+  "Contact": {
+    "title": "Let's Build Something Great",
+    "subtitle": "Ready to transform your business with technology? Tell us about your project.",
+    "name": "Your Name",
+    "email": "Email Address",
+    "company": "Company (optional)",
+    "message": "Tell us about your project",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent! We'll get back to you within 24 hours.",
+    "error": "Something went wrong. Please try again."
+  },
+  "Footer": {
+    "tagline": "Pragmatic technology solutions for forward-thinking businesses.",
+    "services": "Services",
+    "company": "Company",
+    "about": "About",
+    "contact": "Contact",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "rights": "All rights reserved."
+  },
+  "Quote": {
+    "title": "Quote",
+    "preparedFor": "Prepared for",
+    "quoteNumber": "Quote",
+    "date": "Date",
+    "validUntil": "Valid until",
+    "description": "Description",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "notes": "Notes & Terms",
+    "downloadPdf": "Download PDF",
+    "acceptQuote": "Accept Quote",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "sent": "Sent",
+    "draft": "Draft",
+    "expired": "Expired",
+    "poweredBy": "Powered by PRAGMA",
+    "theProblem": "The Problem",
+    "theOpportunity": "The Opportunity",
+    "deliverables": "Deliverables",
+    "timeline": "Timeline",
+    "investment": "Investment",
+    "originalPrice": "Original Price",
+    "nextSteps": "Next Steps",
+    "scopeNote": "Scope Note"
+  },
+  "Admin": {
+    "title": "Admin Panel",
+    "login": "Login",
+    "password": "Password",
+    "loginButton": "Sign In",
+    "invalidPassword": "Invalid password",
+    "logout": "Logout",
+    "quotes": "Quotes",
+    "newQuote": "New Quote",
+    "editQuote": "Edit Quote",
+    "deleteQuote": "Delete",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link copied!",
+    "saveAsDraft": "Save as Draft",
+    "saveAndShare": "Save & Get Shareable Link",
+    "preview": "Preview",
+    "clientName": "Client Name",
+    "clientEmail": "Client Email",
+    "clientCompany": "Company",
+    "quoteTitle": "Quote Title",
+    "quoteDescription": "Description",
+    "currency": "Currency",
+    "locale": "Language",
+    "validUntil": "Valid Until",
+    "addLineItem": "Add Line Item",
+    "discountLabel": "Discount (%)",
+    "notesLabel": "Notes & Terms",
+    "quoteType": "Quote Type",
+    "lineItemsType": "Line Items",
+    "blueprintType": "Blueprint",
+    "problem": "Problem",
+    "opportunity": "Opportunity",
+    "deliverableTitle": "Deliverable Title",
+    "deliverableDesc": "Description",
+    "addDeliverable": "Add Deliverable",
+    "timeline": "Timeline",
+    "fixedPrice": "Fixed Price",
+    "listPrice": "List Price (optional)",
+    "preferentialNote": "Preferential Note (optional)",
+    "paymentTerms": "Payment Terms",
+    "nextStep": "Step",
+    "addNextStep": "Add Step",
+    "scopeNote": "Scope Note (optional)",
+    "noQuotes": "No quotes yet. Create your first one!",
+    "status": "Status",
+    "client": "Client",
+    "amount": "Amount",
+    "actions": "Actions"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "Navbar": {
+    "services": "Servicios",
+    "about": "Nosotros",
+    "caseStudies": "Proyectos",
+    "contact": "Contacto",
+    "admin": "Admin"
+  },
+  "Hero": {
+    "title": "Soluciones de IA Pragmaticas",
+    "titleAccent": "con Impacto Real",
+    "subtitle": "Construimos sistemas inteligentes que transforman la operacion de los negocios. Desde soluciones de IA personalizadas hasta desarrollo web full-stack, PRAGMA entrega tecnologia que funciona.",
+    "cta": "Consulta Gratuita",
+    "ctaSecondary": "Ver Nuestro Trabajo"
+  },
+  "Services": {
+    "title": "Lo Que Hacemos",
+    "subtitle": "Soluciones tecnologicas integrales disenadas para dar a tu negocio una ventaja competitiva.",
+    "aiConsulting": {
+      "title": "Consultoria & Estrategia de IA",
+      "description": "Orientacion estrategica para identificar oportunidades de alto impacto en IA, construir hojas de ruta y alinear la tecnologia con tus objetivos de negocio."
+    },
+    "customAI": {
+      "title": "Soluciones de IA Personalizadas",
+      "description": "Sistemas de IA a medida — desde chatbots y motores de recomendacion hasta vision por computadora y pipelines de NLP."
+    },
+    "automation": {
+      "title": "Automatizacion de Procesos",
+      "description": "Optimiza operaciones con automatizacion inteligente que reduce costos, elimina errores y libera a tu equipo para trabajo de mayor valor."
+    },
+    "analytics": {
+      "title": "Analitica de Datos & BI",
+      "description": "Convierte datos crudos en insights accionables con dashboards personalizados, modelos predictivos e infraestructura de datos."
+    },
+    "webDev": {
+      "title": "Desarrollo Web",
+      "description": "Aplicaciones web modernas y de alto rendimiento construidas con tecnologias de vanguardia. Desde landing pages hasta plataformas complejas."
+    },
+    "uiux": {
+      "title": "Consultoria de UI/UX",
+      "description": "Diseno centrado en el usuario que convierte. Creamos interfaces intuitivas respaldadas por investigacion, pruebas y refinamiento iterativo."
+    }
+  },
+  "About": {
+    "title": "Por Que PRAGMA",
+    "subtitle": "Tomamos un enfoque pragmatico hacia la tecnologia — sin palabras de moda, sin sobre-ingenieria. Solo soluciones que entregan resultados medibles.",
+    "diff1Title": "Orientados a Resultados",
+    "diff1Desc": "Cada proyecto comienza con tus objetivos de negocio. Medimos el exito por impacto, no por lineas de codigo.",
+    "diff2Title": "Expertise Full-Stack",
+    "diff2Desc": "Desde investigacion en IA hasta despliegue en produccion, nuestro equipo cubre todo el espectro tecnologico.",
+    "diff3Title": "Proceso Transparente",
+    "diff3Desc": "Comunicacion clara, plazos realistas y sin sorpresas. Siempre sabes donde esta tu proyecto.",
+    "statProjects": "Proyectos Entregados",
+    "statClients": "Clientes Satisfechos",
+    "statYears": "Anos de Experiencia"
+  },
+  "CaseStudies": {
+    "title": "Nuestro Trabajo",
+    "subtitle": "Proyectos reales, resultados reales. Asi es como hemos ayudado a empresas a aprovechar la tecnologia.",
+    "viewDetails": "Ver Detalles",
+    "case1": {
+      "title": "Soporte al Cliente con IA",
+      "description": "Reduccion del tiempo de respuesta en un 70% con un chatbot NLP personalizado que maneja el 80% de las consultas de forma autonoma.",
+      "client": "Startup FinTech"
+    },
+    "case2": {
+      "title": "Plataforma de Mantenimiento Predictivo",
+      "description": "Sistema de ML que predice fallas de equipos con 48 horas de anticipacion, ahorrando $2M anuales.",
+      "client": "Corporacion Manufacturera"
+    },
+    "case3": {
+      "title": "Motor de Recomendaciones E-Commerce",
+      "description": "Recomendaciones personalizadas de productos que incrementaron el valor promedio de orden en un 35%.",
+      "client": "Marca de Retail"
+    }
+  },
+  "Testimonials": {
+    "title": "Lo Que Dicen Nuestros Clientes"
+  },
+  "Contact": {
+    "title": "Construyamos Algo Grandioso",
+    "subtitle": "Listo para transformar tu negocio con tecnologia? Cuentanos sobre tu proyecto.",
+    "name": "Tu Nombre",
+    "email": "Correo Electronico",
+    "company": "Empresa (opcional)",
+    "message": "Cuentanos sobre tu proyecto",
+    "send": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "success": "Mensaje enviado! Te responderemos en las proximas 24 horas.",
+    "error": "Algo salio mal. Por favor intenta de nuevo."
+  },
+  "Footer": {
+    "tagline": "Soluciones tecnologicas pragmaticas para negocios visionarios.",
+    "services": "Servicios",
+    "company": "Empresa",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "legal": "Legal",
+    "privacy": "Politica de Privacidad",
+    "terms": "Terminos de Servicio",
+    "rights": "Todos los derechos reservados."
+  },
+  "Quote": {
+    "title": "Cotizacion",
+    "preparedFor": "Preparado para",
+    "quoteNumber": "Cotizacion",
+    "date": "Fecha",
+    "validUntil": "Valido hasta",
+    "description": "Descripcion",
+    "qty": "Cant",
+    "unitPrice": "Precio Unitario",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "discount": "Descuento",
+    "notes": "Notas y Terminos",
+    "downloadPdf": "Descargar PDF",
+    "acceptQuote": "Aceptar Cotizacion",
+    "accepted": "Aceptada",
+    "rejected": "Rechazada",
+    "sent": "Enviada",
+    "draft": "Borrador",
+    "expired": "Expirada",
+    "poweredBy": "Desarrollado por PRAGMA",
+    "theProblem": "El Problema",
+    "theOpportunity": "La Oportunidad",
+    "deliverables": "Entregables",
+    "timeline": "Timeline",
+    "investment": "Inversion",
+    "originalPrice": "Precio Original",
+    "nextSteps": "Siguientes Pasos",
+    "scopeNote": "Nota de Alcance"
+  },
+  "Admin": {
+    "title": "Panel de Administracion",
+    "login": "Iniciar Sesion",
+    "password": "Contrasena",
+    "loginButton": "Ingresar",
+    "invalidPassword": "Contrasena invalida",
+    "logout": "Cerrar Sesion",
+    "quotes": "Cotizaciones",
+    "newQuote": "Nueva Cotizacion",
+    "editQuote": "Editar Cotizacion",
+    "deleteQuote": "Eliminar",
+    "copyLink": "Copiar Enlace",
+    "linkCopied": "Enlace copiado!",
+    "saveAsDraft": "Guardar como Borrador",
+    "saveAndShare": "Guardar y Obtener Enlace",
+    "preview": "Vista Previa",
+    "clientName": "Nombre del Cliente",
+    "clientEmail": "Correo del Cliente",
+    "clientCompany": "Empresa",
+    "quoteTitle": "Titulo de la Cotizacion",
+    "quoteDescription": "Descripcion",
+    "currency": "Moneda",
+    "locale": "Idioma",
+    "validUntil": "Valido Hasta",
+    "addLineItem": "Agregar Item",
+    "discountLabel": "Descuento (%)",
+    "notesLabel": "Notas y Terminos",
+    "quoteType": "Tipo de Cotizacion",
+    "lineItemsType": "Items Detallados",
+    "blueprintType": "Propuesta",
+    "problem": "Problema",
+    "opportunity": "Oportunidad",
+    "deliverableTitle": "Titulo del Entregable",
+    "deliverableDesc": "Descripcion",
+    "addDeliverable": "Agregar Entregable",
+    "timeline": "Timeline",
+    "fixedPrice": "Precio Fijo",
+    "listPrice": "Precio Lista (opcional)",
+    "preferentialNote": "Nota Preferencial (opcional)",
+    "paymentTerms": "Condiciones de Pago",
+    "nextStep": "Paso",
+    "addNextStep": "Agregar Paso",
+    "scopeNote": "Nota de Alcance (opcional)",
+    "noQuotes": "Aun no hay cotizaciones. Crea la primera!",
+    "status": "Estado",
+    "client": "Cliente",
+    "amount": "Monto",
+    "actions": "Acciones"
+  }
+}

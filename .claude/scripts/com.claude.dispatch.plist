@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.claude.dispatch</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/mou/.claude/scripts/scheduled-dispatch.sh</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+        <!-- Monday through Friday at 6:00 AM -->
+        <dict>
+            <key>Weekday</key><integer>1</integer>
+            <key>Hour</key><integer>6</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>2</integer>
+            <key>Hour</key><integer>6</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>3</integer>
+            <key>Hour</key><integer>6</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>4</integer>
+            <key>Hour</key><integer>6</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>5</integer>
+            <key>Hour</key><integer>6</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/Users/mou/.local/bin</string>
+        <key>HOME</key>
+        <string>/Users/mou</string>
+        <key>OBSIDIAN_VAULT_PATH</key>
+        <string>/Users/mou/Documents/Vaults/boldorigins</string>
+        <key>CLAUDE_ORCHESTRATOR_MODE</key>
+        <string>1</string>
+    </dict>
+    <key>WorkingDirectory</key>
+    <string>/Users/mou</string>
+    <key>StandardOutPath</key>
+    <string>/Users/mou/.claude/logs/dispatch-launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/mou/.claude/logs/dispatch-launchd.log</string>
+</dict>
+</plist>
