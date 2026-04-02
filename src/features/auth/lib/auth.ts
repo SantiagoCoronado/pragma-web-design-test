@@ -1,27 +1,17 @@
 import { cookies } from "next/headers";
+import bcrypt from "bcryptjs";
 
 const SESSION_COOKIE = "pragma_admin_session";
 const SESSION_MAX_AGE = 60 * 60 * 24; // 24 hours
 
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password + "pragma_salt_2024");
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
 export async function verifyPassword(password: string): Promise<boolean> {
-  const adminPassword = process.env.ADMIN_PASSWORD;
-  if (!adminPassword) return false;
-  return password === adminPassword;
+  const hash = process.env.ADMIN_PASSWORD_HASH;
+  if (!hash) return false;
+  return bcrypt.compare(password, hash);
 }
 
 export async function createSession(): Promise<void> {
-  const token = await hashPassword(
-    Date.now().toString() + Math.random().toString()
-  );
+  const token = crypto.randomUUID();
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, token, {
     httpOnly: true,
