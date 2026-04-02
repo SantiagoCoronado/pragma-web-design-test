@@ -68,4 +68,15 @@ export async function initDb() {
       // Column already exists - ignore
     }
   }
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS contact_submissions (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      company TEXT DEFAULT '',
+      message TEXT NOT NULL,
+      created_at TEXT DEFAULT (datetime('now'))
+    )
+  `);
 }

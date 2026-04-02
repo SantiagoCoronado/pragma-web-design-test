@@ -2,10 +2,10 @@
 
 ## High Priority — Landing Page Polish
 
-- [ ] Contact form server action (email sending or storage)
-- [ ] Scroll-triggered Framer Motion animations (intersection observer on each section)
-- [ ] Upgrade AnimateIn to use scroll-driven triggers instead of mount-only fade-in
-- [ ] Testimonials section — add real client content or richer placeholders
+- [x] Contact form server action (stores submissions in contact_submissions DB table)
+- [x] Scroll-triggered Framer Motion animations (intersection observer on each section)
+- [x] Upgrade AnimateIn to use scroll-driven triggers instead of mount-only fade-in
+- [x] Testimonials section — fixed hydration-risk locale detection (useLocale() instead of DOM check)
 - [ ] Case Studies — replace placeholder data with real projects when available
 
 ## High Priority — Quote Page Review & Dev Access

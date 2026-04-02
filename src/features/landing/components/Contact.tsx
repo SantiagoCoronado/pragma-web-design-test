@@ -7,6 +7,7 @@ import { Input } from "@/shared/components/ui/Input";
 import { Textarea } from "@/shared/components/ui/Textarea";
 import { AnimateIn } from "@/shared/components/ui/AnimateIn";
 import { Send, Mail, MapPin } from "lucide-react";
+import { submitContactAction } from "@/features/landing/actions";
 
 export function Contact() {
   const t = useTranslations("Contact");
@@ -16,12 +17,15 @@ export function Contact() {
     e.preventDefault();
     setStatus("sending");
 
-    // For MVP: just simulate submission. Replace with actual Server Action later.
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setStatus("success");
-
-    // Reset after 3 seconds
-    setTimeout(() => setStatus("idle"), 3000);
+    const result = await submitContactAction(new FormData(e.currentTarget));
+    if (result.success) {
+      setStatus("success");
+      e.currentTarget.reset();
+      setTimeout(() => setStatus("idle"), 4000);
+    } else {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 4000);
+    }
   }
 
   return (

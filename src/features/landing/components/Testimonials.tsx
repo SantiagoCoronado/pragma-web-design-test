@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Card } from "@/shared/components/ui/Card";
 import { AnimateIn } from "@/shared/components/ui/AnimateIn";
 import { Quote } from "lucide-react";
@@ -34,6 +34,7 @@ const testimonials = [
 
 export function Testimonials() {
   const t = useTranslations("Testimonials");
+  const locale = useLocale();
 
   return (
     <section className="py-24 sm:py-32 bg-pragma-surface/20">
@@ -54,14 +55,7 @@ export function Testimonials() {
                 />
                 <p className="text-sm text-pragma-muted leading-relaxed flex-1">
                   &ldquo;
-                  {
-                    testimonial.quote[
-                      typeof window !== "undefined" &&
-                      document.documentElement.lang === "es"
-                        ? "es"
-                        : "en"
-                    ]
-                  }
+                  {testimonial.quote[locale === "es" ? "es" : "en"]}
                   &rdquo;
                 </p>
                 <div className="mt-4 pt-4 border-t border-pragma-border/50">
