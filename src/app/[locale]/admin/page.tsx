@@ -15,17 +15,17 @@ export default async function AdminDashboard() {
       {/* Admin header */}
       <header className="border-b border-pragma-border bg-pragma-surface/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <span className="font-display text-lg font-bold text-pragma-accent">
               PRAGMA
             </span>
-            <span className="text-pragma-muted text-sm">{t("title")}</span>
+            <span className="hidden sm:inline text-pragma-muted text-sm">{t("title")}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/admin/quotes/new">
               <Button size="sm">
                 <Plus size={16} />
-                {t("newQuote")}
+                <span className="hidden sm:inline">{t("newQuote")}</span>
               </Button>
             </Link>
             <LogoutButton />

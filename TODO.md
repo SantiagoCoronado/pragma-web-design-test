@@ -37,10 +37,10 @@
 
 ## Medium Priority — Responsive & Polish
 
-- [ ] Mobile responsive audit at 375px, 768px, 1024px
-- [ ] Quote line items table — card layout on mobile (< 640px)
-- [ ] Navbar mobile menu polish
-- [ ] Add `shared/hooks/` (useMediaQuery, useScrollPosition)
+- [x] Mobile responsive audit at 375px, 768px, 1024px
+- [x] Quote line items table — card layout on mobile (< 640px)
+- [x] Navbar mobile menu polish
+- [x] Add `shared/hooks/` (useMediaQuery, useScrollPosition)
 - [ ] Verify `npm run build` completes with zero errors/warnings
 
 ## Low Priority — Security Hardening

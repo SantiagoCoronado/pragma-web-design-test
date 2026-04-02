@@ -60,7 +60,7 @@ export function About() {
           {/* Right: stats */}
           <AnimateIn delay={0.2}>
             <div className="bg-pragma-surface/50 backdrop-blur-sm border border-pragma-border rounded-2xl p-8 sm:p-12">
-              <div className="grid grid-cols-3 gap-8">
+              <div className="grid grid-cols-3 gap-4 sm:gap-8">
                 <StatBlock value="50+" label={t("statProjects")} />
                 <StatBlock value="30+" label={t("statClients")} />
                 <StatBlock value="8+" label={t("statYears")} />

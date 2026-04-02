@@ -377,6 +377,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
                     />
                   </div>
                   <div className="sm:col-span-2">
+                    <label className="block sm:hidden text-xs text-pragma-muted mb-1">Qty</label>
                     <input
                       type="number"
                       min="1"
@@ -392,6 +393,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
                     />
                   </div>
                   <div className="sm:col-span-2">
+                    <label className="block sm:hidden text-xs text-pragma-muted mb-1">Unit price</label>
                     <input
                       type="number"
                       min="0"
@@ -456,13 +458,13 @@ export function QuoteForm({ quote }: QuoteFormProps) {
                   className="w-20 bg-pragma-surface border border-pragma-border rounded-lg px-3 py-1.5 text-sm text-pragma-text focus:outline-none focus:border-pragma-accent/50"
                 />
               </div>
-              <div className="flex flex-col items-end gap-1 text-sm">
-                <div className="flex gap-8">
+              <div className="flex flex-col gap-1 text-sm">
+                <div className="flex justify-between gap-4">
                   <span className="text-pragma-muted">Subtotal:</span>
                   <span>{formatCurrency(subtotal, currency, locale)}</span>
                 </div>
                 {discount > 0 && (
-                  <div className="flex gap-8">
+                  <div className="flex justify-between gap-4">
                     <span className="text-pragma-muted">
                       Discount ({discount}%):
                     </span>
@@ -471,7 +473,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
                     </span>
                   </div>
                 )}
-                <div className="flex gap-8 text-lg font-bold border-t border-pragma-accent/30 pt-2 mt-1">
+                <div className="flex justify-between gap-4 text-lg font-bold border-t border-pragma-accent/30 pt-2 mt-1">
                   <span>Total:</span>
                   <span className="text-pragma-accent">
                     {formatCurrency(total, currency, locale)}

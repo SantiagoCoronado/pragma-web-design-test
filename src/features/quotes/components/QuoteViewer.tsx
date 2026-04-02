@@ -427,15 +427,15 @@ export function QuoteViewer({ quote }: { quote: Quote }) {
 
           {/* Totals */}
           <div className="border-t border-pragma-border mt-4 pt-4">
-            <div className="flex flex-col items-end gap-1 text-sm">
-              <div className="flex gap-8">
+            <div className="flex flex-col gap-1 text-sm">
+              <div className="flex justify-between gap-4">
                 <span className="text-pragma-muted">{t("subtotal")}:</span>
                 <span>
                   {formatCurrency(subtotal, quote.currency, quote.locale)}
                 </span>
               </div>
               {quote.discount > 0 && (
-                <div className="flex gap-8">
+                <div className="flex justify-between gap-4">
                   <span className="text-pragma-muted">
                     {t("discount")} ({quote.discount}%):
                   </span>
@@ -444,7 +444,7 @@ export function QuoteViewer({ quote }: { quote: Quote }) {
                   </span>
                 </div>
               )}
-              <div className="flex gap-8 text-xl font-bold mt-2 px-4 py-3 rounded-lg border border-pragma-accent/30 shadow-[0_0_15px_rgba(0,240,255,0.12)]">
+              <div className="flex justify-between gap-4 text-xl font-bold mt-2 px-4 py-3 rounded-lg border border-pragma-accent/30 shadow-[0_0_15px_rgba(0,240,255,0.12)]">
                 <span>{t("total")}:</span>
                 <span className="text-pragma-accent">
                   {formatCurrency(total, quote.currency, quote.locale)}
