@@ -31,9 +31,9 @@
 
 ## Medium Priority — PDF & Branding
 
-- [ ] PDF branding: PRAGMA logo, theme colors, professional footer
+- [x] PDF branding: PRAGMA logo, theme colors, professional footer
 - [ ] Verify PDF renders correctly with all currency formats
-- [ ] PDF filename includes client name and quote title
+- [x] PDF filename includes client name and quote title
 
 ## Medium Priority — Responsive & Polish
 

@@ -177,14 +177,27 @@ const styles = StyleSheet.create({
     left: 40,
     right: 40,
     borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
+    borderTopColor: "#b3f7ff",
     paddingTop: 10,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   footerText: {
     fontSize: 8,
     color: colors.muted,
+  },
+  footerBrand: {
+    fontSize: 9,
+    fontFamily: "Helvetica-Bold",
+    color: "#1a1a2e",
+    marginBottom: 1,
+  },
+  footerConfidential: {
+    fontSize: 7,
+    color: colors.muted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
   // Blueprint-specific styles
   sectionLabel: {
@@ -315,13 +328,36 @@ const styles = StyleSheet.create({
   },
 });
 
+function LogoMark() {
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          width: 28,
+          height: 28,
+          backgroundColor: colors.accent,
+          borderRadius: 3,
+          alignItems: "center",
+          justifyContent: "center",
+          marginRight: 10,
+        }}
+      >
+        <Text style={{ fontSize: 15, fontFamily: "Helvetica-Bold", color: "#0a0a0f" }}>
+          P
+        </Text>
+      </View>
+      <Text style={styles.logo}>PRAGMA</Text>
+    </View>
+  );
+}
+
 function BlueprintPdfDocument({ quote }: { quote: Quote }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.logo}>PRAGMA</Text>
+          <LogoMark />
           <View style={styles.headerRight}>
             <Text style={styles.headerLabel}>PROPUESTA</Text>
             <Text style={styles.headerValue}>#{quote.id}</Text>
@@ -442,10 +478,15 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            PRAGMA | AI & Technology Solutions
-          </Text>
-          <Text style={styles.footerText}>hello@pragma.agency</Text>
+          <View>
+            <Text style={styles.footerBrand}>PRAGMA</Text>
+            <Text style={styles.footerText}>AI & Technology Solutions</Text>
+          </View>
+          <Text style={styles.footerConfidential}>Documento Confidencial</Text>
+          <View style={{ alignItems: "flex-end" }}>
+            <Text style={styles.footerText}>hello@pragma.agency</Text>
+            <Text style={styles.footerText}>pragma.agency</Text>
+          </View>
         </View>
       </Page>
     </Document>
@@ -467,7 +508,7 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.logo}>PRAGMA</Text>
+          <LogoMark />
           <View style={styles.headerRight}>
             <Text style={styles.headerLabel}>QUOTE</Text>
             <Text style={styles.headerValue}>#{quote.id}</Text>
@@ -566,10 +607,15 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            PRAGMA | AI & Technology Solutions
-          </Text>
-          <Text style={styles.footerText}>hello@pragma.agency</Text>
+          <View>
+            <Text style={styles.footerBrand}>PRAGMA</Text>
+            <Text style={styles.footerText}>AI & Technology Solutions</Text>
+          </View>
+          <Text style={styles.footerConfidential}>Confidential Document</Text>
+          <View style={{ alignItems: "flex-end" }}>
+            <Text style={styles.footerText}>hello@pragma.agency</Text>
+            <Text style={styles.footerText}>pragma.agency</Text>
+          </View>
         </View>
       </Page>
     </Document>
