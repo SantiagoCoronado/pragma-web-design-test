@@ -16,11 +16,11 @@
 
 ## High Priority — Quote System UX
 
-- [ ] "Copy Shareable Link" button after saving a quote (clipboard API)
-- [ ] Toast/notification system for user feedback (save success, copy confirmation, errors)
-- [ ] Inline form validation errors displayed below each field
-- [ ] Quote form "Preview" opens client-facing view in new tab before saving
-- [ ] Keyboard UX: Enter to add new line item row, Tab navigation between fields
+- [x] "Copy Shareable Link" button after saving a quote (clipboard API)
+- [x] Toast/notification system for user feedback (save success, copy confirmation, errors)
+- [x] Inline form validation errors displayed below each field
+- [x] Quote form "Preview" opens client-facing view in new tab before saving
+- [x] Keyboard UX: Enter on last line item description adds a new row
 
 ## Medium Priority — SEO & Meta
 

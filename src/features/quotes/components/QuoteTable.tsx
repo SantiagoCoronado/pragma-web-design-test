@@ -60,6 +60,9 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
               {t("client")}
             </th>
             <th className="pb-3 text-xs font-medium text-pragma-muted uppercase tracking-wider">
+              {t("quoteType")}
+            </th>
+            <th className="pb-3 text-xs font-medium text-pragma-muted uppercase tracking-wider">
               {t("amount")}
             </th>
             <th className="pb-3 text-xs font-medium text-pragma-muted uppercase tracking-wider">
@@ -87,12 +90,15 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
                   {quote.clientCompany}
                 </p>
               </td>
+              <td className="py-4">
+                <span className={`text-xs px-2 py-0.5 rounded font-medium ${quote.quoteType === "blueprint" ? "bg-pragma-accent/10 text-pragma-accent" : "bg-pragma-surface text-pragma-muted"}`}>
+                  {quote.quoteType === "blueprint" ? t("blueprintType") : t("lineItemsType")}
+                </span>
+              </td>
               <td className="py-4 text-sm">
-                {formatCurrency(
-                  calculateTotal(quote.lineItems, quote.discount),
-                  quote.currency,
-                  locale
-                )}
+                {quote.quoteType === "blueprint"
+                  ? formatCurrency(quote.fixedPrice ?? 0, quote.currency, locale)
+                  : formatCurrency(calculateTotal(quote.lineItems, quote.discount), quote.currency, locale)}
               </td>
               <td className="py-4">
                 <Badge variant={STATUS_VARIANTS[quote.status]}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/shared/components/ui/Button";
@@ -8,6 +8,7 @@ import { Input } from "@/shared/components/ui/Input";
 import { Textarea } from "@/shared/components/ui/Textarea";
 import { Select } from "@/shared/components/ui/Select";
 import { Card } from "@/shared/components/ui/Card";
+import { useToast } from "@/shared/components/ui/Toaster";
 import {
   createQuoteAction,
   updateQuoteAction,
@@ -27,10 +28,14 @@ interface QuoteFormProps {
   quote?: Quote;
 }
 
+type FieldErrors = Record<string, string[] | undefined>;
+
 export function QuoteForm({ quote }: QuoteFormProps) {
   const t = useTranslations("Admin");
   const locale = useLocale();
   const router = useRouter();
+  const { toast } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const [quoteType, setQuoteType] = useState<QuoteType>(
     quote?.quoteType || "line-items"
@@ -50,7 +55,8 @@ export function QuoteForm({ quote }: QuoteFormProps) {
   const [nextSteps, setNextSteps] = useState<string[]>(
     quote?.nextSteps || []
   );
-  const [copiedLink, setCopiedLink] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Line item handlers
   const addLineItem = useCallback(() => {
@@ -120,42 +126,86 @@ export function QuoteForm({ quote }: QuoteFormProps) {
   const subtotal = calculateSubtotal(lineItems);
   const total = calculateTotal(lineItems, discount);
 
-  async function handleSubmit(formData: FormData, status: string) {
-    formData.set("quoteType", quoteType);
-    formData.set("currency", currency);
-    formData.set("status", status);
+  function buildFormData(base: FormData, status: string): FormData {
+    base.set("quoteType", quoteType);
+    base.set("currency", currency);
+    base.set("status", status);
 
     if (quoteType === "line-items") {
-      formData.set("lineItems", JSON.stringify(lineItems));
-      formData.set("discount", discount.toString());
+      base.set("lineItems", JSON.stringify(lineItems));
+      base.set("discount", discount.toString());
     } else {
-      formData.set("lineItems", "[]");
-      formData.set("discount", "0");
-      formData.set("deliverables", JSON.stringify(deliverables));
-      formData.set("nextSteps", JSON.stringify(nextSteps));
+      base.set("lineItems", "[]");
+      base.set("discount", "0");
+      base.set("deliverables", JSON.stringify(deliverables));
+      base.set("nextSteps", JSON.stringify(nextSteps));
     }
+    return base;
+  }
+
+  async function handleSubmit(formData: FormData, status: string) {
+    setIsSubmitting(true);
+    setFieldErrors({});
+    buildFormData(formData, status);
 
     if (quote) {
       const result = await updateQuoteAction(quote.id, formData);
-      if ("error" in result) return;
+      setIsSubmitting(false);
+      if ("error" in result) {
+        setFieldErrors(result.error as FieldErrors);
+        toast("Please fix the errors below", "error");
+        return;
+      }
+      toast("Quote saved", "success");
       router.push("/admin");
     } else {
       const result = await createQuoteAction(formData);
-      if ("error" in result) return;
+      setIsSubmitting(false);
+      if ("error" in result) {
+        setFieldErrors(result.error as FieldErrors);
+        toast("Please fix the errors below", "error");
+        return;
+      }
 
       if (status === "sent" && result.id) {
         const baseUrl = window.location.origin;
         await navigator.clipboard.writeText(
           `${baseUrl}/${locale}/quote/${result.id}`
         );
-        setCopiedLink(true);
-        setTimeout(() => {
-          router.push("/admin");
-        }, 1500);
+        toast("Link copied to clipboard!", "success");
+        setTimeout(() => router.push("/admin"), 1500);
       } else {
+        toast("Quote saved as draft", "success");
         router.push("/admin");
       }
     }
+  }
+
+  async function handlePreview() {
+    if (!formRef.current) return;
+    const formData = buildFormData(new FormData(formRef.current), "draft");
+
+    if (quote) {
+      // Already saved — just open in new tab
+      window.open(`/${locale}/quote/${quote.id}`, "_blank");
+      return;
+    }
+
+    // New quote: save as draft first, then open preview
+    setIsSubmitting(true);
+    setFieldErrors({});
+    const result = await createQuoteAction(formData);
+    setIsSubmitting(false);
+
+    if ("error" in result) {
+      setFieldErrors(result.error as FieldErrors);
+      toast("Please fix the errors below", "error");
+      return;
+    }
+
+    window.open(`/${locale}/quote/${result.id}`, "_blank");
+    toast("Draft saved — redirecting to edit", "info");
+    router.push(`/admin/quotes/${result.id}/edit`);
   }
 
   const currencyOptions = Object.entries(CURRENCY_LABELS).map(
@@ -164,6 +214,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
 
   return (
     <form
+      ref={formRef}
       action={async (formData) => handleSubmit(formData, "draft")}
       className="max-w-4xl mx-auto space-y-6"
     >
@@ -209,6 +260,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
             name="clientName"
             label={t("clientName")}
             defaultValue={quote?.clientName}
+            error={fieldErrors.clientName?.[0]}
             required
           />
           <Input
@@ -217,6 +269,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
             type="email"
             label={t("clientEmail")}
             defaultValue={quote?.clientEmail}
+            error={fieldErrors.clientEmail?.[0]}
             required
           />
           <Input
@@ -239,6 +292,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
             name="title"
             label={t("quoteTitle")}
             defaultValue={quote?.title}
+            error={fieldErrors.title?.[0]}
             required
           />
           <Select
@@ -297,7 +351,7 @@ export function QuoteForm({ quote }: QuoteFormProps) {
                 <div className="col-span-1" />
               </div>
 
-              {lineItems.map((item) => (
+              {lineItems.map((item, index) => (
                 <div
                   key={item.id}
                   className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-start bg-pragma-bg/50 rounded-lg p-3"
@@ -309,6 +363,15 @@ export function QuoteForm({ quote }: QuoteFormProps) {
                       onChange={(e) =>
                         updateLineItem(item.id, "description", e.target.value)
                       }
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Enter" &&
+                          index === lineItems.length - 1
+                        ) {
+                          e.preventDefault();
+                          addLineItem();
+                        }
+                      }}
                       placeholder="Description..."
                       className="w-full bg-pragma-surface border border-pragma-border rounded-lg px-3 py-2 text-sm text-pragma-text placeholder:text-pragma-muted/50 focus:outline-none focus:border-pragma-accent/50"
                     />
@@ -623,7 +686,22 @@ export function QuoteForm({ quote }: QuoteFormProps) {
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row justify-end gap-3">
-        <Button type="submit" variant="secondary" size="md">
+        <Button
+          type="button"
+          variant="ghost"
+          size="md"
+          disabled={isSubmitting}
+          onClick={handlePreview}
+        >
+          <Eye size={16} />
+          {t("preview")}
+        </Button>
+        <Button
+          type="submit"
+          variant="secondary"
+          size="md"
+          disabled={isSubmitting}
+        >
           <Save size={16} />
           {t("saveAsDraft")}
         </Button>
@@ -631,15 +709,15 @@ export function QuoteForm({ quote }: QuoteFormProps) {
           type="button"
           variant="primary"
           size="md"
+          disabled={isSubmitting}
           onClick={async () => {
-            const form = document.querySelector("form");
-            if (!form) return;
-            const formData = new FormData(form);
+            if (!formRef.current) return;
+            const formData = new FormData(formRef.current);
             await handleSubmit(formData, "sent");
           }}
         >
           <Link2 size={16} />
-          {copiedLink ? t("linkCopied") : t("saveAndShare")}
+          {t("saveAndShare")}
         </Button>
       </div>
     </form>
