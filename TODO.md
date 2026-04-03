@@ -58,12 +58,13 @@
 
 ## Deployment
 
-- [ ] Set up Vercel project and connect repo
-- [ ] Provision Turso production database
-- [ ] Configure environment variables on Vercel (DATABASE_URL, DATABASE_AUTH_TOKEN, ADMIN_PASSWORD)
+- [x] Set up Vercel project and connect repo
+- [x] Provision Turso production database
+- [x] Configure environment variables on Vercel (DATABASE_URL, DATABASE_AUTH_TOKEN, ADMIN_PASSWORD_HASH)
 - [x] Document required env vars in README or .env.example
-- [ ] Verify all routes work in production
-- [ ] Run `npm audit` — resolve any critical/high vulnerabilities
+- [x] Verify all routes work in production
+- [x] Run `npm audit` — resolve any critical/high vulnerabilities
+- [ ] Set NEXT_PUBLIC_APP_URL on Vercel → redeploy to fix sitemap/robots.txt domain
 
 ## Future Features (Out of Scope for MVP)
 
