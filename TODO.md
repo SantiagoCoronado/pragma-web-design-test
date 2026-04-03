@@ -61,7 +61,7 @@
 - [ ] Set up Vercel project and connect repo
 - [ ] Provision Turso production database
 - [ ] Configure environment variables on Vercel (DATABASE_URL, DATABASE_AUTH_TOKEN, ADMIN_PASSWORD)
-- [ ] Document required env vars in README or .env.example
+- [x] Document required env vars in README or .env.example
 - [ ] Verify all routes work in production
 - [ ] Run `npm audit` — resolve any critical/high vulnerabilities
 
