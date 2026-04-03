@@ -45,16 +45,16 @@
 
 ## Low Priority — Security Hardening
 
-- [ ] Hash admin password (bcrypt or scrypt) instead of plain-text comparison
-- [ ] Rate limiting on login endpoint
-- [ ] Rate limiting on PDF generation endpoint
-- [ ] CSRF protection review
+- [x] Hash admin password (bcrypt or scrypt) instead of plain-text comparison
+- [x] Rate limiting on login endpoint
+- [x] Rate limiting on PDF generation endpoint
+- [x] CSRF protection review
 
 ## Low Priority — Testing
 
-- [ ] Unit tests for quote calculation utilities (formatCurrency, calculateTotal)
-- [ ] Integration tests for quote server actions
-- [ ] E2E test: create quote -> view public link -> download PDF
+- [x] Unit tests for quote calculation utilities (formatCurrency, calculateTotal)
+- [x] Integration tests for quote server actions
+- [x] E2E test: create quote -> view public link -> download PDF
 
 ## Deployment
 
