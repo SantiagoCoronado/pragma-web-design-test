@@ -24,15 +24,15 @@
 
 ## Medium Priority — SEO & Meta
 
-- [ ] Per-page SEO metadata (title, description, OG tags) for landing sections
-- [ ] Generate `sitemap.xml` (Next.js metadata API)
-- [ ] Generate `robots.txt` (allow landing, disallow admin & quote pages)
-- [ ] Structured data (JSON-LD) for organization and services
+- [x] Per-page SEO metadata (title, description, OG tags) for landing sections
+- [x] Generate `sitemap.xml` (Next.js metadata API)
+- [x] Generate `robots.txt` (allow landing, disallow admin & quote pages)
+- [x] Structured data (JSON-LD) for organization and services
 
 ## Medium Priority — PDF & Branding
 
 - [x] PDF branding: PRAGMA logo, theme colors, professional footer
-- [ ] Verify PDF renders correctly with all currency formats
+- [x] Verify PDF renders correctly with all currency formats
 - [x] PDF filename includes client name and quote title
 
 ## Medium Priority — Responsive & Polish
@@ -41,7 +41,7 @@
 - [x] Quote line items table — card layout on mobile (< 640px)
 - [x] Navbar mobile menu polish
 - [x] Add `shared/hooks/` (useMediaQuery, useScrollPosition)
-- [ ] Verify `npm run build` completes with zero errors/warnings
+- [x] Verify `npm run build` completes with zero errors/warnings
 
 ## Low Priority — Security Hardening
 
