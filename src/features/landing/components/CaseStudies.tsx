@@ -14,17 +14,17 @@ interface CaseStudyData {
 const caseStudies: CaseStudyData[] = [
   {
     titleKey: "case1",
-    tags: ["NLP", "Python", "AWS"],
+    tags: ["AI", "RAG", "Next.js"],
     color: "cyan",
   },
   {
     titleKey: "case2",
-    tags: ["ML", "IoT", "TensorFlow"],
+    tags: ["Automation", "Python", "Integrations"],
     color: "purple",
   },
   {
     titleKey: "case3",
-    tags: ["React", "Node.js", "Redis"],
+    tags: ["React", "Vercel", "Turso"],
     color: "green",
   },
 ];

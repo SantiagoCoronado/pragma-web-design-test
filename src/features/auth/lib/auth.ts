@@ -6,8 +6,19 @@ const SESSION_MAX_AGE = 60 * 60 * 24; // 24 hours
 
 export async function verifyPassword(password: string): Promise<boolean> {
   const hash = process.env.ADMIN_PASSWORD_HASH;
-  if (!hash) return false;
-  return bcrypt.compare(password, hash);
+
+  // Try hashed password first (production)
+  if (hash) {
+    return bcrypt.compare(password, hash);
+  }
+
+  // Fall back to plain text for development (requires ADMIN_PASSWORD)
+  const plaintext = process.env.ADMIN_PASSWORD;
+  if (plaintext) {
+    return password === plaintext;
+  }
+
+  return false;
 }
 
 export async function createSession(): Promise<void> {

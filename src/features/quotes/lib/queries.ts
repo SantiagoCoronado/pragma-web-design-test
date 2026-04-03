@@ -43,12 +43,74 @@ function rowToQuote(row: Record<string, unknown>): Quote {
   };
 }
 
-export async function getAllQuotes(): Promise<Quote[]> {
+export interface QuoteFilters {
+  search?: string;
+  status?: string;
+  quoteType?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface PaginatedQuotes {
+  quotes: Quote[];
+  total: number;
+  page: number;
+  perPage: number;
+  totalPages: number;
+}
+
+export async function getAllQuotes(
+  filters?: QuoteFilters
+): Promise<PaginatedQuotes> {
   const db = await ensureDb();
-  const result = await db.execute(
-    "SELECT * FROM quotes ORDER BY created_at DESC"
+  const conditions: string[] = [];
+  const args: (string | number)[] = [];
+
+  if (filters?.search) {
+    conditions.push(
+      "(client_name LIKE ? OR client_company LIKE ? OR title LIKE ?)"
+    );
+    const like = `%${filters.search}%`;
+    args.push(like, like, like);
+  }
+
+  if (filters?.status) {
+    conditions.push("status = ?");
+    args.push(filters.status);
+  }
+
+  if (filters?.quoteType) {
+    conditions.push("quote_type = ?");
+    args.push(filters.quoteType);
+  }
+
+  const where = conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+  const page = filters?.page ?? 1;
+  const perPage = filters?.perPage ?? 15;
+  const offset = (page - 1) * perPage;
+
+  const countResult = await db.execute({
+    sql: `SELECT COUNT(*) as count FROM quotes ${where}`,
+    args,
+  });
+  const total = Number(
+    (countResult.rows[0] as Record<string, unknown>).count
   );
-  return result.rows.map((row) => rowToQuote(row as Record<string, unknown>));
+
+  const result = await db.execute({
+    sql: `SELECT * FROM quotes ${where} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+    args: [...args, perPage, offset],
+  });
+
+  return {
+    quotes: result.rows.map((row) =>
+      rowToQuote(row as Record<string, unknown>)
+    ),
+    total,
+    page,
+    perPage,
+    totalPages: Math.ceil(total / perPage),
+  };
 }
 
 export async function getQuoteById(id: string): Promise<Quote | null> {

@@ -7,7 +7,9 @@ import {
   updateQuote,
   deleteQuote,
   updateQuoteStatus,
+  getQuoteById,
 } from "../lib/queries";
+import { sendQuoteToClient } from "@/shared/lib/email";
 
 function extractBlueprintFields(formData: FormData) {
   const deliverablesRaw = formData.get("deliverables") as string;
@@ -94,5 +96,24 @@ export async function deleteQuoteAction(id: string) {
 export async function acceptQuoteAction(id: string) {
   await updateQuoteStatus(id, "accepted");
   revalidatePath("/[locale]/quote/[id]", "page");
+  return { success: true };
+}
+
+export async function sendQuoteAction(id: string, locale: string) {
+  const quote = await getQuoteById(id);
+  if (!quote) return { error: "Quote not found" };
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || "https://pragma-web-steel.vercel.app";
+  const quoteUrl = `${baseUrl}/${locale}/quote/${id}`;
+
+  await sendQuoteToClient({
+    clientEmail: quote.clientEmail,
+    clientName: quote.clientName,
+    quoteTitle: quote.title,
+    quoteUrl,
+  });
+
+  await updateQuoteStatus(id, "sent");
+  revalidatePath("/[locale]/admin", "page");
   return { success: true };
 }

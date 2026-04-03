@@ -59,19 +59,19 @@
     "subtitle": "Real projects, real results. Here's how we've helped businesses leverage technology.",
     "viewDetails": "View Details",
     "case1": {
-      "title": "AI-Powered Customer Support",
-      "description": "Reduced response time by 70% with a custom NLP chatbot that handles 80% of inquiries autonomously.",
-      "client": "FinTech Startup"
+      "title": "AI Knowledge Assistant for Legal Firm",
+      "description": "Built a RAG-powered assistant that indexes thousands of legal documents, enabling lawyers to find precedents and draft briefs 5x faster than manual research.",
+      "client": "Corporate Law Firm"
     },
     "case2": {
-      "title": "Predictive Maintenance Platform",
-      "description": "ML-driven system that predicts equipment failures 48 hours in advance, saving $2M annually.",
-      "client": "Manufacturing Corp"
+      "title": "Automated Invoicing & Compliance Pipeline",
+      "description": "End-to-end automation for a logistics company: receipt capture, tax validation, ERP sync, and regulatory reporting — cutting monthly close from 5 days to 8 hours.",
+      "client": "Logistics Company"
     },
     "case3": {
-      "title": "E-Commerce Recommendation Engine",
-      "description": "Personalized product recommendations that increased average order value by 35%.",
-      "client": "Retail Brand"
+      "title": "Client Portal & Quoting Platform",
+      "description": "Full-stack web application with bilingual support, PDF generation, and an admin panel — from first commit to production in under two weeks.",
+      "client": "Technology Agency"
     }
   },
   "Testimonials": {
@@ -179,6 +179,26 @@
     "status": "Status",
     "client": "Client",
     "amount": "Amount",
-    "actions": "Actions"
+    "actions": "Actions",
+    "contacts": "Contact Submissions",
+    "viewContacts": "Contacts",
+    "noContacts": "No contact submissions yet.",
+    "contactStatus": "Status",
+    "contactName": "Name",
+    "contactCompany": "Company",
+    "contactMessage": "Message",
+    "contactDate": "Date",
+    "contactNew": "New",
+    "contactRead": "Read",
+    "sendToClient": "Send to Client",
+    "quoteSent": "Quote sent!",
+    "searchPlaceholder": "Search quotes...",
+    "allStatuses": "All Statuses",
+    "allTypes": "All Types",
+    "clearFilters": "Clear",
+    "statusDraft": "Draft",
+    "statusSent": "Sent",
+    "statusAccepted": "Accepted",
+    "statusRejected": "Rejected"
   }
 }

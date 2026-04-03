@@ -9,8 +9,8 @@ import {
   formatCurrency,
   calculateTotal,
 } from "../types";
-import { deleteQuoteAction } from "../actions";
-import { Copy, Pencil, Trash2, ExternalLink } from "lucide-react";
+import { deleteQuoteAction, sendQuoteAction } from "../actions";
+import { Copy, Pencil, Trash2, ExternalLink, Send } from "lucide-react";
 import { useState } from "react";
 
 const STATUS_VARIANTS = {
@@ -25,6 +25,8 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
   const tq = useTranslations("Quote");
   const locale = useLocale();
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [sendingId, setSendingId] = useState<string | null>(null);
+  const [sentId, setSentId] = useState<string | null>(null);
 
   function copyLink(id: string) {
     const baseUrl =
@@ -32,6 +34,16 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
     navigator.clipboard.writeText(`${baseUrl}/${locale}/quote/${id}`);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
+  }
+
+  async function handleSend(id: string) {
+    setSendingId(id);
+    const result = await sendQuoteAction(id, locale);
+    setSendingId(null);
+    if (result.success) {
+      setSentId(id);
+      setTimeout(() => setSentId(null), 2000);
+    }
   }
 
   async function handleDelete(id: string) {
@@ -92,6 +104,17 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
                 <Copy size={14} />
                 {copiedId === quote.id && (
                   <span className="text-xs text-pragma-accent-3">{t("linkCopied")}</span>
+                )}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleSend(quote.id)}
+                disabled={sendingId === quote.id}
+              >
+                <Send size={14} className="text-pragma-accent" />
+                {sentId === quote.id && (
+                  <span className="text-xs text-pragma-accent-3">{t("quoteSent")}</span>
                 )}
               </Button>
               <Link href={`/admin/quotes/${quote.id}/edit`}>
@@ -178,6 +201,20 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
                       {copiedId === quote.id && (
                         <span className="text-xs text-pragma-accent-3">
                           {t("linkCopied")}
+                        </span>
+                      )}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleSend(quote.id)}
+                      disabled={sendingId === quote.id}
+                      title={t("sendToClient")}
+                    >
+                      <Send size={14} className="text-pragma-accent" />
+                      {sentId === quote.id && (
+                        <span className="text-xs text-pragma-accent-3">
+                          {t("quoteSent")}
                         </span>
                       )}
                     </Button>

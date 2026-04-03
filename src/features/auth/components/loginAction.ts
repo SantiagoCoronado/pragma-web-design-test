@@ -15,7 +15,7 @@ export async function loginAction(formData: FormData) {
     hdrs.get("x-real-ip") ??
     "unknown";
 
-  const limit = rateLimit(`login:${ip}`, { limit: 5, windowMs: 15 * 60 * 1000 });
+  const limit = rateLimit(`login:${ip}`, { limit: process.env.NODE_ENV === "development" ? 100 : 5, windowMs: 15 * 60 * 1000 });
   if (!limit.success) {
     return { error: "Too many attempts. Try again in 15 minutes." };
   }

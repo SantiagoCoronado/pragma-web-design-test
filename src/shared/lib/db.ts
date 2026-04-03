@@ -76,7 +76,17 @@ export async function initDb() {
       email TEXT NOT NULL,
       company TEXT DEFAULT '',
       message TEXT NOT NULL,
+      read INTEGER DEFAULT 0,
       created_at TEXT DEFAULT (datetime('now'))
     )
   `);
+
+  // Migration: add read column to existing contact_submissions tables
+  try {
+    await db.execute(
+      "ALTER TABLE contact_submissions ADD COLUMN read INTEGER DEFAULT 0"
+    );
+  } catch {
+    // Column already exists
+  }
 }

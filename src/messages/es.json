@@ -59,19 +59,19 @@
     "subtitle": "Proyectos reales, resultados reales. Asi es como hemos ayudado a empresas a aprovechar la tecnologia.",
     "viewDetails": "Ver Detalles",
     "case1": {
-      "title": "Soporte al Cliente con IA",
-      "description": "Reduccion del tiempo de respuesta en un 70% con un chatbot NLP personalizado que maneja el 80% de las consultas de forma autonoma.",
-      "client": "Startup FinTech"
+      "title": "Asistente de Conocimiento con IA para Despacho Legal",
+      "description": "Asistente con RAG que indexa miles de documentos legales, permitiendo a abogados encontrar precedentes y redactar escritos 5 veces mas rapido que la investigacion manual.",
+      "client": "Despacho Corporativo"
     },
     "case2": {
-      "title": "Plataforma de Mantenimiento Predictivo",
-      "description": "Sistema de ML que predice fallas de equipos con 48 horas de anticipacion, ahorrando $2M anuales.",
-      "client": "Corporacion Manufacturera"
+      "title": "Pipeline Automatizado de Facturacion y Cumplimiento",
+      "description": "Automatizacion integral para empresa de logistica: captura de recibos, validacion fiscal, sincronizacion con ERP y reportes regulatorios — reduciendo el cierre mensual de 5 dias a 8 horas.",
+      "client": "Empresa de Logistica"
     },
     "case3": {
-      "title": "Motor de Recomendaciones E-Commerce",
-      "description": "Recomendaciones personalizadas de productos que incrementaron el valor promedio de orden en un 35%.",
-      "client": "Marca de Retail"
+      "title": "Portal de Clientes y Plataforma de Cotizaciones",
+      "description": "Aplicacion web full-stack con soporte bilingue, generacion de PDF y panel de administracion — del primer commit a produccion en menos de dos semanas.",
+      "client": "Agencia de Tecnologia"
     }
   },
   "Testimonials": {
@@ -179,6 +179,26 @@
     "status": "Estado",
     "client": "Cliente",
     "amount": "Monto",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "contacts": "Formularios de Contacto",
+    "viewContacts": "Contactos",
+    "noContacts": "Aun no hay formularios de contacto.",
+    "contactStatus": "Estado",
+    "contactName": "Nombre",
+    "contactCompany": "Empresa",
+    "contactMessage": "Mensaje",
+    "contactDate": "Fecha",
+    "contactNew": "Nuevo",
+    "contactRead": "Leido",
+    "sendToClient": "Enviar al Cliente",
+    "quoteSent": "Cotizacion enviada!",
+    "searchPlaceholder": "Buscar cotizaciones...",
+    "allStatuses": "Todos los Estados",
+    "allTypes": "Todos los Tipos",
+    "clearFilters": "Limpiar",
+    "statusDraft": "Borrador",
+    "statusSent": "Enviada",
+    "statusAccepted": "Aceptada",
+    "statusRejected": "Rechazada"
   }
 }

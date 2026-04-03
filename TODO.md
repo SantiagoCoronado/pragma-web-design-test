@@ -1,76 +1,82 @@
 # PRAGMA Web — TODO
 
-## High Priority — Landing Page Polish
+## Pending — Vercel Configuration
 
-- [x] Contact form server action (stores submissions in contact_submissions DB table)
-- [x] Scroll-triggered Framer Motion animations (intersection observer on each section)
-- [x] Upgrade AnimateIn to use scroll-driven triggers instead of mount-only fade-in
-- [x] Testimonials section — fixed hydration-risk locale detection (useLocale() instead of DOM check)
-- [ ] Case Studies — replace placeholder data with real projects when available
+- [ ] Set `NEXT_PUBLIC_APP_URL` on Vercel → redeploy (fixes sitemap/robots.txt domain)
+- [ ] Set `RESEND_API_KEY`, `ADMIN_EMAIL`, `FROM_EMAIL` env vars on Vercel (enables email notifications)
 
-## High Priority — Quote Page Review & Dev Access
+## Next Up — Tier 2 Remaining
 
-- [x] Review and polish the quote page UI/UX (layout, styling, interactions)
-- [x] Seed dev database with sample quotes so the quote page is viewable during development
-- [x] Add a dev-only route or script to quickly create/view test quotes without full auth flow
+- [ ] Quote templates (save/reuse common quote structures)
+- [ ] Landing page polish (next/image optimization, smooth scroll, skeleton loaders)
 
-## High Priority — Quote System UX
+## Future — Tier 3
 
-- [x] "Copy Shareable Link" button after saving a quote (clipboard API)
-- [x] Toast/notification system for user feedback (save success, copy confirmation, errors)
-- [x] Inline form validation errors displayed below each field
-- [x] Quote form "Preview" opens client-facing view in new tab before saving
-- [x] Keyboard UX: Enter on last line item description adds a new row
+- [ ] Blog / content section (MDX, bilingual, RSS)
+- [ ] Client portal with login
+- [ ] Multi-user admin with roles
+- [ ] Invoicing (convert accepted quotes to invoices)
+- [ ] Distributed rate limiting (Upstash Redis)
+- [ ] Error monitoring (Sentry)
 
-## Medium Priority — SEO & Meta
+## Completed
 
-- [x] Per-page SEO metadata (title, description, OG tags) for landing sections
-- [x] Generate `sitemap.xml` (Next.js metadata API)
-- [x] Generate `robots.txt` (allow landing, disallow admin & quote pages)
-- [x] Structured data (JSON-LD) for organization and services
+### Landing Page
+- [x] Contact form server action (DB storage)
+- [x] Scroll-triggered Framer Motion animations
+- [x] AnimateIn scroll-driven triggers
+- [x] Testimonials hydration fix (useLocale)
+- [x] Case Studies — realistic PRAGMA projects
 
-## Medium Priority — PDF & Branding
+### Quote System
+- [x] Quote page UI/UX polish
+- [x] Dev database seeding + dev-only test route
+- [x] "Copy Shareable Link" button
+- [x] Toast/notification system
+- [x] Inline form validation
+- [x] Quote preview in new tab
+- [x] Keyboard UX (Enter adds row)
+- [x] "Send to Client" email (Resend, auto-updates status to sent)
+- [x] Search, filter by status/type, pagination
 
-- [x] PDF branding: PRAGMA logo, theme colors, professional footer
-- [x] Verify PDF renders correctly with all currency formats
-- [x] PDF filename includes client name and quote title
+### Admin
+- [x] Contact submissions dashboard (/admin/contacts)
+- [x] Email notifications for contact form (Resend)
 
-## Medium Priority — Responsive & Polish
+### SEO & Meta
+- [x] Per-page metadata (title, description, OG tags)
+- [x] sitemap.xml + robots.txt
+- [x] JSON-LD structured data
 
-- [x] Mobile responsive audit at 375px, 768px, 1024px
-- [x] Quote line items table — card layout on mobile (< 640px)
-- [x] Navbar mobile menu polish
-- [x] Add `shared/hooks/` (useMediaQuery, useScrollPosition)
-- [x] Verify `npm run build` completes with zero errors/warnings
+### PDF & Branding
+- [x] PRAGMA logo, theme colors, professional footer
+- [x] Currency format verification
+- [x] Filename includes client name + title
 
-## Low Priority — Security Hardening
+### Responsive & Polish
+- [x] Mobile audit (375px, 768px, 1024px)
+- [x] Card layout on mobile for line items
+- [x] Navbar mobile menu
+- [x] shared/hooks (useMediaQuery, useScrollPosition)
+- [x] Clean build (zero errors/warnings)
 
-- [x] Hash admin password (bcrypt or scrypt) instead of plain-text comparison
-- [x] Rate limiting on login endpoint
-- [x] Rate limiting on PDF generation endpoint
+### Security
+- [x] bcrypt password hashing + set-password script
+- [x] Rate limiting (login + PDF endpoints)
 - [x] CSRF protection review
 
-## Low Priority — Testing
+### Testing
+- [x] Unit tests (quote calculations, formatCurrency)
+- [x] Integration tests (server actions)
+- [x] E2E test (create → view → PDF)
 
-- [x] Unit tests for quote calculation utilities (formatCurrency, calculateTotal)
-- [x] Integration tests for quote server actions
-- [x] E2E test: create quote -> view public link -> download PDF
+### Observability
+- [x] Vercel Analytics + Speed Insights
 
-## Deployment
-
-- [x] Set up Vercel project and connect repo
-- [x] Provision Turso production database
-- [x] Configure environment variables on Vercel (DATABASE_URL, DATABASE_AUTH_TOKEN, ADMIN_PASSWORD_HASH)
-- [x] Document required env vars in README or .env.example
-- [x] Verify all routes work in production
-- [x] Run `npm audit` — resolve any critical/high vulnerabilities
-- [ ] Set NEXT_PUBLIC_APP_URL on Vercel → redeploy to fix sitemap/robots.txt domain
-
-## Future Features (Out of Scope for MVP)
-
-- [ ] Blog / content section
-- [ ] Client portal with login
-- [ ] Invoicing (convert accepted quotes to invoices)
-- [ ] Email notifications when quote status changes
-- [ ] Analytics dashboard for quote conversion rates
-- [ ] NextAuth upgrade for multi-user admin
+### Deployment
+- [x] Vercel project + repo connected
+- [x] Turso production database
+- [x] Environment variables configured
+- [x] README with env docs
+- [x] Production routes verified
+- [x] npm audit clean
