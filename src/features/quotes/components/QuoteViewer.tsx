@@ -170,7 +170,7 @@ function BlueprintViewer({
               <p className="text-xs font-semibold text-pragma-accent uppercase tracking-wider mb-3">
                 {t("theOpportunity")}
               </p>
-              <p className="text-sm text-pragma-text leading-relaxed italic">
+              <p className="text-sm text-pragma-text leading-relaxed">
                 {quote.opportunity}
               </p>
             </Card>
