@@ -35,7 +35,60 @@ npm run db:seed
 | `npm run test:watch` | Vitest in watch mode |
 | `npm run test:e2e` | Playwright E2E (starts dev server automatically) |
 | `npm run db:seed` | Seed dev DB with sample quotes |
+| `npm run create-quote -- --id <id> --file <spec>` | Insert a quote row from a spec file |
 | `node scripts/hash-password.mjs <pw>` | Generate bcrypt hash for ADMIN_PASSWORD_HASH |
+
+---
+
+## Creating a new quote
+
+Two flavors: **standard quotes** (line-items / blueprint) are created through the admin UI at `/en/admin`. **Bespoke AI-generated quotes** (custom React layouts) go through the `/generate-quote` workflow below.
+
+### Bespoke quote workflow
+
+1. **Write a spec file** (e.g. `specs/acme-quote.md`) with YAML frontmatter:
+
+    ```yaml
+    ---
+    client_name: "Acme Corp"
+    client_email: "contact@acme.com"
+    client_company: "Acme Corporation"
+    title: "Your Project Title"
+    currency: "USD"          # USD | EUR | MXN | COP
+    locale: "en"             # en | es
+    valid_until: "2026-05-16"
+    ---
+
+    # Overview
+    ...your bespoke content as markdown...
+    ```
+
+2. **Generate the quote** from a Claude Code session in this repo:
+
+    ```
+    /generate-quote specs/acme-quote.md
+    ```
+
+    This mints a 10-char ID, creates `src/generated-quotes/Quote_[id]/QuoteContent.tsx` + `QuotePDF.tsx`, registers them in `src/generated-quotes/registry.ts`, and inserts the DB row via `npm run create-quote`.
+
+3. **Verify locally**:
+
+    ```bash
+    npm run dev
+    # open http://localhost:3000/en/quote/[id]
+    ```
+
+4. **Commit & deploy**:
+
+    ```bash
+    git add src/generated-quotes/ specs/
+    git commit -m "feat: add quote [id] for [client]"
+    git push
+    ```
+
+    Vercel auto-deploys from `main`. The DB row was written directly to Turso prod in step 2, so once the deploy completes the client URL is live.
+
+See `.claude/commands/generate-quote.md` for the full spec, component conventions, and design-system guidelines.
 
 ---
 
@@ -62,6 +115,14 @@ Copy `.env.sample` to `.env.local` and fill in every value before running locall
 |---|---|
 | `NEXT_PUBLIC_APP_URL` | Full public URL of the site, no trailing slash — e.g. `https://pragma.agency`. Used for shareable quote links, sitemap, and OG metadata. |
 
+### Email (Resend)
+
+| Variable | Description |
+|---|---|
+| `RESEND_API_KEY` | Resend API key — enables "Send to Client" emails and contact-form notifications. |
+| `FROM_EMAIL` | Verified sender address, e.g. `quotes@pragma.agency`. |
+| `ADMIN_EMAIL` | Address that receives contact-form submissions. |
+
 ### E2E tests (optional)
 
 | Variable | Description |
@@ -73,110 +134,37 @@ Copy `.env.sample` to `.env.local` and fill in every value before running locall
 
 ## Deployment
 
-### Prerequisites
-
-- [Vercel account](https://vercel.com) (free tier is fine)
-- [Turso account](https://turso.tech) (free tier: 500MB, plenty for this)
-- [Turso CLI](https://docs.turso.tech/cli/installation): `brew install tursodatabase/tap/turso`
-
----
-
-### Step 1 — Provision the Turso production database
-
-Run these commands once. Copy the output values — you'll need them for Vercel.
+The project is already linked to Vercel and auto-deploys from `main`. Day-to-day flow:
 
 ```bash
-# Log in
-turso auth login
-
-# Create the production database
-turso db create pragma-web-prod
-
-# Get the database URL (copy the value under "URL")
-turso db show pragma-web-prod
-
-# Create an auth token (copy the full token string)
-turso db tokens create pragma-web-prod
-```
-
-The schema is applied automatically on first run — no migration step needed.
-
----
-
-### Step 2 — Generate the admin password hash
-
-```bash
-node scripts/hash-password.mjs <your-chosen-password>
-# Outputs something like: $2b$12$...
-# Copy this — you'll paste it as ADMIN_PASSWORD_HASH in Vercel
-```
-
----
-
-### Step 3 — Deploy to Vercel
-
-```bash
-# Install Vercel CLI if you don't have it
-npm i -g vercel
-
-# From the project root — follow the prompts
-# Link to your GitHub repo when asked, select the SantiagoCoronado/pragma-web repo
-vercel
-
-# Or deploy directly to production
+git push origin main        # triggers production deploy
+# or, for an out-of-band deploy:
 vercel --prod
 ```
 
-Alternatively: go to [vercel.com/new](https://vercel.com/new), import from GitHub, and follow the UI.
-
----
-
-### Step 4 — Set environment variables on Vercel
-
-Run each command and paste the value when prompted:
+Environment variables are managed with the Vercel CLI:
 
 ```bash
-vercel env add DATABASE_URL production
-# paste: libsql://pragma-web-prod.turso.io  (from Step 1)
-
-vercel env add DATABASE_AUTH_TOKEN production
-# paste: your Turso auth token  (from Step 1)
-
-vercel env add ADMIN_PASSWORD_HASH production
-# paste: $2b$12$...  (from Step 2)
-
-vercel env add NEXT_PUBLIC_APP_URL production
-# paste: https://pragma.agency  (your actual domain)
+vercel env ls
+vercel env add <NAME> production
+vercel env pull .env.local --yes    # sync local .env.local from Vercel
 ```
 
-Then trigger a fresh deployment to pick up the new vars:
+Admin password hash can be regenerated any time:
 
 ```bash
-vercel --prod
+node scripts/hash-password.mjs <new-password>
+# then: vercel env add ADMIN_PASSWORD_HASH production
 ```
 
----
+### Smoke test checklist (after a deploy)
 
-### Step 5 — Connect your domain (optional)
-
-In the Vercel dashboard → your project → Settings → Domains, add `pragma.agency` and follow the DNS instructions.
-
----
-
-### Step 6 — Production smoke test checklist
-
-After deploying, verify manually:
-
-- [ ] `https://pragma.agency/en` — landing page loads, all sections visible
-- [ ] `https://pragma.agency/es` — Spanish version loads
-- [ ] `https://pragma.agency/sitemap.xml` — returns XML with `/en` and `/es`
-- [ ] `https://pragma.agency/robots.txt` — disallows `/en/admin/`, `/en/quote/`
-- [ ] `https://pragma.agency/en/admin` — login form appears
-- [ ] Admin login works with your password
-- [ ] Create a new quote, save as draft
-- [ ] Copy shareable link → open in a new incognito tab → quote renders
-- [ ] Download PDF → file opens, looks correct
-- [ ] `https://pragma.agency/en/admin` shows noindex in page source
+- [ ] `/en` and `/es` landing pages load
+- [ ] `/sitemap.xml` and `/robots.txt` return the expected domain
+- [ ] `/en/admin` login works
+- [ ] Create a quote, copy shareable link, open in incognito — renders correctly
+- [ ] Download PDF — file opens, branded correctly
+- [ ] "Send to Client" delivers email (requires `RESEND_API_KEY`)
 
 ---
 
@@ -195,6 +183,7 @@ src/
 │   ├── quotes/            # Quote form, viewer, PDF, server actions, DB queries
 │   ├── landing/           # Hero, Services, About, Case Studies, Testimonials, Contact
 │   └── auth/              # Login form, server action, session management
+├── generated-quotes/      # Bespoke AI-generated quote components + registry
 └── shared/
     ├── components/
     │   ├── layout/        # Navbar, Footer, LanguageToggle
@@ -210,8 +199,9 @@ src/
 |---|---|
 | `line-items` | Itemized quote with qty × price table, subtotal, discount, total |
 | `blueprint` | Narrative proposal — problem, opportunity, deliverables, timeline, fixed price |
+| `ai-generated` | Bespoke per-client React component rendered from a spec file (see "Creating a new quote") |
 
-Both types generate a branded PDF with the PRAGMA logo and footer.
+All three generate a branded PDF with the PRAGMA logo and footer.
 
 ### Auth
 
