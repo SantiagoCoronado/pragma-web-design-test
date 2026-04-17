@@ -9,6 +9,8 @@
     "lint": "eslint",
     "db:seed": "node scripts/seed-db.mjs",
     "set-password": "node scripts/set-admin-password.mjs",
+    "create-quote": "dotenv -e .env.local -- tsx scripts/create-quote.ts",
+    "switch-db": "bash scripts/switch-db.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test"
@@ -38,6 +40,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
+    "gray-matter": "^4.0.3",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",

@@ -11,6 +11,12 @@ vi.mock("@/features/quotes/lib/queries", () => ({
   updateQuote: vi.fn(),
   deleteQuote: vi.fn(),
   updateQuoteStatus: vi.fn(),
+  getQuoteById: vi.fn(),
+}));
+
+// Mock auth — default to authenticated; tests can override
+vi.mock("@/features/auth/lib/auth", () => ({
+  isAuthenticated: vi.fn(async () => true),
 }));
 
 import { revalidatePath } from "next/cache";
@@ -19,6 +25,7 @@ import {
   updateQuote,
   deleteQuote,
   updateQuoteStatus,
+  getQuoteById,
 } from "@/features/quotes/lib/queries";
 import {
   createQuoteAction,
@@ -202,6 +209,7 @@ describe("acceptQuoteAction", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(updateQuoteStatus).mockResolvedValue(undefined);
+    vi.mocked(getQuoteById).mockResolvedValue({ id: "q-1", status: "sent" } as never);
   });
 
   it("calls updateQuoteStatus with accepted", async () => {
@@ -212,5 +220,19 @@ describe("acceptQuoteAction", () => {
   it("returns success", async () => {
     const result = await acceptQuoteAction("q-1");
     expect(result).toEqual({ success: true });
+  });
+
+  it("returns not-found error when quote is missing", async () => {
+    vi.mocked(getQuoteById).mockResolvedValueOnce(null);
+    const result = await acceptQuoteAction("missing");
+    expect(result).toEqual({ error: "Quote not found" });
+    expect(updateQuoteStatus).not.toHaveBeenCalled();
+  });
+
+  it("rejects invalid state transitions", async () => {
+    vi.mocked(getQuoteById).mockResolvedValueOnce({ id: "q-1", status: "draft" } as never);
+    const result = await acceptQuoteAction("q-1");
+    expect(result).toEqual({ error: "Invalid state" });
+    expect(updateQuoteStatus).not.toHaveBeenCalled();
   });
 });

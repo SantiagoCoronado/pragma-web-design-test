@@ -46,9 +46,20 @@ export async function initDb() {
     )
   `);
 
-  // Migrations for existing installations (ignore errors if columns already exist)
+  // Migrations for existing installations (ignore errors if columns already exist).
+  // Rule: every column in CREATE TABLE above MUST have a matching ALTER here,
+  // otherwise DBs created before that column was added will diverge from fresh ones.
   const migrations = [
+    "ALTER TABLE quotes ADD COLUMN client_company TEXT DEFAULT ''",
+    "ALTER TABLE quotes ADD COLUMN description TEXT DEFAULT ''",
     "ALTER TABLE quotes ADD COLUMN quote_type TEXT DEFAULT 'line-items'",
+    "ALTER TABLE quotes ADD COLUMN line_items TEXT NOT NULL DEFAULT '[]'",
+    "ALTER TABLE quotes ADD COLUMN currency TEXT DEFAULT 'MXN'",
+    "ALTER TABLE quotes ADD COLUMN discount REAL DEFAULT 0",
+    "ALTER TABLE quotes ADD COLUMN notes TEXT DEFAULT ''",
+    "ALTER TABLE quotes ADD COLUMN status TEXT DEFAULT 'draft'",
+    "ALTER TABLE quotes ADD COLUMN valid_until TEXT DEFAULT ''",
+    "ALTER TABLE quotes ADD COLUMN locale TEXT DEFAULT 'en'",
     "ALTER TABLE quotes ADD COLUMN problem TEXT",
     "ALTER TABLE quotes ADD COLUMN opportunity TEXT",
     "ALTER TABLE quotes ADD COLUMN deliverables TEXT",
@@ -59,6 +70,8 @@ export async function initDb() {
     "ALTER TABLE quotes ADD COLUMN payment_terms TEXT",
     "ALTER TABLE quotes ADD COLUMN next_steps TEXT",
     "ALTER TABLE quotes ADD COLUMN scope_note TEXT",
+    "ALTER TABLE quotes ADD COLUMN raw_content TEXT",
+    "ALTER TABLE quotes ADD COLUMN generated_component TEXT",
   ];
 
   for (const sql of migrations) {

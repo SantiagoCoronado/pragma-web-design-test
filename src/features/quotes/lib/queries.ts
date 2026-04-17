@@ -40,6 +40,8 @@ function rowToQuote(row: Record<string, unknown>): Quote {
       ? (JSON.parse(row.next_steps as string) as string[])
       : undefined,
     scopeNote: (row.scope_note as string) || undefined,
+    rawContent: (row.raw_content as string) || undefined,
+    generatedComponent: (row.generated_component as string) || undefined,
   };
 }
 
@@ -240,4 +242,53 @@ export async function deleteQuote(id: string): Promise<void> {
     sql: "DELETE FROM quotes WHERE id = ?",
     args: [id],
   });
+}
+
+export interface AiQuoteInput {
+  clientName: string;
+  clientEmail: string;
+  clientCompany: string;
+  title: string;
+  currency: Quote["currency"];
+  locale: Quote["locale"];
+  validUntil: string;
+  rawContent: string;
+  generatedComponent: string;
+}
+
+export async function createAiQuote(data: AiQuoteInput): Promise<Quote> {
+  const db = await ensureDb();
+  const id = nanoid(10);
+  const now = new Date().toISOString();
+
+  await db.execute({
+    sql: `INSERT INTO quotes (
+            id, client_name, client_email, client_company, title, description,
+            quote_type, line_items, currency, discount, notes, status, valid_until, locale,
+            raw_content, generated_component,
+            created_at, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [
+      id,
+      data.clientName,
+      data.clientEmail,
+      data.clientCompany,
+      data.title,
+      "",
+      "ai-generated",
+      "[]",
+      data.currency,
+      0,
+      "",
+      "draft",
+      data.validUntil,
+      data.locale,
+      data.rawContent,
+      data.generatedComponent,
+      now,
+      now,
+    ],
+  });
+
+  return (await getQuoteById(id))!;
 }

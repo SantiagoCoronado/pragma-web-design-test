@@ -10,6 +10,7 @@ import {
   getQuoteById,
 } from "../lib/queries";
 import { sendQuoteToClient } from "@/shared/lib/email";
+import { isAuthenticated } from "@/features/auth/lib/auth";
 
 function extractBlueprintFields(formData: FormData) {
   const deliverablesRaw = formData.get("deliverables") as string;
@@ -32,6 +33,7 @@ function extractBlueprintFields(formData: FormData) {
 }
 
 export async function createQuoteAction(formData: FormData) {
+  if (!(await isAuthenticated())) return { error: "Unauthorized" };
   const raw = {
     clientName: formData.get("clientName") as string,
     clientEmail: formData.get("clientEmail") as string,
@@ -60,6 +62,7 @@ export async function createQuoteAction(formData: FormData) {
 }
 
 export async function updateQuoteAction(id: string, formData: FormData) {
+  if (!(await isAuthenticated())) return { error: "Unauthorized" };
   const raw = {
     clientName: formData.get("clientName") as string,
     clientEmail: formData.get("clientEmail") as string,
@@ -88,18 +91,24 @@ export async function updateQuoteAction(id: string, formData: FormData) {
 }
 
 export async function deleteQuoteAction(id: string) {
+  if (!(await isAuthenticated())) return { error: "Unauthorized" };
   await deleteQuote(id);
   revalidatePath("/[locale]/admin", "page");
   return { success: true };
 }
 
 export async function acceptQuoteAction(id: string) {
+  const quote = await getQuoteById(id);
+  if (!quote) return { error: "Quote not found" };
+  if (quote.status !== "sent") return { error: "Invalid state" };
+
   await updateQuoteStatus(id, "accepted");
   revalidatePath("/[locale]/quote/[id]", "page");
   return { success: true };
 }
 
 export async function sendQuoteAction(id: string, locale: string) {
+  if (!(await isAuthenticated())) return { error: "Unauthorized" };
   const quote = await getQuoteById(id);
   if (!quote) return { error: "Quote not found" };
 
@@ -115,5 +124,28 @@ export async function sendQuoteAction(id: string, locale: string) {
 
   await updateQuoteStatus(id, "sent");
   revalidatePath("/[locale]/admin", "page");
+  return { success: true };
+}
+
+export async function sendAiQuoteAction(id: string, locale: string) {
+  if (!(await isAuthenticated())) return { error: "Unauthorized" };
+  const quote = await getQuoteById(id);
+  if (!quote) return { error: "Quote not found" };
+  if (quote.quoteType !== "ai-generated") return { error: "Only AI-generated quotes can be sent" };
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXT_PUBLIC_BASE_URL || "https://pragma-web-steel.vercel.app";
+  const quoteUrl = `${baseUrl}/${locale}/quote/${id}`;
+
+  await sendQuoteToClient({
+    clientEmail: quote.clientEmail,
+    clientName: quote.clientName,
+    quoteTitle: quote.title,
+    quoteUrl,
+  });
+
+  await updateQuoteStatus(id, "sent");
+  revalidatePath("/[locale]/admin", "page");
+  revalidatePath("/[locale]/admin/quotes", "page");
+  revalidatePath("/[locale]/admin/quotes/[id]", "page");
   return { success: true };
 }

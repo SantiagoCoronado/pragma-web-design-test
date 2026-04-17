@@ -85,8 +85,18 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
                 {quote.clientCompany && (
                   <p className="text-xs text-pragma-muted">{quote.clientCompany}</p>
                 )}
-                <span className={`text-xs px-1.5 py-0.5 rounded font-medium mt-1 inline-block ${quote.quoteType === "blueprint" ? "bg-pragma-accent/10 text-pragma-accent" : "bg-pragma-surface text-pragma-muted"}`}>
-                  {quote.quoteType === "blueprint" ? t("blueprintType") : t("lineItemsType")}
+                <span className={`text-xs px-1.5 py-0.5 rounded font-medium mt-1 inline-block ${
+                  quote.quoteType === "blueprint"
+                    ? "bg-pragma-accent/10 text-pragma-accent"
+                    : quote.quoteType === "ai-generated"
+                    ? "bg-purple-500/10 text-purple-400"
+                    : "bg-pragma-surface text-pragma-muted"
+                }`}>
+                  {quote.quoteType === "blueprint"
+                    ? t("blueprintType")
+                    : quote.quoteType === "ai-generated"
+                    ? t("aiGeneratedType")
+                    : t("lineItemsType")}
                 </span>
               </div>
               <p className="text-sm font-semibold text-pragma-accent">
@@ -171,8 +181,18 @@ export function QuoteTable({ quotes }: { quotes: Quote[] }) {
                   </p>
                 </td>
                 <td className="py-4">
-                  <span className={`text-xs px-2 py-0.5 rounded font-medium ${quote.quoteType === "blueprint" ? "bg-pragma-accent/10 text-pragma-accent" : "bg-pragma-surface text-pragma-muted"}`}>
-                    {quote.quoteType === "blueprint" ? t("blueprintType") : t("lineItemsType")}
+                  <span className={`text-xs px-2 py-0.5 rounded font-medium ${
+                    quote.quoteType === "blueprint"
+                      ? "bg-pragma-accent/10 text-pragma-accent"
+                      : quote.quoteType === "ai-generated"
+                      ? "bg-purple-500/10 text-purple-400"
+                      : "bg-pragma-surface text-pragma-muted"
+                  }`}>
+                    {quote.quoteType === "blueprint"
+                      ? t("blueprintType")
+                      : quote.quoteType === "ai-generated"
+                      ? t("aiGeneratedType")
+                      : t("lineItemsType")}
                   </span>
                 </td>
                 <td className="py-4 text-sm">

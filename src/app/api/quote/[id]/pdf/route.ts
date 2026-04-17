@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { renderToBuffer } from "@react-pdf/renderer";
+import { createElement, type ReactElement } from "react";
+import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import { getQuoteById } from "@/features/quotes/lib/queries";
 import { QuotePdfDocument } from "@/features/quotes/components/QuotePdfDocument";
 import { rateLimit } from "@/shared/lib/rate-limit";
@@ -37,7 +38,20 @@ export async function GET(
     return NextResponse.json({ error: "Quote not found" }, { status: 404 });
   }
 
-  const buffer = await renderToBuffer(QuotePdfDocument({ quote }));
+  let pdfComponent: ReactElement<DocumentProps>;
+
+  if (quote.quoteType === "ai-generated") {
+    const { quoteRegistry } = await import("@/generated-quotes/registry");
+    const entry = quoteRegistry[quote.id];
+    if (!entry) {
+      return NextResponse.json({ error: "Quote PDF not found" }, { status: 404 });
+    }
+    pdfComponent = createElement(entry.QuotePDF, { quote }) as ReactElement<DocumentProps>;
+  } else {
+    pdfComponent = createElement(QuotePdfDocument, { quote }) as ReactElement<DocumentProps>;
+  }
+
+  const buffer = await renderToBuffer(pdfComponent);
   const uint8 = new Uint8Array(buffer);
 
   const clientSlug = slugify(quote.clientName);

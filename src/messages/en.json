@@ -199,6 +199,12 @@
     "statusDraft": "Draft",
     "statusSent": "Sent",
     "statusAccepted": "Accepted",
-    "statusRejected": "Rejected"
+    "statusRejected": "Rejected",
+    "aiGeneratedType": "AI Custom",
+    "quotePreview": "Preview",
+    "sendQuote": "Send to Client",
+    "backToQuotes": "← Back to Quotes",
+    "deleteConfirm": "Are you sure you want to delete this quote? This action cannot be undone.",
+    "sending": "Sending"
   }
 }

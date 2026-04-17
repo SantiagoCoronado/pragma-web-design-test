@@ -1,0 +1,50 @@
+[
+  {
+    "session_id": "f32d2764-18ca-4c36-8058-6f26e915740b",
+    "transcript_path": "/Users/santiagocoronado/.claude/projects/-Users-santiagocoronado-PRAGMA-pragma-web/f32d2764-18ca-4c36-8058-6f26e915740b.jsonl",
+    "cwd": "/Users/santiagocoronado/PRAGMA/pragma-web",
+    "hook_event_name": "PreCompact",
+    "trigger": "manual",
+    "custom_instructions": ""
+  },
+  {
+    "session_id": "f32d2764-18ca-4c36-8058-6f26e915740b",
+    "transcript_path": "/Users/santiagocoronado/.claude/projects/-Users-santiagocoronado-PRAGMA-pragma-web/f32d2764-18ca-4c36-8058-6f26e915740b.jsonl",
+    "cwd": "/Users/santiagocoronado/PRAGMA/pragma-web",
+    "hook_event_name": "PreCompact",
+    "trigger": "manual",
+    "custom_instructions": ""
+  },
+  {
+    "session_id": "f32d2764-18ca-4c36-8058-6f26e915740b",
+    "transcript_path": "/Users/santiagocoronado/.claude/projects/-Users-santiagocoronado-PRAGMA-pragma-web/f32d2764-18ca-4c36-8058-6f26e915740b.jsonl",
+    "cwd": "/Users/santiagocoronado/PRAGMA/pragma-web",
+    "hook_event_name": "PreCompact",
+    "trigger": "manual",
+    "custom_instructions": ""
+  },
+  {
+    "session_id": "d223a2bf-3f74-473c-b5b9-01877a336c21",
+    "transcript_path": "/Users/santiagocoronado/.claude/projects/-Users-santiagocoronado-PRAGMA-pragma-web/d223a2bf-3f74-473c-b5b9-01877a336c21.jsonl",
+    "cwd": "/Users/santiagocoronado/PRAGMA/pragma-web",
+    "hook_event_name": "PreCompact",
+    "trigger": "manual",
+    "custom_instructions": ""
+  },
+  {
+    "session_id": "4698259d-c5d2-4fab-89f8-9fdf918ee2b5",
+    "transcript_path": "/Users/santiagocoronado/.claude/projects/-Users-santiagocoronado-PRAGMA-pragma-web/4698259d-c5d2-4fab-89f8-9fdf918ee2b5.jsonl",
+    "cwd": "/Users/santiagocoronado/PRAGMA/pragma-web",
+    "hook_event_name": "PreCompact",
+    "trigger": "manual",
+    "custom_instructions": ""
+  },
+  {
+    "session_id": "d550a1ed-b5b0-44e6-8bff-1821073953e3",
+    "transcript_path": "/Users/santiagocoronado/.claude/projects/-Users-santiagocoronado-PRAGMA-pragma-web/d550a1ed-b5b0-44e6-8bff-1821073953e3.jsonl",
+    "cwd": "/Users/santiagocoronado/PRAGMA/pragma-web",
+    "hook_event_name": "PreCompact",
+    "trigger": "manual",
+    "custom_instructions": ""
+  }
+]

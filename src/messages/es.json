@@ -199,6 +199,12 @@
     "statusDraft": "Borrador",
     "statusSent": "Enviada",
     "statusAccepted": "Aceptada",
-    "statusRejected": "Rechazada"
+    "statusRejected": "Rechazada",
+    "aiGeneratedType": "Personalizada IA",
+    "quotePreview": "Vista Previa",
+    "sendQuote": "Enviar al Cliente",
+    "backToQuotes": "← Volver a Cotizaciones",
+    "deleteConfirm": "Estás seguro que quieres eliminar esta cotización? Esta acción no se puede deshacer.",
+    "sending": "Enviando"
   }
 }

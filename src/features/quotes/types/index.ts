@@ -1,4 +1,4 @@
-export type QuoteType = "line-items" | "blueprint";
+export type QuoteType = "line-items" | "blueprint" | "ai-generated";
 
 export interface Deliverable {
   id: string;
@@ -46,6 +46,9 @@ export interface Quote {
   paymentTerms?: string;
   nextSteps?: string[];
   scopeNote?: string;
+  // AI-generated quote fields
+  rawContent?: string;
+  generatedComponent?: string;
 }
 
 export const CURRENCY_SYMBOLS: Record<Currency, string> = {
