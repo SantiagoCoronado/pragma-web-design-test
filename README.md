@@ -71,6 +71,8 @@ Two flavors: **standard quotes** (line-items / blueprint) are created through th
 
     This mints a 10-char ID, creates `src/generated-quotes/Quote_[id]/QuoteContent.tsx` + `QuotePDF.tsx`, registers them in `src/generated-quotes/registry.ts`, and inserts the DB row via `npm run create-quote`.
 
+    Quote IDs are lowercase-only (`[a-z0-9]{10}`) so shared URLs survive chat apps that lowercase paths. The DB lookup also uses `COLLATE NOCASE` as a safety net for any legacy mixed-case IDs.
+
 3. **Verify locally**:
 
     ```bash

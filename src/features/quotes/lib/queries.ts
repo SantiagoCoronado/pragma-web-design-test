@@ -1,5 +1,5 @@
 import { getDb, initDb } from "@/shared/lib/db";
-import { nanoid } from "nanoid";
+import { quoteId } from "@/shared/lib/ids";
 import type { Quote, LineItem, Deliverable } from "../types";
 import type { QuoteFormData } from "./schemas";
 
@@ -118,7 +118,7 @@ export async function getAllQuotes(
 export async function getQuoteById(id: string): Promise<Quote | null> {
   const db = await ensureDb();
   const result = await db.execute({
-    sql: "SELECT * FROM quotes WHERE id = ?",
+    sql: "SELECT * FROM quotes WHERE id = ? COLLATE NOCASE",
     args: [id],
   });
   if (result.rows.length === 0) return null;
@@ -127,7 +127,7 @@ export async function getQuoteById(id: string): Promise<Quote | null> {
 
 export async function createQuote(data: QuoteFormData): Promise<Quote> {
   const db = await ensureDb();
-  const id = nanoid(10);
+  const id = quoteId();
   const now = new Date().toISOString();
 
   await db.execute({
@@ -258,7 +258,7 @@ export interface AiQuoteInput {
 
 export async function createAiQuote(data: AiQuoteInput): Promise<Quote> {
   const db = await ensureDb();
-  const id = nanoid(10);
+  const id = quoteId();
   const now = new Date().toISOString();
 
   await db.execute({

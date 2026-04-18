@@ -2,8 +2,8 @@ import { ComponentType } from "react";
 import { Quote } from "@/features/quotes/types";
 import { QuoteContent as QuoteContent_47sJ8SiMdN } from "./Quote_47sJ8SiMdN/QuoteContent";
 import { QuotePDF as QuotePDF_47sJ8SiMdN } from "./Quote_47sJ8SiMdN/QuotePDF";
-import { QuoteContent as QuoteContent_xzggIB6mbp } from "./Quote_xzggIB6mbp/QuoteContent";
-import { QuotePDF as QuotePDF_xzggIB6mbp } from "./Quote_xzggIB6mbp/QuotePDF";
+import { QuoteContent as QuoteContent_xzggib6mbp } from "./Quote_xzggib6mbp/QuoteContent";
+import { QuotePDF as QuotePDF_xzggib6mbp } from "./Quote_xzggib6mbp/QuotePDF";
 
 /**
  * Component for rendering the quote content section.
@@ -36,8 +36,8 @@ export const quoteRegistry: Record<string, QuoteRegistryEntry> = {
     QuoteContent: QuoteContent_47sJ8SiMdN,
     QuotePDF: QuotePDF_47sJ8SiMdN,
   },
-  xzggIB6mbp: {
-    QuoteContent: QuoteContent_xzggIB6mbp,
-    QuotePDF: QuotePDF_xzggIB6mbp,
+  xzggib6mbp: {
+    QuoteContent: QuoteContent_xzggib6mbp,
+    QuotePDF: QuotePDF_xzggib6mbp,
   },
 };

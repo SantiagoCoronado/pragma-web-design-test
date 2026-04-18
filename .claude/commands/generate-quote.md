@@ -12,7 +12,7 @@ Generate a bespoke AI-customized quote from a specification file.
 
 Transforms a Markdown specification file into a complete, production-ready quote:
 1. Parses the spec's frontmatter and content
-2. Generates a 10-character ID (nanoid style)
+2. Generates a 10-character lowercase ID (`[a-z0-9]{10}`) — URLs are case-sensitive in some chat apps, so IDs stay lowercase
 3. Creates two React components: `QuoteContent.tsx` (web) and `QuotePDF.tsx` (PDF export)
 4. Updates `src/generated-quotes/registry.ts` to register the new components
 5. Inserts a quote row into the database
@@ -80,7 +80,8 @@ Everything after the frontmatter is parsed as markdown and becomes the basis for
    - Extract body content (raw markdown)
 
 2. **Generate ID**
-   - Create a 10-character ID using `nanoid(10)` pattern: e.g., `xK9mP2qR4s`
+   - Create a 10-character ID using the lowercase alphabet `[a-z0-9]` — must match `/^[a-z0-9]{10}$/` (e.g., `xk9mp2qr4s`)
+   - Use `quoteId()` from `src/shared/lib/ids.ts` when generating from code; for hand-picked IDs, keep them lowercase + digits only
 
 3. **Create directory structure**
    - `mkdir -p src/generated-quotes/Quote_[id]/`

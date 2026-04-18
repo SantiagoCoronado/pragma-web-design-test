@@ -102,9 +102,15 @@ const SAMPLES = [
   },
 ];
 
+const quoteIdAlphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+const quoteId = (n = 10) =>
+  Array.from(crypto.getRandomValues(new Uint8Array(n)))
+    .map((b) => quoteIdAlphabet[b % quoteIdAlphabet.length])
+    .join("");
+
 const ids = [];
 for (const q of SAMPLES) {
-  const id = nanoid(10);
+  const id = quoteId(10);
   const now = new Date().toISOString();
   await db.execute({
     sql: `INSERT INTO quotes (id, client_name, client_email, client_company, title, description, line_items, currency, discount, notes, status, valid_until, locale, created_at, updated_at)
