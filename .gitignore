@@ -37,6 +37,9 @@ yarn-error.log*
 *.db
 *.db-journal
 
+# local dev tooling
+check-quote-db.mjs
+
 # vercel
 .vercel
 
