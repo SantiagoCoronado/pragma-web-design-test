@@ -9,7 +9,7 @@ export function Hero() {
   const t = useTranslations("Hero");
 
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center bg-grid bg-gradient-mesh overflow-hidden pt-16 pb-24">
+    <section className="relative min-h-[100svh] flex items-center justify-center bg-grid bg-gradient-mesh overflow-hidden pt-12 pb-16">
       {/* Floating accent orbs */}
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-pragma-accent/5 rounded-full blur-3xl animate-float" />
       <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-pragma-accent-2/5 rounded-full blur-3xl animate-float [animation-delay:2s]" />
