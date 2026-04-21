@@ -12,352 +12,432 @@ import {
   calculateSubtotal,
   calculateTotal,
 } from "../types";
+import { pdfColors as c, pdfFonts as f, type PdfVariant } from "../pdf/tokens";
 
-const colors = {
-  bg: "#0a0a0f",
-  surface: "#12121a",
-  border: "#1e1e2e",
-  accent: "#00f0ff",
-  text: "#e4e4e7",
-  muted: "#71717a",
-};
+function makeStyles(variant: PdfVariant) {
+  const isFull = variant === "full";
+  const isDark = variant === "dark";
+  const bold = isFull || isDark;
 
-const styles = StyleSheet.create({
-  page: {
-    padding: 40,
-    backgroundColor: "#ffffff",
-    color: "#1a1a2e",
-    fontFamily: "Helvetica",
-    fontSize: 10,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 30,
-    paddingBottom: 15,
-    borderBottomWidth: 2,
-    borderBottomColor: colors.accent,
-  },
-  logo: {
-    fontSize: 24,
-    fontFamily: "Helvetica-Bold",
-    color: colors.accent,
-  },
-  headerRight: {
-    textAlign: "right",
-  },
-  headerLabel: {
-    fontSize: 8,
-    color: colors.muted,
-    marginBottom: 2,
-  },
-  headerValue: {
-    fontSize: 10,
-    marginBottom: 4,
-  },
-  title: {
-    fontSize: 18,
-    fontFamily: "Helvetica-Bold",
-    marginBottom: 6,
-    color: "#1a1a2e",
-  },
-  description: {
-    fontSize: 10,
-    color: colors.muted,
-    marginBottom: 20,
-  },
-  clientBox: {
-    backgroundColor: "#f5f5f5",
-    borderRadius: 4,
-    padding: 12,
-    marginBottom: 20,
-  },
-  clientLabel: {
-    fontSize: 8,
-    color: colors.muted,
-    marginBottom: 6,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-  },
-  clientName: {
-    fontSize: 12,
-    fontFamily: "Helvetica-Bold",
-    marginBottom: 2,
-  },
-  clientDetail: {
-    fontSize: 9,
-    color: colors.muted,
-  },
-  tableHeader: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    paddingBottom: 6,
-    marginBottom: 4,
-  },
-  tableHeaderText: {
-    fontSize: 8,
-    color: colors.muted,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  tableRow: {
-    flexDirection: "row",
-    paddingVertical: 6,
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#f0f0f0",
-  },
-  colDesc: { flex: 5 },
-  colQty: { flex: 1, textAlign: "right" },
-  colPrice: { flex: 2, textAlign: "right" },
-  colTotal: { flex: 2, textAlign: "right" },
-  totalsSection: {
-    marginTop: 12,
-    paddingTop: 8,
-    alignItems: "flex-end",
-  },
-  totalRow: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginBottom: 4,
-  },
-  totalLabel: {
-    width: 100,
-    textAlign: "right",
-    color: colors.muted,
-    fontSize: 10,
-  },
-  totalValue: {
-    width: 100,
-    textAlign: "right",
-    fontSize: 10,
-  },
-  grandTotal: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    borderTopWidth: 2,
-    borderTopColor: colors.accent,
-    paddingTop: 6,
-    marginTop: 4,
-  },
-  grandTotalLabel: {
-    width: 100,
-    textAlign: "right",
-    fontSize: 14,
-    fontFamily: "Helvetica-Bold",
-  },
-  grandTotalValue: {
-    width: 100,
-    textAlign: "right",
-    fontSize: 14,
-    fontFamily: "Helvetica-Bold",
-    color: "#0066cc",
-  },
-  notesBox: {
-    marginTop: 24,
-    backgroundColor: "#fafafa",
-    borderRadius: 4,
-    padding: 12,
-  },
-  notesLabel: {
-    fontSize: 8,
-    color: colors.muted,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 6,
-  },
-  notesText: {
-    fontSize: 9,
-    color: "#555",
-    lineHeight: 1.5,
-  },
-  footer: {
-    position: "absolute",
-    bottom: 30,
-    left: 40,
-    right: 40,
-    borderTopWidth: 1,
-    borderTopColor: "#b3f7ff",
-    paddingTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  footerText: {
-    fontSize: 8,
-    color: colors.muted,
-  },
-  footerBrand: {
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    color: "#1a1a2e",
-    marginBottom: 1,
-  },
-  footerConfidential: {
-    fontSize: 7,
-    color: colors.muted,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-  },
-  // Blueprint-specific styles
-  sectionLabel: {
-    fontSize: 8,
-    color: colors.muted,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 6,
-  },
-  sectionLabelAccent: {
-    fontSize: 8,
-    color: colors.accent,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    marginBottom: 6,
-  },
-  narrativeBox: {
-    borderLeftWidth: 2,
-    borderLeftColor: colors.accent,
-    marginBottom: 16,
-    backgroundColor: "#f9f9f9",
-    padding: 12,
-    paddingLeft: 14,
-  },
-  narrativeText: {
-    fontSize: 10,
-    color: "#333",
-    lineHeight: 1.6,
-  },
-  divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    marginVertical: 16,
-  },
-  deliverableRow: {
-    flexDirection: "row",
-    marginBottom: 10,
-    backgroundColor: "#f9f9f9",
-    padding: 10,
-    borderRadius: 4,
-  },
-  deliverableNumber: {
-    fontSize: 14,
-    fontFamily: "Helvetica-Bold",
-    color: colors.accent,
-    width: 24,
-    marginRight: 8,
-  },
-  deliverableContent: {
-    flex: 1,
-  },
-  deliverableTitle: {
-    fontSize: 10,
-    fontFamily: "Helvetica-Bold",
-    marginBottom: 3,
-  },
-  deliverableDesc: {
-    fontSize: 9,
-    color: colors.muted,
-    lineHeight: 1.4,
-  },
-  timelineInvestmentRow: {
-    flexDirection: "row",
-    gap: 12,
-    marginBottom: 16,
-  },
-  timelineBox: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-    borderRadius: 4,
-    padding: 12,
-  },
-  investmentBox: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-    borderRadius: 4,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#b3f7ff",
-  },
-  timelineValue: {
-    fontSize: 16,
-    fontFamily: "Helvetica-Bold",
-    marginTop: 4,
-  },
-  listPriceText: {
-    fontSize: 10,
-    color: colors.muted,
-    textDecoration: "line-through",
-  },
-  preferentialText: {
-    fontSize: 8,
-    color: colors.muted,
-    fontStyle: "italic",
-    marginBottom: 2,
-  },
-  fixedPriceText: {
-    fontSize: 16,
-    fontFamily: "Helvetica-Bold",
-    color: "#0066cc",
-    marginTop: 2,
-  },
-  paymentTermsText: {
-    fontSize: 8,
-    color: colors.muted,
-    marginTop: 4,
-  },
-  scopeNoteText: {
-    fontSize: 9,
-    color: colors.muted,
-    fontStyle: "italic",
-    marginBottom: 16,
-  },
-  nextStepRow: {
-    flexDirection: "row",
-    marginBottom: 6,
-  },
-  nextStepNum: {
-    fontSize: 10,
-    color: colors.accent,
-    width: 20,
-    fontFamily: "Helvetica-Bold",
-  },
-  nextStepText: {
-    flex: 1,
-    fontSize: 10,
-    color: "#333",
-  },
-});
+  const pageBg = isDark ? c.pageDark : c.white;
+  const bodyText = isDark ? c.inkOnDark : c.inkBody;
+  const titleText = isDark ? c.inkOnDark : c.ink;
+  const mutedText = isDark ? c.mutedDark : c.inkMuted;
+  const cardBg = isDark ? c.surfaceInkSoft : c.surfaceSoft;
+  const accentText = isDark ? c.accentGlow : c.accentPrint;
+  const accentDeep = isDark ? c.accentGlow : c.accentPrintDeep;
+  const hairBorder = isDark ? c.borderDark : c.borderHair;
+  const hairBorderSoft = isDark ? c.borderDark : c.borderHairSoft;
 
-function LogoMark() {
+  return StyleSheet.create({
+    page: {
+      padding: 40,
+      backgroundColor: pageBg,
+      color: bodyText,
+      fontFamily: f.sans,
+      fontSize: 10,
+    },
+    pageRail: {
+      position: "absolute",
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: 3,
+      backgroundColor: isDark ? c.accentGlow : c.accentPrint,
+    },
+    headerBandFull: {
+      marginBottom: 24,
+      paddingHorizontal: 16,
+      paddingTop: 18,
+      paddingBottom: 18,
+      backgroundColor: isDark ? c.surfaceInkSoft : c.surfaceInk,
+      borderLeftWidth: 4,
+      borderLeftColor: c.accentGlow,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-end",
+    },
+    headerBandPolish: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 30,
+      paddingBottom: 15,
+      borderBottomWidth: 2,
+      borderBottomColor: c.accentPrint,
+    },
+    logoTile: {
+      width: 28,
+      height: 28,
+      backgroundColor: bold ? c.accentGlow : c.accentPrint,
+      borderRadius: 3,
+      alignItems: "center",
+      justifyContent: "center",
+      marginRight: 10,
+    },
+    logoTileText: {
+      fontSize: 15,
+      fontFamily: f.sansBold,
+      color: bold ? c.surfaceInk : c.white,
+    },
+    logo: {
+      fontSize: 24,
+      fontFamily: f.sansBold,
+      color: bold ? c.inkOnDark : c.ink,
+      letterSpacing: 1,
+    },
+    headerRight: {
+      textAlign: "right",
+    },
+    headerLabel: {
+      fontSize: 8,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      marginBottom: 2,
+      letterSpacing: 0.5,
+    },
+    headerValue: {
+      fontSize: 10,
+      color: bold ? c.inkOnDark : c.inkBody,
+      marginBottom: 4,
+    },
+    title: {
+      fontSize: 18,
+      fontFamily: f.sansBold,
+      marginBottom: 6,
+      color: titleText,
+    },
+    description: {
+      fontSize: 10,
+      color: mutedText,
+      marginBottom: 20,
+    },
+    clientBox: {
+      backgroundColor: cardBg,
+      borderRadius: 4,
+      padding: 12,
+      marginBottom: 20,
+      borderLeftWidth: 3,
+      borderLeftColor: accentText,
+    },
+    clientLabel: {
+      fontSize: 8,
+      color: mutedText,
+      fontFamily: f.sansBold,
+      marginBottom: 6,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+    },
+    clientName: {
+      fontSize: 12,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 2,
+    },
+    clientDetail: {
+      fontSize: 9,
+      color: mutedText,
+    },
+    tableHeader: {
+      flexDirection: "row",
+      backgroundColor: cardBg,
+      borderBottomWidth: 1.5,
+      borderBottomColor: accentText,
+      paddingVertical: 6,
+      paddingHorizontal: 6,
+      marginBottom: 4,
+    },
+    tableHeaderText: {
+      fontSize: 8,
+      color: titleText,
+      fontFamily: f.sansBold,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+    },
+    tableRow: {
+      flexDirection: "row",
+      paddingVertical: 6,
+      paddingHorizontal: 6,
+      borderBottomWidth: 0.5,
+      borderBottomColor: hairBorderSoft,
+    },
+    colDesc: { flex: 5 },
+    colQty: { flex: 1, textAlign: "right" },
+    colPrice: { flex: 2, textAlign: "right" },
+    colTotal: { flex: 2, textAlign: "right" },
+    cellText: {
+      fontSize: 9.5,
+      color: bodyText,
+    },
+    totalsSection: {
+      marginTop: 12,
+      paddingTop: 8,
+      alignItems: "flex-end",
+    },
+    totalRow: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      marginBottom: 4,
+    },
+    totalLabel: {
+      width: 100,
+      textAlign: "right",
+      color: mutedText,
+      fontSize: 10,
+    },
+    totalValue: {
+      width: 100,
+      textAlign: "right",
+      fontSize: 10,
+      color: bodyText,
+    },
+    grandTotal: {
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      borderTopWidth: 2,
+      borderTopColor: accentText,
+      paddingTop: 6,
+      marginTop: 4,
+    },
+    grandTotalLabel: {
+      width: 100,
+      textAlign: "right",
+      fontSize: 14,
+      fontFamily: f.sansBold,
+      color: titleText,
+    },
+    grandTotalValue: {
+      width: 100,
+      textAlign: "right",
+      fontSize: 14,
+      fontFamily: f.sansBold,
+      color: accentDeep,
+    },
+    notesBox: {
+      marginTop: 24,
+      backgroundColor: cardBg,
+      borderRadius: 4,
+      padding: 12,
+    },
+    notesLabel: {
+      fontSize: 8,
+      color: accentText,
+      fontFamily: f.sansBold,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 6,
+    },
+    notesText: {
+      fontSize: 9,
+      color: bodyText,
+      lineHeight: 1.5,
+    },
+    footer: {
+      position: "absolute",
+      bottom: 30,
+      left: 40,
+      right: 40,
+      borderTopWidth: 1,
+      borderTopColor: hairBorder,
+      paddingTop: 10,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    footerText: {
+      fontSize: 8,
+      color: mutedText,
+    },
+    footerBrand: {
+      fontSize: 9,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 1,
+    },
+    footerConfidential: {
+      fontSize: 7,
+      color: mutedText,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+    },
+    // Blueprint-specific styles
+    sectionLabel: {
+      fontSize: 8,
+      color: mutedText,
+      fontFamily: f.sansBold,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 6,
+    },
+    sectionLabelAccent: {
+      fontSize: 8,
+      color: accentText,
+      fontFamily: f.sansBold,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 6,
+    },
+    narrativeBox: {
+      borderLeftWidth: 3,
+      borderLeftColor: accentText,
+      marginBottom: 16,
+      backgroundColor: cardBg,
+      padding: 12,
+      paddingLeft: 14,
+    },
+    narrativeText: {
+      fontSize: 10,
+      color: bodyText,
+      lineHeight: 1.6,
+    },
+    divider: {
+      borderBottomWidth: 1,
+      borderBottomColor: hairBorder,
+      marginVertical: 16,
+    },
+    deliverableRow: {
+      flexDirection: "row",
+      marginBottom: 10,
+      backgroundColor: cardBg,
+      padding: 10,
+      borderRadius: 4,
+      borderLeftWidth: bold ? 3 : 0,
+      borderLeftColor: accentText,
+    },
+    deliverableNumber: {
+      fontSize: 14,
+      fontFamily: f.sansBold,
+      color: accentDeep,
+      width: 24,
+      marginRight: 8,
+    },
+    deliverableContent: {
+      flex: 1,
+    },
+    deliverableTitle: {
+      fontSize: 10,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 3,
+    },
+    deliverableDesc: {
+      fontSize: 9,
+      color: mutedText,
+      lineHeight: 1.4,
+    },
+    timelineInvestmentRow: {
+      flexDirection: "row",
+      gap: 12,
+      marginBottom: 16,
+    },
+    timelineBox: {
+      flex: 1,
+      backgroundColor: cardBg,
+      borderRadius: 4,
+      padding: 12,
+    },
+    investmentBox: {
+      flex: 1,
+      backgroundColor: isDark
+        ? c.surfaceInkSoft
+        : isFull
+          ? c.surfaceInk
+          : c.surfaceSoft,
+      borderRadius: 4,
+      padding: 12,
+      borderWidth: 1,
+      borderColor: isDark
+        ? c.accentGlow
+        : isFull
+          ? c.surfaceInk
+          : c.borderAccent,
+    },
+    investmentLabel: {
+      fontSize: 8,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      fontFamily: f.sansBold,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 6,
+    },
+    timelineValue: {
+      fontSize: 16,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginTop: 4,
+    },
+    listPriceText: {
+      fontSize: 10,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      textDecoration: "line-through",
+    },
+    preferentialText: {
+      fontSize: 8,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      fontStyle: "italic",
+      marginBottom: 2,
+    },
+    fixedPriceText: {
+      fontSize: 16,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.accentPrintDeep,
+      marginTop: 2,
+    },
+    paymentTermsText: {
+      fontSize: 8,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      marginTop: 4,
+    },
+    scopeNoteText: {
+      fontSize: 9,
+      color: mutedText,
+      fontStyle: "italic",
+      marginBottom: 16,
+    },
+    nextStepRow: {
+      flexDirection: "row",
+      marginBottom: 6,
+    },
+    nextStepNum: {
+      fontSize: 10,
+      color: accentText,
+      width: 20,
+      fontFamily: f.sansBold,
+    },
+    nextStepText: {
+      flex: 1,
+      fontSize: 10,
+      color: bodyText,
+    },
+  });
+}
+
+function LogoMark({ styles }: { styles: ReturnType<typeof makeStyles> }) {
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <View
-        style={{
-          width: 28,
-          height: 28,
-          backgroundColor: colors.accent,
-          borderRadius: 3,
-          alignItems: "center",
-          justifyContent: "center",
-          marginRight: 10,
-        }}
-      >
-        <Text style={{ fontSize: 15, fontFamily: "Helvetica-Bold", color: "#0a0a0f" }}>
-          P
-        </Text>
+      <View style={styles.logoTile}>
+        <Text style={styles.logoTileText}>P</Text>
       </View>
       <Text style={styles.logo}>PRAGMA</Text>
     </View>
   );
 }
 
-function BlueprintPdfDocument({ quote }: { quote: Quote }) {
+function BlueprintPdfDocument({
+  quote,
+  variant,
+}: {
+  quote: Quote;
+  variant: PdfVariant;
+}) {
+  const styles = makeStyles(variant);
+  const bold = variant === "full" || variant === "dark";
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <LogoMark />
+        {bold && <View style={styles.pageRail} fixed />}
+
+        <View style={bold ? styles.headerBandFull : styles.headerBandPolish}>
+          <LogoMark styles={styles} />
           <View style={styles.headerRight}>
             <Text style={styles.headerLabel}>PROPUESTA</Text>
             <Text style={styles.headerValue}>#{quote.id}</Text>
@@ -374,10 +454,8 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
           </View>
         </View>
 
-        {/* Title */}
         <Text style={styles.title}>{quote.title}</Text>
 
-        {/* Client */}
         <View style={styles.clientBox}>
           <Text style={styles.clientLabel}>Preparado para</Text>
           <Text style={styles.clientName}>{quote.clientName}</Text>
@@ -387,7 +465,6 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
           <Text style={styles.clientDetail}>{quote.clientEmail}</Text>
         </View>
 
-        {/* Problem */}
         {quote.problem && (
           <View style={styles.narrativeBox}>
             <Text style={styles.sectionLabelAccent}>El Problema</Text>
@@ -395,7 +472,6 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
           </View>
         )}
 
-        {/* Opportunity */}
         {quote.opportunity && (
           <View style={styles.narrativeBox}>
             <Text style={styles.sectionLabelAccent}>La Oportunidad</Text>
@@ -405,7 +481,6 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
           </View>
         )}
 
-        {/* Deliverables */}
         {quote.deliverables && quote.deliverables.length > 0 && (
           <>
             <View style={styles.divider} />
@@ -424,7 +499,6 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
 
         <View style={styles.divider} />
 
-        {/* Timeline + Investment */}
         <View style={styles.timelineInvestmentRow}>
           {quote.timeline && (
             <View style={styles.timelineBox}>
@@ -435,7 +509,7 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
 
           {quote.fixedPrice != null && (
             <View style={styles.investmentBox}>
-              <Text style={styles.sectionLabel}>Inversión</Text>
+              <Text style={styles.investmentLabel}>Inversión</Text>
               {quote.listPrice != null && (
                 <Text style={styles.listPriceText}>
                   {formatCurrency(quote.listPrice, quote.currency, quote.locale)}
@@ -458,12 +532,10 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
           )}
         </View>
 
-        {/* Scope note */}
         {quote.scopeNote && (
           <Text style={styles.scopeNoteText}>{quote.scopeNote}</Text>
         )}
 
-        {/* Next Steps */}
         {quote.nextSteps && quote.nextSteps.length > 0 && (
           <>
             <Text style={styles.sectionLabel}>Siguientes Pasos</Text>
@@ -476,7 +548,6 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
           </>
         )}
 
-        {/* Footer */}
         <View style={styles.footer}>
           <View>
             <Text style={styles.footerBrand}>PRAGMA</Text>
@@ -493,12 +564,20 @@ function BlueprintPdfDocument({ quote }: { quote: Quote }) {
   );
 }
 
-export function QuotePdfDocument({ quote }: { quote: Quote }) {
+export function QuotePdfDocument({
+  quote,
+  variant = "full",
+}: {
+  quote: Quote;
+  variant?: PdfVariant;
+}) {
   if (quote.quoteType === "blueprint") {
-    return <BlueprintPdfDocument quote={quote} />;
+    return <BlueprintPdfDocument quote={quote} variant={variant} />;
   }
 
-  // Line-items PDF (original)
+  const styles = makeStyles(variant);
+  const bold = variant === "full" || variant === "dark";
+
   const subtotal = calculateSubtotal(quote.lineItems);
   const discountAmount = subtotal * (quote.discount / 100);
   const total = calculateTotal(quote.lineItems, quote.discount);
@@ -506,9 +585,10 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <LogoMark />
+        {bold && <View style={styles.pageRail} fixed />}
+
+        <View style={bold ? styles.headerBandFull : styles.headerBandPolish}>
+          <LogoMark styles={styles} />
           <View style={styles.headerRight}>
             <Text style={styles.headerLabel}>QUOTE</Text>
             <Text style={styles.headerValue}>#{quote.id}</Text>
@@ -525,13 +605,11 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
           </View>
         </View>
 
-        {/* Title */}
         <Text style={styles.title}>{quote.title}</Text>
         {quote.description && (
           <Text style={styles.description}>{quote.description}</Text>
         )}
 
-        {/* Client */}
         <View style={styles.clientBox}>
           <Text style={styles.clientLabel}>Prepared for</Text>
           <Text style={styles.clientName}>{quote.clientName}</Text>
@@ -541,7 +619,6 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
           <Text style={styles.clientDetail}>{quote.clientEmail}</Text>
         </View>
 
-        {/* Table Header */}
         <View style={styles.tableHeader}>
           <Text style={[styles.tableHeaderText, styles.colDesc]}>
             Description
@@ -553,15 +630,16 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
           <Text style={[styles.tableHeaderText, styles.colTotal]}>Total</Text>
         </View>
 
-        {/* Table Rows */}
         {quote.lineItems.map((item) => (
           <View key={item.id} style={styles.tableRow}>
-            <Text style={styles.colDesc}>{item.description}</Text>
-            <Text style={styles.colQty}>{item.quantity}</Text>
-            <Text style={styles.colPrice}>
+            <Text style={[styles.cellText, styles.colDesc]}>
+              {item.description}
+            </Text>
+            <Text style={[styles.cellText, styles.colQty]}>{item.quantity}</Text>
+            <Text style={[styles.cellText, styles.colPrice]}>
               {formatCurrency(item.unitPrice, quote.currency, quote.locale)}
             </Text>
-            <Text style={styles.colTotal}>
+            <Text style={[styles.cellText, styles.colTotal]}>
               {formatCurrency(
                 calculateLineItemTotal(item),
                 quote.currency,
@@ -571,7 +649,6 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
           </View>
         ))}
 
-        {/* Totals */}
         <View style={styles.totalsSection}>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Subtotal:</Text>
@@ -584,7 +661,7 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
               <Text style={styles.totalLabel}>
                 Discount ({quote.discount}%):
               </Text>
-              <Text style={[styles.totalValue, { color: "#cc0000" }]}>
+              <Text style={[styles.totalValue, { color: c.discount }]}>
                 -{formatCurrency(discountAmount, quote.currency, quote.locale)}
               </Text>
             </View>
@@ -597,7 +674,6 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
           </View>
         </View>
 
-        {/* Notes */}
         {quote.notes && (
           <View style={styles.notesBox}>
             <Text style={styles.notesLabel}>Notes & Terms</Text>
@@ -605,7 +681,6 @@ export function QuotePdfDocument({ quote }: { quote: Quote }) {
           </View>
         )}
 
-        {/* Footer */}
         <View style={styles.footer}>
           <View>
             <Text style={styles.footerBrand}>PRAGMA</Text>

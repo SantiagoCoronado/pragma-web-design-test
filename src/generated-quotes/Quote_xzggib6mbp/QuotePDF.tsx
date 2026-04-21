@@ -6,15 +6,11 @@ import {
   View,
   StyleSheet,
 } from "@react-pdf/renderer";
-
-const COLOR_ACCENT = "#00f0ff";
-const COLOR_DARK = "#0a0e27";
-const COLOR_TEXT = "#1a1d3a";
-const COLOR_MUTED = "#666666";
-const COLOR_BORDER = "#e0e0e0";
-const COLOR_BORDER_SOFT = "#f0f0f0";
-const COLOR_BG_SOFT = "#f9f9fb";
-const COLOR_BG_ACCENT = "#e6fcff";
+import {
+  pdfColors as c,
+  pdfFonts as f,
+  type PdfVariant,
+} from "@/features/quotes/pdf/tokens";
 
 const PROBLEMS = [
   {
@@ -69,6 +65,7 @@ const PHASES = [
       "El equipo de AMEXCAP deja de operar como una agencia de correos en enero. Los socios estrenan una plataforma con la que sí quieren interactuar. Y por primera vez, los fondos cuentan con un canal seguro para alimentar a la asociación con la información que la industria necesita.",
     duration: "2 a 3 meses",
     investment: "$350,000 MXN",
+    investmentAmount: 350000,
   },
   {
     n: 2,
@@ -87,6 +84,7 @@ const PHASES = [
       "Todo el sitio público migra al nuevo ecosistema y queda alineado con el panel de administración. AMEXCAP pasa a tener una sola plataforma, lista para construir lo que sigue.",
     duration: "0.5 a 1 mes",
     investment: "$200,000 MXN",
+    investmentAmount: 200000,
   },
   {
     n: 3,
@@ -107,6 +105,7 @@ const PHASES = [
       "AMEXCAP construye un sistema de eventos propio que elimina proveedores externos, integra la identidad de socio en cada compra, abre una nueva fuente de ingresos y profesionaliza la experiencia del día del evento.",
     duration: "0.5 a 1 mes",
     investment: "$150,000 MXN",
+    investmentAmount: 150000,
   },
 ];
 
@@ -147,456 +146,653 @@ const NEXT_STEPS = [
   },
 ];
 
-const styles = StyleSheet.create({
-  page: {
-    paddingTop: 48,
-    paddingBottom: 60,
-    paddingHorizontal: 48,
-    fontSize: 10,
-    fontFamily: "Helvetica",
-    color: COLOR_TEXT,
-    backgroundColor: "#ffffff",
-    lineHeight: 1.55,
-  },
-  header: {
-    marginBottom: 20,
-    paddingBottom: 14,
-    borderBottomWidth: 2,
-    borderBottomColor: COLOR_ACCENT,
-  },
-  brandRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-    gap: 8,
-  },
-  brand: {
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 2,
-  },
-  brandSep: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-  },
-  brandClient: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-    letterSpacing: 2,
-    fontFamily: "Helvetica-Bold",
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 6,
-  },
-  headerMeta: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-    marginTop: 2,
-  },
-  clientCard: {
-    backgroundColor: COLOR_BG_SOFT,
-    padding: 14,
-    marginBottom: 24,
-    borderLeftWidth: 3,
-    borderLeftColor: COLOR_ACCENT,
-  },
-  clientLabel: {
-    fontSize: 7.5,
-    color: COLOR_MUTED,
-    fontFamily: "Helvetica-Bold",
-    letterSpacing: 1.5,
-    marginBottom: 4,
-  },
-  clientName: {
-    fontSize: 12,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-  },
-  clientCompany: {
-    fontSize: 10,
-    color: COLOR_MUTED,
-    marginTop: 2,
-  },
-  clientEmail: {
-    fontSize: 10,
-    color: COLOR_MUTED,
-    marginTop: 1,
-  },
-  sectionKicker: {
-    fontSize: 8,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 2,
-    marginTop: 18,
-    marginBottom: 6,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 10,
-  },
-  paragraph: {
-    fontSize: 10,
-    color: COLOR_TEXT,
-    lineHeight: 1.55,
-    marginBottom: 8,
-    textAlign: "justify",
-  },
-  muted: {
-    fontSize: 9.5,
-    color: COLOR_MUTED,
-    lineHeight: 1.55,
-    marginBottom: 8,
-  },
-  bold: {
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-  },
-  italic: {
-    fontFamily: "Helvetica-Oblique",
-    color: COLOR_MUTED,
-  },
-  problemsGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 6,
-    marginHorizontal: -4,
-  },
-  problemCard: {
-    width: "50%",
-    paddingHorizontal: 4,
-    marginBottom: 8,
-  },
-  problemInner: {
-    borderWidth: 1,
-    borderColor: COLOR_BORDER,
-    padding: 10,
-    flexDirection: "row",
-    gap: 8,
-    minHeight: 80,
-  },
-  problemBadge: {
-    fontSize: 10,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    borderWidth: 1,
-    borderColor: COLOR_ACCENT,
-    width: 22,
-    height: 22,
-    textAlign: "center",
-    paddingTop: 4,
-  },
-  problemBody: {
-    flex: 1,
-  },
-  problemTitle: {
-    fontSize: 9.5,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 3,
-  },
-  problemText: {
-    fontSize: 8.5,
-    color: COLOR_MUTED,
-    lineHeight: 1.45,
-  },
-  phaseCard: {
-    borderWidth: 1,
-    borderColor: COLOR_BORDER,
-    marginBottom: 14,
-    flexDirection: "row",
-  },
-  phaseSide: {
-    width: 110,
-    backgroundColor: COLOR_BG_ACCENT,
-    borderRightWidth: 1,
-    borderRightColor: COLOR_BORDER,
-    padding: 12,
-  },
-  phaseNum: {
-    fontSize: 36,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    lineHeight: 1,
-    marginBottom: 8,
-  },
-  phaseSideLabel: {
-    fontSize: 7,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_MUTED,
-    letterSpacing: 1.5,
-    marginBottom: 4,
-  },
-  phaseSideMeta: {
-    fontSize: 8.5,
-    color: COLOR_MUTED,
-    marginBottom: 2,
-  },
-  phaseSideInvest: {
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    marginTop: 2,
-  },
-  phaseBody: {
-    flex: 1,
-    padding: 14,
-  },
-  phaseTitle: {
-    fontSize: 13,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 3,
-  },
-  phaseSolves: {
-    fontSize: 8,
-    color: COLOR_MUTED,
-    letterSpacing: 1,
-    marginBottom: 10,
-  },
-  phaseSolvesAccent: {
-    color: COLOR_ACCENT,
-    fontFamily: "Helvetica-Bold",
-  },
-  phaseIntro: {
-    fontSize: 9.5,
-    color: COLOR_TEXT,
-    lineHeight: 1.55,
-    marginBottom: 10,
-    textAlign: "justify",
-  },
-  scopeLabel: {
-    fontSize: 8,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 1.5,
-    marginBottom: 6,
-  },
-  scopeItem: {
-    flexDirection: "row",
-    marginBottom: 4,
-    paddingRight: 4,
-  },
-  scopeBullet: {
-    fontSize: 10,
-    color: COLOR_ACCENT,
-    width: 10,
-    fontFamily: "Helvetica-Bold",
-  },
-  scopeText: {
-    fontSize: 9,
-    color: COLOR_TEXT,
-    lineHeight: 1.5,
-    flex: 1,
-  },
-  resultBlock: {
-    marginTop: 10,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: COLOR_BORDER_SOFT,
-  },
-  resultLabel: {
-    fontSize: 8,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 1.5,
-    marginBottom: 4,
-  },
-  resultText: {
-    fontSize: 9,
-    color: COLOR_TEXT,
-    fontFamily: "Helvetica-Oblique",
-    lineHeight: 1.5,
-  },
-  optionalGrid: {
-    flexDirection: "row",
-    gap: 8,
-    marginTop: 6,
-  },
-  optionalCard: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: COLOR_BORDER,
-    padding: 10,
-  },
-  optionalCode: {
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 2,
-    marginBottom: 4,
-  },
-  optionalTitle: {
-    fontSize: 9.5,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 4,
-  },
-  optionalBody: {
-    fontSize: 8.5,
-    color: COLOR_MUTED,
-    lineHeight: 1.45,
-  },
-  table: {
-    marginTop: 8,
-    borderWidth: 1,
-    borderColor: COLOR_BORDER,
-  },
-  tableHeaderRow: {
-    flexDirection: "row",
-    backgroundColor: COLOR_BG_ACCENT,
-    borderBottomWidth: 1.5,
-    borderBottomColor: COLOR_ACCENT,
-  },
-  tableRow: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: COLOR_BORDER_SOFT,
-  },
-  tableRowTotal: {
-    flexDirection: "row",
-    backgroundColor: COLOR_BG_ACCENT,
-  },
-  thPhase: { width: 40, padding: 8, fontSize: 8, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT, letterSpacing: 1 },
-  thScope: { flex: 1, padding: 8, fontSize: 8, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT, letterSpacing: 1 },
-  thDur: { width: 90, padding: 8, fontSize: 8, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT, letterSpacing: 1 },
-  thInv: { width: 95, padding: 8, fontSize: 8, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT, letterSpacing: 1, textAlign: "right" },
-  tdPhase: { width: 40, padding: 8, fontSize: 10, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT },
-  tdScope: { flex: 1, padding: 8, fontSize: 9, color: COLOR_TEXT },
-  tdScopeTitle: { fontSize: 9.5, fontFamily: "Helvetica-Bold", color: COLOR_DARK, marginBottom: 2 },
-  tdScopeSolves: { fontSize: 8, color: COLOR_MUTED },
-  tdDur: { width: 90, padding: 8, fontSize: 9, color: COLOR_MUTED },
-  tdInv: { width: 95, padding: 8, fontSize: 9.5, fontFamily: "Helvetica-Bold", color: COLOR_TEXT, textAlign: "right" },
-  tdTotalPhase: { width: 40, padding: 10, fontSize: 11, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT },
-  tdTotalLabel: { flex: 1, padding: 10, fontSize: 10, fontFamily: "Helvetica-Bold", color: COLOR_DARK, letterSpacing: 1.5 },
-  tdTotalDur: { width: 90, padding: 10, fontSize: 9.5, fontFamily: "Helvetica-Bold", color: COLOR_TEXT },
-  tdTotalInv: { width: 95, padding: 10, fontSize: 12, fontFamily: "Helvetica-Bold", color: COLOR_ACCENT, textAlign: "right" },
-  tableNote: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-    fontFamily: "Helvetica-Oblique",
-    marginTop: 8,
-    lineHeight: 1.5,
-  },
-  nextStep: {
-    flexDirection: "row",
-    marginBottom: 10,
-    gap: 10,
-  },
-  nextNum: {
-    width: 26,
-    fontSize: 20,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    lineHeight: 1,
-  },
-  nextBody: {
-    flex: 1,
-  },
-  nextTitle: {
-    fontSize: 10,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 3,
-  },
-  nextText: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-    lineHeight: 1.5,
-  },
-  signoff: {
-    marginTop: 28,
-    paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: COLOR_BORDER,
-  },
-  signoffText: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-    fontFamily: "Helvetica-Oblique",
-    marginBottom: 2,
-  },
-  footer: {
-    position: "absolute",
-    left: 48,
-    right: 48,
-    bottom: 24,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: COLOR_BORDER,
-    textAlign: "center",
-    fontSize: 8,
-    color: COLOR_MUTED,
-  },
-  pageNumber: {
-    position: "absolute",
-    bottom: 12,
-    right: 48,
-    fontSize: 8,
-    color: COLOR_MUTED,
-  },
-});
+const TOTAL_INVESTMENT = PHASES.reduce((sum, p) => sum + p.investmentAmount, 0);
 
-export const QuotePDF = ({ quote }: { quote: Quote }) => {
+function makeStyles(variant: PdfVariant) {
+  const isFull = variant === "full";
+  const isDark = variant === "dark";
+  const bold = isFull || isDark;
+
+  const pageBg = isDark ? c.pageDark : c.white;
+  const bodyText = isDark ? c.inkOnDark : c.inkBody;
+  const titleText = isDark ? c.inkOnDark : c.ink;
+  const mutedText = isDark ? c.mutedDark : c.inkMuted;
+  const cardBg = isDark ? c.surfaceInkSoft : c.surfaceSoft;
+  const accentText = isDark ? c.accentGlow : c.accentPrint;
+  const accentDeep = isDark ? c.accentGlow : c.accentPrintDeep;
+  const hairBorder = isDark ? c.borderDark : c.borderHair;
+  const hairBorderSoft = isDark ? c.borderDark : c.borderHairSoft;
+  // Dark sidebars/total rows use a slightly-lifted card surface to stand out from the dark page.
+  const darkPanel = isDark ? c.surfaceInkSoft : c.surfaceInk;
+
+  return StyleSheet.create({
+    page: {
+      paddingTop: 48,
+      paddingBottom: 60,
+      paddingHorizontal: 48,
+      fontSize: 10,
+      fontFamily: f.sans,
+      color: bodyText,
+      backgroundColor: pageBg,
+      lineHeight: 1.55,
+    },
+    pageFlush: {
+      paddingTop: 0,
+      paddingBottom: 60,
+      paddingHorizontal: 0,
+      fontSize: 10,
+      fontFamily: f.sans,
+      color: bodyText,
+      backgroundColor: pageBg,
+      lineHeight: 1.55,
+    },
+    pageInner: {
+      paddingHorizontal: 48,
+      paddingTop: 0,
+      flex: 1,
+    },
+    pageRail: {
+      position: "absolute",
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: 3,
+      backgroundColor: isDark ? c.accentGlow : c.accentPrint,
+    },
+    headerBandFull: {
+      marginBottom: 22,
+      paddingHorizontal: 48,
+      paddingTop: 48,
+      paddingBottom: 24,
+      backgroundColor: darkPanel,
+    },
+    headerBandPolish: {
+      marginBottom: 20,
+      paddingBottom: 14,
+      borderBottomWidth: 2,
+      borderBottomColor: c.accentPrint,
+    },
+    brandRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 10,
+      gap: 8,
+    },
+    brand: {
+      fontSize: 9,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.accentPrint,
+      letterSpacing: 2,
+    },
+    brandSep: {
+      fontSize: 9,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+    },
+    brandClient: {
+      fontSize: 9,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      letterSpacing: 2,
+      fontFamily: f.sansBold,
+    },
+    headerTitle: {
+      fontSize: 20,
+      fontFamily: f.sansBold,
+      color: bold ? c.inkOnDark : c.ink,
+      marginBottom: 6,
+    },
+    headerMeta: {
+      fontSize: 9,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      marginTop: 2,
+    },
+    clientCard: {
+      backgroundColor: cardBg,
+      padding: 14,
+      marginBottom: 24,
+      borderLeftWidth: 3,
+      borderLeftColor: accentText,
+    },
+    clientLabel: {
+      fontSize: 7.5,
+      color: mutedText,
+      fontFamily: f.sansBold,
+      letterSpacing: 1.5,
+      marginBottom: 4,
+    },
+    clientName: {
+      fontSize: 12,
+      fontFamily: f.sansBold,
+      color: titleText,
+    },
+    clientCompany: {
+      fontSize: 10,
+      color: mutedText,
+      marginTop: 2,
+    },
+    clientEmail: {
+      fontSize: 10,
+      color: mutedText,
+      marginTop: 1,
+    },
+    sectionKicker: {
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: accentText,
+      letterSpacing: 2,
+      marginTop: 18,
+      marginBottom: 6,
+    },
+    sectionTitle: {
+      fontSize: 16,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 10,
+    },
+    paragraph: {
+      fontSize: 10,
+      color: bodyText,
+      lineHeight: 1.55,
+      marginBottom: 8,
+      textAlign: "justify",
+    },
+    muted: {
+      fontSize: 9.5,
+      color: mutedText,
+      lineHeight: 1.55,
+      marginBottom: 8,
+    },
+    bold: {
+      fontFamily: f.sansBold,
+      color: titleText,
+    },
+    italic: {
+      fontFamily: f.sansItalic,
+      color: mutedText,
+    },
+    problemsGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginTop: 6,
+      marginHorizontal: -4,
+    },
+    problemCard: {
+      width: "50%",
+      paddingHorizontal: 4,
+      marginBottom: 8,
+    },
+    problemInner: {
+      borderWidth: 1,
+      borderColor: hairBorder,
+      borderLeftWidth: bold ? 3 : 1,
+      borderLeftColor: bold ? accentText : hairBorder,
+      padding: 10,
+      flexDirection: "row",
+      gap: 8,
+      minHeight: 80,
+    },
+    problemBadge: {
+      fontSize: 10,
+      fontFamily: f.sansBold,
+      color: titleText,
+      borderWidth: 1,
+      borderColor: accentText,
+      width: 22,
+      height: 22,
+      textAlign: "center",
+      paddingTop: 4,
+    },
+    problemBody: {
+      flex: 1,
+    },
+    problemTitle: {
+      fontSize: 9.5,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 3,
+    },
+    problemText: {
+      fontSize: 8.5,
+      color: mutedText,
+      lineHeight: 1.45,
+    },
+    phaseCard: {
+      borderWidth: 1,
+      borderColor: hairBorder,
+      marginBottom: 14,
+      flexDirection: "row",
+    },
+    phaseSide: {
+      width: bold ? 120 : 110,
+      backgroundColor: bold ? darkPanel : c.surfaceSoft,
+      borderRightWidth: 1,
+      borderRightColor: bold ? darkPanel : c.borderHair,
+      padding: 12,
+    },
+    phaseNum: {
+      fontSize: bold ? 44 : 36,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.ink,
+      lineHeight: 1,
+      marginBottom: bold ? 10 : 4,
+    },
+    phaseNumUnderline: {
+      width: 28,
+      height: 2,
+      backgroundColor: c.accentPrint,
+      marginBottom: 10,
+    },
+    phaseSideLabel: {
+      fontSize: 7,
+      fontFamily: f.sansBold,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      letterSpacing: 1.5,
+      marginBottom: 4,
+    },
+    phaseSideMeta: {
+      fontSize: 8.5,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      marginBottom: 2,
+    },
+    phaseSideInvest: {
+      fontSize: 9.5,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.ink,
+      marginTop: 4,
+    },
+    phaseBody: {
+      flex: 1,
+      padding: 14,
+    },
+    phaseTitle: {
+      fontSize: 13,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 3,
+    },
+    phaseSolves: {
+      fontSize: 8,
+      color: mutedText,
+      letterSpacing: 1,
+      marginBottom: 10,
+    },
+    phaseSolvesAccent: {
+      color: accentDeep,
+      fontFamily: f.sansBold,
+    },
+    phaseIntro: {
+      fontSize: 9.5,
+      color: bodyText,
+      lineHeight: 1.55,
+      marginBottom: 10,
+      textAlign: "justify",
+    },
+    scopeLabel: {
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: accentText,
+      letterSpacing: 1.5,
+      marginBottom: 6,
+    },
+    scopeItem: {
+      flexDirection: "row",
+      marginBottom: 4,
+      paddingRight: 4,
+    },
+    scopeBullet: {
+      fontSize: 10,
+      color: accentText,
+      width: 10,
+      fontFamily: f.sansBold,
+    },
+    scopeText: {
+      fontSize: 9,
+      color: bodyText,
+      lineHeight: 1.5,
+      flex: 1,
+    },
+    resultBlock: {
+      marginTop: 10,
+      paddingTop: 8,
+      borderTopWidth: 1,
+      borderTopColor: hairBorderSoft,
+    },
+    resultLabel: {
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: accentText,
+      letterSpacing: 1.5,
+      marginBottom: 4,
+    },
+    resultText: {
+      fontSize: 9,
+      color: bodyText,
+      fontFamily: f.sansItalic,
+      lineHeight: 1.5,
+    },
+    optionalGrid: {
+      flexDirection: "row",
+      gap: 8,
+      marginTop: 6,
+    },
+    optionalCard: {
+      flex: 1,
+      borderWidth: 1,
+      borderColor: hairBorder,
+      borderTopWidth: bold ? 2 : 1,
+      borderTopColor: bold ? accentText : hairBorder,
+      padding: 10,
+    },
+    optionalCode: {
+      fontSize: 9,
+      fontFamily: f.sansBold,
+      color: accentText,
+      letterSpacing: 2,
+      marginBottom: 4,
+    },
+    optionalTitle: {
+      fontSize: 9.5,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 4,
+    },
+    optionalBody: {
+      fontSize: 8.5,
+      color: mutedText,
+      lineHeight: 1.45,
+    },
+    ribbon: {
+      marginTop: 8,
+      marginBottom: 14,
+      flexDirection: "row",
+      height: 56,
+      borderWidth: 1,
+      borderColor: hairBorder,
+    },
+    ribbonSeg: {
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      justifyContent: "center",
+      backgroundColor: darkPanel,
+    },
+    ribbonSegDivider: {
+      width: 1,
+      backgroundColor: isDark ? c.accentGlow : c.accentPrint,
+      opacity: 0.4,
+    },
+    ribbonSegLabel: {
+      fontSize: 7,
+      fontFamily: f.sansBold,
+      color: c.inkOnDarkMuted,
+      letterSpacing: 1.5,
+      marginBottom: 3,
+    },
+    ribbonSegAmount: {
+      fontSize: 11,
+      fontFamily: f.sansBold,
+      color: c.accentGlow,
+    },
+    ribbonScale: {
+      flexDirection: "row",
+      marginBottom: 10,
+      justifyContent: "space-between",
+    },
+    ribbonScaleLabel: {
+      fontSize: 7,
+      color: mutedText,
+      fontFamily: f.sansBold,
+      letterSpacing: 1,
+    },
+    table: {
+      marginTop: 8,
+      borderWidth: 1,
+      borderColor: hairBorder,
+    },
+    tableHeaderRow: {
+      flexDirection: "row",
+      backgroundColor: cardBg,
+      borderBottomWidth: 1.5,
+      borderBottomColor: accentText,
+    },
+    tableRow: {
+      flexDirection: "row",
+      borderBottomWidth: 1,
+      borderBottomColor: hairBorderSoft,
+    },
+    tableRowTotal: {
+      flexDirection: "row",
+      backgroundColor: bold ? darkPanel : c.surfaceSoft,
+      borderTopWidth: 2,
+      borderTopColor: accentText,
+    },
+    thPhase: {
+      width: 40,
+      padding: 8,
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: titleText,
+      letterSpacing: 1,
+    },
+    thScope: {
+      flex: 1,
+      padding: 8,
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: titleText,
+      letterSpacing: 1,
+    },
+    thDur: {
+      width: 90,
+      padding: 8,
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: titleText,
+      letterSpacing: 1,
+    },
+    thInv: {
+      width: 95,
+      padding: 8,
+      fontSize: 8,
+      fontFamily: f.sansBold,
+      color: titleText,
+      letterSpacing: 1,
+      textAlign: "right",
+    },
+    tdPhase: {
+      width: 40,
+      padding: 8,
+      fontSize: 10,
+      fontFamily: f.sansBold,
+      color: accentDeep,
+    },
+    tdScope: { flex: 1, padding: 8, fontSize: 9, color: bodyText },
+    tdScopeTitle: {
+      fontSize: 9.5,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 2,
+    },
+    tdScopeSolves: { fontSize: 8, color: mutedText },
+    tdDur: { width: 90, padding: 8, fontSize: 9, color: mutedText },
+    tdInv: {
+      width: 95,
+      padding: 8,
+      fontSize: 9.5,
+      fontFamily: f.sansBold,
+      color: titleText,
+      textAlign: "right",
+    },
+    tdTotalPhase: {
+      width: 40,
+      padding: 10,
+      fontSize: 11,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.accentPrintDeep,
+    },
+    tdTotalLabel: {
+      flex: 1,
+      padding: 10,
+      fontSize: 10,
+      fontFamily: f.sansBold,
+      color: bold ? c.inkOnDark : c.ink,
+      letterSpacing: 1.5,
+    },
+    tdTotalDur: {
+      width: 90,
+      padding: 10,
+      fontSize: 9.5,
+      fontFamily: f.sansBold,
+      color: bold ? c.inkOnDark : c.ink,
+    },
+    tdTotalInv: {
+      width: 95,
+      padding: 10,
+      fontSize: 12,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.accentPrintDeep,
+      textAlign: "right",
+    },
+    tableNote: {
+      fontSize: 9,
+      color: mutedText,
+      fontFamily: f.sansItalic,
+      marginTop: 8,
+      lineHeight: 1.5,
+    },
+    nextStep: {
+      flexDirection: "row",
+      marginBottom: 10,
+      gap: 10,
+    },
+    nextNum: {
+      width: 30,
+      fontSize: bold ? 26 : 20,
+      fontFamily: f.sansBold,
+      color: isDark ? c.inkOnDarkMuted : isFull ? c.borderHair : c.accentPrint,
+      lineHeight: 1,
+    },
+    nextBody: {
+      flex: 1,
+    },
+    nextTitle: {
+      fontSize: 10,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginBottom: 3,
+    },
+    nextText: {
+      fontSize: 9,
+      color: mutedText,
+      lineHeight: 1.5,
+    },
+    signoff: {
+      marginTop: 28,
+      paddingTop: 12,
+      borderTopWidth: 1,
+      borderTopColor: hairBorder,
+    },
+    signoffText: {
+      fontSize: 9,
+      color: mutedText,
+      fontFamily: f.sansItalic,
+      marginBottom: 2,
+    },
+    footer: {
+      position: "absolute",
+      left: 48,
+      right: 48,
+      bottom: 24,
+      paddingTop: 8,
+      borderTopWidth: 1,
+      borderTopColor: hairBorder,
+      textAlign: "center",
+      fontSize: 8,
+      color: mutedText,
+    },
+    pageNumber: {
+      position: "absolute",
+      bottom: 12,
+      right: 48,
+      fontSize: 8,
+      color: mutedText,
+    },
+  });
+}
+
+export const QuotePDF = ({
+  quote,
+  variant = "full",
+}: {
+  quote: Quote;
+  variant?: PdfVariant;
+}) => {
+  const styles = makeStyles(variant);
+  const bold = variant === "full" || variant === "dark";
+
   const formattedDate = new Date(quote.createdAt).toLocaleDateString("es-MX", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
+  const renderRail = () => (bold ? <View style={styles.pageRail} fixed /> : null);
+
+  const renderHeader = () => (
+    <View style={bold ? styles.headerBandFull : styles.headerBandPolish}>
+      <View style={styles.brandRow}>
+        <Text style={styles.brand}>PRAGMA</Text>
+        <Text style={styles.brandSep}>—</Text>
+        <Text style={styles.brandClient}>AMEXCAP</Text>
+      </View>
+      <Text style={styles.headerTitle}>{quote.title}</Text>
+      <Text style={styles.headerMeta}>Cotización #{quote.id}</Text>
+      <Text style={styles.headerMeta}>Fecha: {formattedDate}</Text>
+      {quote.validUntil && (
+        <Text style={styles.headerMeta}>Válida hasta: {quote.validUntil}</Text>
+      )}
+    </View>
+  );
+
+  const page1Body = (
+    <>
+      <View style={styles.clientCard}>
+        <Text style={styles.clientLabel}>PREPARADO PARA</Text>
+        <Text style={styles.clientName}>{quote.clientName}</Text>
+        {quote.clientCompany && (
+          <Text style={styles.clientCompany}>{quote.clientCompany}</Text>
+        )}
+        <Text style={styles.clientEmail}>{quote.clientEmail}</Text>
+      </View>
+
+      <Text style={styles.sectionKicker}>01 — RESUMEN EJECUTIVO</Text>
+      <Text style={styles.sectionTitle}>
+        Una plataforma integral, entregada por fases
+      </Text>
+      <Text style={styles.paragraph}>
+        AMEXCAP es la voz de los fondos de inversión en México, con 130 socios entre fondos de
+        capital de riesgo, crédito privado, crecimiento, infraestructura, energía y despachos
+        especializados. Su operación, sin embargo, todavía depende de procesos manuales que
+        consumen tiempo del equipo y limitan la experiencia que vive el socio.
+      </Text>
+      <Text style={styles.paragraph}>
+        PRAGMA propone construir una <Text style={styles.bold}>plataforma integral</Text> que
+        centralice la gestión de membresías, la comunicación con socios, los eventos y el sitio
+        web, todo bajo una sola identidad de socio y un solo panel de administración. El proyecto
+        se entrega en tres fases secuenciales para que AMEXCAP reciba funcionalidad útil desde
+        el primer mes y pueda distribuir la inversión en el tiempo.
+      </Text>
+    </>
+  );
+
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.brandRow}>
-            <Text style={styles.brand}>PRAGMA</Text>
-            <Text style={styles.brandSep}>—</Text>
-            <Text style={styles.brandClient}>AMEXCAP</Text>
-          </View>
-          <Text style={styles.headerTitle}>{quote.title}</Text>
-          <Text style={styles.headerMeta}>Cotización #{quote.id}</Text>
-          <Text style={styles.headerMeta}>Fecha: {formattedDate}</Text>
-          {quote.validUntil && (
-            <Text style={styles.headerMeta}>Válida hasta: {quote.validUntil}</Text>
-          )}
-        </View>
-
-        {/* Client card */}
-        <View style={styles.clientCard}>
-          <Text style={styles.clientLabel}>PREPARADO PARA</Text>
-          <Text style={styles.clientName}>{quote.clientName}</Text>
-          {quote.clientCompany && (
-            <Text style={styles.clientCompany}>{quote.clientCompany}</Text>
-          )}
-          <Text style={styles.clientEmail}>{quote.clientEmail}</Text>
-        </View>
-
-        {/* 1. Executive summary */}
-        <Text style={styles.sectionKicker}>01 — RESUMEN EJECUTIVO</Text>
-        <Text style={styles.sectionTitle}>Una plataforma integral, entregada por fases</Text>
-        <Text style={styles.paragraph}>
-          AMEXCAP es la voz de los fondos de inversión en México, con 130 socios entre fondos de
-          capital de riesgo, crédito privado, crecimiento, infraestructura, energía y despachos
-          especializados. Su operación, sin embargo, todavía depende de procesos manuales que
-          consumen tiempo del equipo y limitan la experiencia que vive el socio.
-        </Text>
-        <Text style={styles.paragraph}>
-          PRAGMA propone construir una <Text style={styles.bold}>plataforma integral</Text> que
-          centralice la gestión de membresías, la comunicación con socios, los eventos y el sitio
-          web, todo bajo una sola identidad de socio y un solo panel de administración. El proyecto
-          se entrega en tres fases secuenciales para que AMEXCAP reciba funcionalidad útil desde
-          el primer mes y pueda distribuir la inversión en el tiempo.
-        </Text>
+      <Page size="A4" style={bold ? styles.pageFlush : styles.page}>
+        {renderRail()}
+        {renderHeader()}
+        {bold ? <View style={styles.pageInner}>{page1Body}</View> : page1Body}
       </Page>
 
-      {/* Situation + Solution */}
       <Page size="A4" style={styles.page}>
+        {renderRail()}
         <Text style={styles.sectionKicker}>02 — SITUACIÓN ACTUAL</Text>
         <Text style={styles.sectionTitle}>Seis retos operativos identificados</Text>
         <Text style={styles.muted}>
@@ -636,14 +832,17 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
         </Text>
       </Page>
 
-      {/* Roadmap phases */}
       <Page size="A4" style={styles.page}>
+        {renderRail()}
         <Text style={styles.sectionKicker}>04 — HOJA DE RUTA</Text>
         <Text style={styles.sectionTitle}>Tres fases secuenciales</Text>
         {PHASES.map((phase) => (
           <View key={phase.n} style={styles.phaseCard} wrap={false}>
             <View style={styles.phaseSide}>
-              <Text style={styles.phaseNum}>{phase.n.toString().padStart(2, "0")}</Text>
+              <Text style={styles.phaseNum}>
+                {phase.n.toString().padStart(2, "0")}
+              </Text>
+              {!bold && <View style={styles.phaseNumUnderline} />}
               <Text style={styles.phaseSideLabel}>FASE</Text>
               <Text style={styles.phaseSideMeta}>{phase.duration}</Text>
               <Text style={styles.phaseSideInvest}>{phase.investment}</Text>
@@ -651,7 +850,10 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
             <View style={styles.phaseBody}>
               <Text style={styles.phaseTitle}>{phase.title}</Text>
               <Text style={styles.phaseSolves}>
-                RESUELVE: <Text style={styles.phaseSolvesAccent}>{phase.solves.toUpperCase()}</Text>
+                RESUELVE:{" "}
+                <Text style={styles.phaseSolvesAccent}>
+                  {phase.solves.toUpperCase()}
+                </Text>
               </Text>
               <Text style={styles.phaseIntro}>{phase.intro}</Text>
               <Text style={styles.scopeLabel}>ALCANCE</Text>
@@ -670,10 +872,12 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
         ))}
       </Page>
 
-      {/* Optional + Pricing + Next steps */}
       <Page size="A4" style={styles.page}>
+        {renderRail()}
         <Text style={styles.sectionKicker}>05 — MÓDULOS OPCIONALES</Text>
-        <Text style={styles.sectionTitle}>Expansiones habilitadas por la plataforma</Text>
+        <Text style={styles.sectionTitle}>
+          Expansiones habilitadas por la plataforma
+        </Text>
         <Text style={styles.muted}>
           Los siguientes módulos no forman parte del alcance principal, pero quedan habilitados
           gracias a los cimientos construidos.
@@ -690,6 +894,41 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
 
         <Text style={styles.sectionKicker}>06 — CRONOGRAMA E INVERSIÓN</Text>
         <Text style={styles.sectionTitle}>Inversión estimada por fase</Text>
+
+        {bold && (
+          <>
+            <View style={styles.ribbonScale}>
+              <Text style={styles.ribbonScaleLabel}>DISTRIBUCIÓN DE LA INVERSIÓN</Text>
+              <Text style={styles.ribbonScaleLabel}>
+                TOTAL $700,000 MXN
+              </Text>
+            </View>
+            <View style={styles.ribbon} wrap={false}>
+              {PHASES.flatMap((phase, idx) => {
+                const seg = (
+                  <View
+                    key={`seg-${phase.n}`}
+                    style={[
+                      styles.ribbonSeg,
+                      { flex: phase.investmentAmount / TOTAL_INVESTMENT },
+                    ]}
+                  >
+                    <Text style={styles.ribbonSegLabel}>
+                      FASE {phase.n.toString().padStart(2, "0")}
+                    </Text>
+                    <Text style={styles.ribbonSegAmount}>{phase.investment}</Text>
+                  </View>
+                );
+                if (idx === PHASES.length - 1) return [seg];
+                return [
+                  seg,
+                  <View key={`div-${phase.n}`} style={styles.ribbonSegDivider} />,
+                ];
+              })}
+            </View>
+          </>
+        )}
+
         <View style={styles.table} wrap={false}>
           <View style={styles.tableHeaderRow}>
             <Text style={styles.thPhase}>FASE</Text>
@@ -699,7 +938,9 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
           </View>
           {PHASES.map((phase) => (
             <View key={phase.n} style={styles.tableRow}>
-              <Text style={styles.tdPhase}>{phase.n.toString().padStart(2, "0")}</Text>
+              <Text style={styles.tdPhase}>
+                {phase.n.toString().padStart(2, "0")}
+              </Text>
               <View style={styles.tdScope}>
                 <Text style={styles.tdScopeTitle}>{phase.title}</Text>
                 <Text style={styles.tdScopeSolves}>{phase.solves}</Text>
@@ -725,7 +966,9 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
         <Text style={styles.sectionTitle}>Cómo arrancamos</Text>
         {NEXT_STEPS.map((step, idx) => (
           <View key={idx} style={styles.nextStep} wrap={false}>
-            <Text style={styles.nextNum}>{(idx + 1).toString().padStart(2, "0")}</Text>
+            <Text style={styles.nextNum}>
+              {(idx + 1).toString().padStart(2, "0")}
+            </Text>
             <View style={styles.nextBody}>
               <Text style={styles.nextTitle}>{step.title}</Text>
               <Text style={styles.nextText}>{step.body}</Text>
@@ -734,7 +977,9 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
         ))}
 
         <View style={styles.signoff}>
-          <Text style={styles.signoffText}>Propuesta preparada por PRAGMA para AMEXCAP.</Text>
+          <Text style={styles.signoffText}>
+            Propuesta preparada por PRAGMA para AMEXCAP.
+          </Text>
           <Text style={styles.signoffText}>Contacto: Santiago Coronado</Text>
           <Text style={styles.signoffText}>Fecha: abril 2026</Text>
         </View>
@@ -744,7 +989,9 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
         </Text>
         <Text
           style={styles.pageNumber}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          render={({ pageNumber, totalPages }) =>
+            `${pageNumber} / ${totalPages}`
+          }
           fixed
         />
       </Page>

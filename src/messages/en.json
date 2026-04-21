@@ -114,6 +114,8 @@
     "discount": "Discount",
     "notes": "Notes & Terms",
     "downloadPdf": "Download PDF",
+    "downloadPrint": "For print",
+    "downloadScreen": "For screen",
     "acceptQuote": "Accept Quote",
     "accepted": "Accepted",
     "rejected": "Rejected",

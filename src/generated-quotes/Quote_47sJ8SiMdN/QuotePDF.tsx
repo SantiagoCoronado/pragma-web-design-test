@@ -7,192 +7,235 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 import type { ReactElement } from "react";
+import {
+  pdfColors as c,
+  pdfFonts as f,
+  type PdfVariant,
+} from "@/features/quotes/pdf/tokens";
 
-const COLOR_ACCENT = "#00f0ff";
-const COLOR_DARK = "#0a0e27";
-const COLOR_TEXT = "#1a1d3a";
-const COLOR_MUTED = "#666666";
-const COLOR_BORDER = "#e0e0e0";
-const COLOR_BORDER_SOFT = "#f0f0f0";
-const COLOR_BG_SOFT = "#f9f9fb";
+function makeStyles(variant: PdfVariant) {
+  const isFull = variant === "full";
+  const isDark = variant === "dark";
+  const bold = isFull || isDark;
 
-const styles = StyleSheet.create({
-  page: {
-    paddingTop: 48,
-    paddingBottom: 56,
-    paddingHorizontal: 48,
-    fontSize: 10.5,
-    fontFamily: "Helvetica",
-    color: COLOR_TEXT,
-    backgroundColor: "#ffffff",
-    lineHeight: 1.55,
-  },
-  header: {
-    marginBottom: 24,
-    paddingBottom: 16,
-    borderBottomWidth: 2,
-    borderBottomColor: COLOR_ACCENT,
-  },
-  brand: {
-    fontSize: 10,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 2,
-    marginBottom: 10,
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginBottom: 6,
-  },
-  headerMeta: {
-    fontSize: 9,
-    color: COLOR_MUTED,
-    marginTop: 2,
-  },
-  clientCard: {
-    backgroundColor: COLOR_BG_SOFT,
-    padding: 14,
-    marginBottom: 20,
-    borderRadius: 4,
-    borderLeftWidth: 3,
-    borderLeftColor: COLOR_ACCENT,
-  },
-  clientLabel: {
-    fontSize: 8,
-    color: COLOR_MUTED,
-    fontFamily: "Helvetica-Bold",
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  clientName: {
-    fontSize: 12,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-  },
-  clientCompany: {
-    fontSize: 10,
-    color: COLOR_MUTED,
-    marginTop: 2,
-  },
-  clientEmail: {
-    fontSize: 10,
-    color: COLOR_MUTED,
-    marginTop: 2,
-  },
-  h1: {
-    fontSize: 18,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginTop: 18,
-    marginBottom: 10,
-  },
-  h2: {
-    fontSize: 14,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    marginTop: 14,
-    marginBottom: 8,
-  },
-  h3: {
-    fontSize: 11.5,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-    marginTop: 10,
-    marginBottom: 5,
-  },
-  paragraph: {
-    fontSize: 10.5,
-    color: COLOR_TEXT,
-    lineHeight: 1.55,
-    marginBottom: 8,
-    textAlign: "justify",
-  },
-  listItem: {
-    flexDirection: "row",
-    marginBottom: 4,
-    marginLeft: 4,
-    paddingRight: 6,
-  },
-  listBullet: {
-    fontSize: 10.5,
-    color: COLOR_ACCENT,
-    fontFamily: "Helvetica-Bold",
-    width: 18,
-  },
-  listText: {
-    fontSize: 10.5,
-    color: COLOR_TEXT,
-    lineHeight: 1.5,
-    flex: 1,
-  },
-  hr: {
-    borderBottomWidth: 1,
-    borderBottomColor: COLOR_BORDER,
-    marginVertical: 12,
-  },
-  bold: {
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_DARK,
-  },
-  italic: {
-    fontFamily: "Helvetica-Oblique",
-    color: COLOR_MUTED,
-  },
-  table: {
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: COLOR_BORDER,
-    borderRadius: 2,
-  },
-  tableHeaderRow: {
-    flexDirection: "row",
-    backgroundColor: COLOR_BG_SOFT,
-    borderBottomWidth: 1.5,
-    borderBottomColor: COLOR_ACCENT,
-  },
-  tableRow: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: COLOR_BORDER_SOFT,
-  },
-  tableHeaderCell: {
-    flex: 1,
-    padding: 6,
-    fontSize: 8.5,
-    fontFamily: "Helvetica-Bold",
-    color: COLOR_ACCENT,
-    letterSpacing: 0.5,
-  },
-  tableCell: {
-    flex: 1,
-    padding: 6,
-    fontSize: 9,
-    color: COLOR_TEXT,
-  },
-  footer: {
-    position: "absolute",
-    left: 48,
-    right: 48,
-    bottom: 24,
-    paddingTop: 10,
-    borderTopWidth: 1,
-    borderTopColor: COLOR_BORDER,
-    textAlign: "center",
-    fontSize: 8,
-    color: COLOR_MUTED,
-  },
-  pageNumber: {
-    position: "absolute",
-    bottom: 12,
-    right: 48,
-    fontSize: 8,
-    color: COLOR_MUTED,
-  },
-});
+  const pageBg = isDark ? c.pageDark : c.white;
+  const bodyText = isDark ? c.inkOnDark : c.inkBody;
+  const titleText = isDark ? c.inkOnDark : c.ink;
+  const mutedText = isDark ? c.mutedDark : c.inkMuted;
+  const cardBg = isDark ? c.surfaceInkSoft : c.surfaceSoft;
+  const accentText = isDark ? c.accentGlow : c.accentPrint;
+  const hairBorder = isDark ? c.borderDark : c.borderHair;
+  const hairBorderSoft = isDark ? c.borderDark : c.borderHairSoft;
+  const headerBandBg = isDark ? c.surfaceInkSoft : c.surfaceInk;
 
-function renderInlinePDF(text: string, keyPrefix: string): ReactElement[] {
+  return StyleSheet.create({
+    page: {
+      paddingTop: 48,
+      paddingBottom: 56,
+      paddingHorizontal: 48,
+      fontSize: 10.5,
+      fontFamily: f.sans,
+      color: bodyText,
+      backgroundColor: pageBg,
+      lineHeight: 1.55,
+    },
+    pageRail: {
+      position: "absolute",
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: 3,
+      backgroundColor: accentText,
+    },
+    headerBandFull: {
+      marginBottom: 24,
+      paddingHorizontal: 18,
+      paddingTop: 20,
+      paddingBottom: 20,
+      backgroundColor: headerBandBg,
+      borderLeftWidth: 4,
+      borderLeftColor: c.accentGlow,
+    },
+    headerBandPolish: {
+      marginBottom: 24,
+      paddingBottom: 16,
+      borderBottomWidth: 2,
+      borderBottomColor: c.accentPrint,
+    },
+    brand: {
+      fontSize: 10,
+      fontFamily: f.sansBold,
+      color: bold ? c.accentGlow : c.accentPrint,
+      letterSpacing: 2,
+      marginBottom: 10,
+    },
+    headerTitle: {
+      fontSize: 22,
+      fontFamily: f.sansBold,
+      color: bold ? c.inkOnDark : c.ink,
+      marginBottom: 6,
+    },
+    headerMeta: {
+      fontSize: 9,
+      color: bold ? c.inkOnDarkMuted : c.inkMuted,
+      marginTop: 2,
+    },
+    clientCard: {
+      backgroundColor: cardBg,
+      padding: 14,
+      marginBottom: 20,
+      borderRadius: 4,
+      borderLeftWidth: 3,
+      borderLeftColor: accentText,
+    },
+    clientLabel: {
+      fontSize: 8,
+      color: mutedText,
+      fontFamily: f.sansBold,
+      letterSpacing: 1,
+      marginBottom: 4,
+    },
+    clientName: {
+      fontSize: 12,
+      fontFamily: f.sansBold,
+      color: titleText,
+    },
+    clientCompany: {
+      fontSize: 10,
+      color: mutedText,
+      marginTop: 2,
+    },
+    clientEmail: {
+      fontSize: 10,
+      color: mutedText,
+      marginTop: 2,
+    },
+    h1: {
+      fontSize: 18,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginTop: 18,
+      marginBottom: 10,
+    },
+    h2: {
+      fontSize: 14,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginTop: 14,
+      marginBottom: 8,
+    },
+    h2Underline: {
+      width: 32,
+      height: 2,
+      backgroundColor: accentText,
+      marginTop: -4,
+      marginBottom: 10,
+    },
+    h3: {
+      fontSize: 11.5,
+      fontFamily: f.sansBold,
+      color: titleText,
+      marginTop: 10,
+      marginBottom: 5,
+    },
+    paragraph: {
+      fontSize: 10.5,
+      color: bodyText,
+      lineHeight: 1.55,
+      marginBottom: 8,
+      textAlign: "justify",
+    },
+    listItem: {
+      flexDirection: "row",
+      marginBottom: 4,
+      marginLeft: 4,
+      paddingRight: 6,
+    },
+    listBullet: {
+      fontSize: 10.5,
+      color: accentText,
+      fontFamily: f.sansBold,
+      width: 18,
+    },
+    listText: {
+      fontSize: 10.5,
+      color: bodyText,
+      lineHeight: 1.5,
+      flex: 1,
+    },
+    hr: {
+      borderBottomWidth: 1,
+      borderBottomColor: hairBorder,
+      marginVertical: 12,
+    },
+    bold: {
+      fontFamily: f.sansBold,
+      color: titleText,
+    },
+    italic: {
+      fontFamily: f.sansItalic,
+      color: mutedText,
+    },
+    table: {
+      marginVertical: 10,
+      borderWidth: 1,
+      borderColor: hairBorder,
+      borderRadius: 2,
+    },
+    tableHeaderRow: {
+      flexDirection: "row",
+      backgroundColor: cardBg,
+      borderBottomWidth: 1.5,
+      borderBottomColor: accentText,
+    },
+    tableRow: {
+      flexDirection: "row",
+      borderBottomWidth: 1,
+      borderBottomColor: hairBorderSoft,
+    },
+    tableHeaderCell: {
+      flex: 1,
+      padding: 6,
+      fontSize: 8.5,
+      fontFamily: f.sansBold,
+      color: titleText,
+      letterSpacing: 0.5,
+    },
+    tableCell: {
+      flex: 1,
+      padding: 6,
+      fontSize: 9,
+      color: bodyText,
+    },
+    footer: {
+      position: "absolute",
+      left: 48,
+      right: 48,
+      bottom: 24,
+      paddingTop: 10,
+      borderTopWidth: 1,
+      borderTopColor: hairBorder,
+      textAlign: "center",
+      fontSize: 8,
+      color: mutedText,
+    },
+    pageNumber: {
+      position: "absolute",
+      bottom: 12,
+      right: 48,
+      fontSize: 8,
+      color: mutedText,
+    },
+  });
+}
+
+type Styles = ReturnType<typeof makeStyles>;
+
+function renderInlinePDF(
+  text: string,
+  keyPrefix: string,
+  styles: Styles
+): ReactElement[] {
   const nodes: ReactElement[] = [];
   const regex = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
   let lastIndex = 0;
@@ -228,7 +271,11 @@ function renderInlinePDF(text: string, keyPrefix: string): ReactElement[] {
   return nodes;
 }
 
-function parseMarkdownForPDF(content: string): ReactElement[] {
+function parseMarkdownForPDF(
+  content: string,
+  styles: Styles,
+  variant: PdfVariant
+): ReactElement[] {
   const lines = content.split("\n");
   const elements: ReactElement[] = [];
 
@@ -240,7 +287,7 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
       const text = paragraphBuffer.join(" ");
       elements.push(
         <Text key={key} style={styles.paragraph}>
-          {renderInlinePDF(text, key)}
+          {renderInlinePDF(text, key, styles)}
         </Text>
       );
       paragraphBuffer = [];
@@ -284,7 +331,7 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
               >
                 {row.map((cell, cIdx) => (
                   <Text key={cIdx} style={styles.tableCell}>
-                    {renderInlinePDF(cell, `td-${i}-${rIdx}-${cIdx}`)}
+                    {renderInlinePDF(cell, `td-${i}-${rIdx}-${cIdx}`, styles)}
                   </Text>
                 ))}
               </View>
@@ -300,7 +347,7 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
       flushParagraph(`p-${i}`);
       elements.push(
         <Text key={`h1-${i}`} style={styles.h1}>
-          {renderInlinePDF(line.slice(2), `h1-${i}`)}
+          {renderInlinePDF(line.slice(2), `h1-${i}`, styles)}
         </Text>
       );
       i++;
@@ -310,9 +357,12 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
       flushParagraph(`p-${i}`);
       elements.push(
         <Text key={`h2-${i}`} style={styles.h2}>
-          {renderInlinePDF(line.slice(3), `h2-${i}`)}
+          {renderInlinePDF(line.slice(3), `h2-${i}`, styles)}
         </Text>
       );
+      if (variant === "full" || variant === "dark") {
+        elements.push(<View key={`h2u-${i}`} style={styles.h2Underline} />);
+      }
       i++;
       continue;
     }
@@ -320,7 +370,7 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
       flushParagraph(`p-${i}`);
       elements.push(
         <Text key={`h3-${i}`} style={styles.h3}>
-          {renderInlinePDF(line.slice(4), `h3-${i}`)}
+          {renderInlinePDF(line.slice(4), `h3-${i}`, styles)}
         </Text>
       );
       i++;
@@ -343,7 +393,7 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
         <View key={`ol-${i}`} style={styles.listItem} wrap={false}>
           <Text style={styles.listBullet}>{orderedMatch[1]}.</Text>
           <Text style={styles.listText}>
-            {renderInlinePDF(orderedMatch[2], `ol-${i}`)}
+            {renderInlinePDF(orderedMatch[2], `ol-${i}`, styles)}
           </Text>
         </View>
       );
@@ -359,7 +409,7 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
         <View key={`ul-${i}`} style={styles.listItem}>
           <Text style={styles.listBullet}>•</Text>
           <Text style={styles.listText}>
-            {renderInlinePDF(unorderedMatch[1], `ul-${i}`)}
+            {renderInlinePDF(unorderedMatch[1], `ul-${i}`, styles)}
           </Text>
         </View>
       );
@@ -383,18 +433,29 @@ function parseMarkdownForPDF(content: string): ReactElement[] {
   return elements;
 }
 
-export const QuotePDF = ({ quote }: { quote: Quote }) => {
+export const QuotePDF = ({
+  quote,
+  variant = "full",
+}: {
+  quote: Quote;
+  variant?: PdfVariant;
+}) => {
+  const styles = makeStyles(variant);
+  const bold = variant === "full" || variant === "dark";
+
   const dateFormatLocale = quote.locale === "es" ? "es-MX" : "en-US";
   const quoteLabel = quote.locale === "es" ? "Cotización" : "Quote";
   const dateLabel = quote.locale === "es" ? "Fecha" : "Date";
   const validLabel = quote.locale === "es" ? "Válida hasta" : "Valid until";
-  const preparedLabel = quote.locale === "es" ? "PREPARADO PARA" : "PREPARED FOR";
+  const preparedLabel =
+    quote.locale === "es" ? "PREPARADO PARA" : "PREPARED FOR";
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
+        {bold && <View style={styles.pageRail} fixed />}
+
+        <View style={bold ? styles.headerBandFull : styles.headerBandPolish}>
           <Text style={styles.brand}>PRAGMA</Text>
           <Text style={styles.headerTitle}>{quote.title}</Text>
           <Text style={styles.headerMeta}>
@@ -415,7 +476,6 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
           )}
         </View>
 
-        {/* Client card */}
         <View style={styles.clientCard}>
           <Text style={styles.clientLabel}>{preparedLabel}</Text>
           <Text style={styles.clientName}>{quote.clientName}</Text>
@@ -425,16 +485,18 @@ export const QuotePDF = ({ quote }: { quote: Quote }) => {
           <Text style={styles.clientEmail}>{quote.clientEmail}</Text>
         </View>
 
-        {/* Full rawContent rendered verbatim */}
-        {quote.rawContent && <View>{parseMarkdownForPDF(quote.rawContent)}</View>}
+        {quote.rawContent && (
+          <View>{parseMarkdownForPDF(quote.rawContent, styles, variant)}</View>
+        )}
 
-        {/* Footer */}
         <Text style={styles.footer} fixed>
           Desarrollado por PRAGMA • Santiago Coronado • santiago.coronado94@gmail.com
         </Text>
         <Text
           style={styles.pageNumber}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          render={({ pageNumber, totalPages }) =>
+            `${pageNumber} / ${totalPages}`
+          }
           fixed
         />
       </Page>

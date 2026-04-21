@@ -15,6 +15,7 @@ import {
 import { acceptQuoteAction } from "../actions";
 import { Download, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 const STATUS_VARIANTS = {
   draft: "default",
@@ -64,11 +65,41 @@ function QuoteActions({
 }) {
   const t = useTranslations("Quote");
   return (
-    <div className="flex flex-col sm:flex-row gap-3 pt-4">
-      <a href={`/api/quote/${quote.id}/pdf`} download>
+    <div className="flex flex-row flex-wrap gap-3 pt-4">
+      <a
+        href={`/api/quote/${quote.id}/pdf?variant=polish`}
+        download
+        onClick={() =>
+          track("quote_pdf_download", {
+            variant: "polish",
+            quote_id: quote.id,
+            quote_status: quote.status,
+            locale: quote.locale,
+          })
+        }
+        className="inline-flex self-start"
+      >
         <Button variant="secondary" size="lg">
           <Download size={18} />
-          {t("downloadPdf")}
+          {t("downloadPrint")}
+        </Button>
+      </a>
+      <a
+        href={`/api/quote/${quote.id}/pdf?variant=dark`}
+        download
+        onClick={() =>
+          track("quote_pdf_download", {
+            variant: "dark",
+            quote_id: quote.id,
+            quote_status: quote.status,
+            locale: quote.locale,
+          })
+        }
+        className="inline-flex self-start"
+      >
+        <Button variant="secondary" size="lg">
+          <Download size={18} />
+          {t("downloadScreen")}
         </Button>
       </a>
       {quote.status === "sent" && (

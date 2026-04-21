@@ -4,6 +4,7 @@ import { createElement, type ReactElement } from "react";
 import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import { getQuoteById } from "@/features/quotes/lib/queries";
 import { QuotePdfDocument } from "@/features/quotes/components/QuotePdfDocument";
+import { parseVariant } from "@/features/quotes/pdf/tokens";
 import { rateLimit } from "@/shared/lib/rate-limit";
 
 function slugify(str: string): string {
@@ -17,7 +18,7 @@ function slugify(str: string): string {
 }
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const hdrs = await headers();
@@ -38,6 +39,10 @@ export async function GET(
     return NextResponse.json({ error: "Quote not found" }, { status: 404 });
   }
 
+  const variant = parseVariant(
+    new URL(request.url).searchParams.get("variant")
+  );
+
   let pdfComponent: ReactElement<DocumentProps>;
 
   if (quote.quoteType === "ai-generated") {
@@ -46,9 +51,9 @@ export async function GET(
     if (!entry) {
       return NextResponse.json({ error: "Quote PDF not found" }, { status: 404 });
     }
-    pdfComponent = createElement(entry.QuotePDF, { quote }) as ReactElement<DocumentProps>;
+    pdfComponent = createElement(entry.QuotePDF, { quote, variant }) as ReactElement<DocumentProps>;
   } else {
-    pdfComponent = createElement(QuotePdfDocument, { quote }) as ReactElement<DocumentProps>;
+    pdfComponent = createElement(QuotePdfDocument, { quote, variant }) as ReactElement<DocumentProps>;
   }
 
   const buffer = await renderToBuffer(pdfComponent);
@@ -56,7 +61,8 @@ export async function GET(
 
   const clientSlug = slugify(quote.clientName);
   const titleSlug = slugify(quote.title);
-  const filename = `pragma-${clientSlug}-${titleSlug}.pdf`;
+  const suffix = variant === "dark" ? "-dark" : variant === "polish" ? "-polish" : "";
+  const filename = `pragma-${clientSlug}-${titleSlug}${suffix}.pdf`;
 
   return new Response(uint8, {
     headers: {

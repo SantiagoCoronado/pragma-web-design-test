@@ -1,5 +1,6 @@
 import { ComponentType } from "react";
 import { Quote } from "@/features/quotes/types";
+import type { PdfVariant } from "@/features/quotes/pdf/tokens";
 import { QuoteContent as QuoteContent_47sJ8SiMdN } from "./Quote_47sJ8SiMdN/QuoteContent";
 import { QuotePDF as QuotePDF_47sJ8SiMdN } from "./Quote_47sJ8SiMdN/QuotePDF";
 import { QuoteContent as QuoteContent_xzggib6mbp } from "./Quote_xzggib6mbp/QuoteContent";
@@ -13,9 +14,9 @@ export type QuoteContent = ComponentType<{ quote: Quote }>;
 
 /**
  * Component for rendering the quote as a PDF-ready document.
- * Receives the quote object as a prop.
+ * Receives the quote object and optional variant.
  */
-export type QuotePDF = ComponentType<{ quote: Quote }>;
+export type QuotePDF = ComponentType<{ quote: Quote; variant?: PdfVariant }>;
 
 /**
  * Registry entry for a single generated quote.
