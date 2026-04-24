@@ -1,24 +1,16 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
@@ -28,6 +20,8 @@ export const metadata: Metadata = {
     "Pragmatic AI solutions for real-world impact. Custom AI, web development, automation, and consulting.",
 };
 
+const themeInitScript = `try{var t=localStorage.getItem("pragma-theme")||"space";document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme="space"}`;
+
 export default function RootLayout({
   children,
 }: {
@@ -36,12 +30,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-screen bg-pragma-bg text-pragma-text font-sans">
         {children}
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

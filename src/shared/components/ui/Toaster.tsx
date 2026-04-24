@@ -5,10 +5,9 @@ import {
   useContext,
   useState,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
-import { nanoid } from "nanoid";
-import { CheckCircle, XCircle, Info, X } from "lucide-react";
 
 type ToastType = "success" | "error" | "info";
 
@@ -30,28 +29,25 @@ export function useToast() {
   return ctx;
 }
 
-const ICONS: Record<ToastType, ReactNode> = {
-  success: <CheckCircle size={15} className="text-pragma-accent-3 shrink-0" />,
-  error: <XCircle size={15} className="text-red-400 shrink-0" />,
-  info: <Info size={15} className="text-pragma-accent shrink-0" />,
-};
-
-function Toast({
-  item,
-  onDismiss,
-}: {
-  item: ToastItem;
-  onDismiss: () => void;
-}) {
+function Toast({ item, onDismiss }: { item: ToastItem; onDismiss: () => void }) {
+  const accentClass =
+    item.type === "error"
+      ? "text-pragma-danger"
+      : item.type === "success"
+      ? "text-pragma-accent"
+      : "text-pragma-text";
   return (
-    <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-pragma-border bg-pragma-surface/95 backdrop-blur-sm shadow-lg min-w-[260px] max-w-sm">
-      {ICONS[item.type]}
-      <p className="text-sm flex-1">{item.message}</p>
+    <div className="flex items-start gap-3 px-4 py-3 border border-pragma-border bg-pragma-surface shadow-lg min-w-[260px] max-w-sm rounded-[var(--radius-pragma-md)]">
+      <span className={`font-mono text-[10px] tracking-[0.15em] uppercase ${accentClass} pt-0.5`}>
+        {item.type === "error" ? "ERR" : item.type === "success" ? "OK" : "INFO"}
+      </span>
+      <p className="text-sm flex-1 text-pragma-text">{item.message}</p>
       <button
         onClick={onDismiss}
-        className="text-pragma-muted hover:text-pragma-text transition-colors cursor-pointer"
+        className="text-pragma-subtext hover:text-pragma-text transition-colors cursor-pointer font-mono text-xs"
+        aria-label="Dismiss"
       >
-        <X size={13} />
+        ×
       </button>
     </div>
   );
@@ -59,6 +55,7 @@ function Toast({
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const counter = useRef(0);
 
   const dismiss = useCallback((id: string) => {
     setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -66,7 +63,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const toast = useCallback(
     (message: string, type: ToastType = "info") => {
-      const id = nanoid(6);
+      counter.current += 1;
+      const id = `t-${Date.now()}-${counter.current}`;
       setToasts((prev) => [...prev, { id, message, type }]);
       setTimeout(() => dismiss(id), 4000);
     },

@@ -1,75 +1,47 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 import { Button } from "@/shared/components/ui/Button";
-import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
 
 export function Hero() {
   const t = useTranslations("Hero");
 
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center bg-grid bg-gradient-mesh overflow-hidden pt-12 pb-16">
-      {/* Floating accent orbs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-pragma-accent/5 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-pragma-accent-2/5 rounded-full blur-3xl animate-float [animation-delay:2s]" />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-tight">
-            {t("title")}
-            <br />
-            <span className="text-pragma-accent">{t("titleAccent")}</span>
-          </h1>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="mt-6 text-lg sm:text-xl text-pragma-muted max-w-2xl mx-auto"
-        >
-          {t("subtitle")}
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a href="#contact">
-            <Button size="lg">
-              {t("cta")}
-              <ArrowRight size={18} />
-            </Button>
-          </a>
-          <a href="#case-studies">
-            <Button variant="secondary" size="lg">
-              {t("ctaSecondary")}
-            </Button>
-          </a>
-        </motion.div>
+    <section className="relative border-b border-pragma-border px-6 md:px-14 pt-20 md:pt-24 pb-20">
+      <div className="font-mono text-[11px] tracking-[0.18em] uppercase text-pragma-subtext mb-7 flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-pragma-accent" />
+        {t("availability")}
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      <h1
+        className="font-display text-pragma-text max-w-[90%] text-balance m-0 mb-9 font-medium leading-[0.98] tracking-[-0.035em]"
+        style={{ fontSize: "clamp(44px, 8vw, 96px)" }}
       >
-        <a href="#services">
-          <ChevronDown
-            size={24}
-            className="text-pragma-muted animate-bounce"
-          />
+        {t("titleLine1")} <br />
+        {t("titleLine2")} <br />
+        <span className="text-pragma-accent">{t("titleAccent")}</span>{" "}
+        {t("titleLine3")}
+      </h1>
+
+      <p className="text-[17px] md:text-[19px] leading-[1.5] text-pragma-subtext max-w-[640px] text-pretty mb-11">
+        {t("subtitle")}
+      </p>
+
+      <div className="flex flex-wrap gap-3">
+        <a href="#contact">
+          <Button variant="primary" size="lg">
+            {t("cta")}
+          </Button>
         </a>
-      </motion.div>
+        <a href="#case-studies">
+          <Button variant="secondary" size="lg">
+            {t("ctaSecondary")}
+          </Button>
+        </a>
+      </div>
+
+      <div className="hidden lg:block absolute right-14 top-24 text-right font-mono text-[11px] tracking-[0.1em] text-pragma-muted">
+        <div>{t("markA")}</div>
+        <div>{t("markB")}</div>
+      </div>
     </section>
   );
 }

@@ -4,209 +4,128 @@
     "about": "Nosotros",
     "caseStudies": "Proyectos",
     "contact": "Contacto",
-    "admin": "Admin"
+    "themeSpace": "SPACE",
+    "themeSignal": "SIGNAL"
   },
   "Hero": {
-    "title": "Soluciones de IA Pragmaticas",
-    "titleAccent": "con Impacto Real",
-    "subtitle": "Construimos sistemas inteligentes que transforman la operacion de los negocios. Desde soluciones de IA personalizadas hasta desarrollo web full-stack, PRAGMA entrega tecnologia que funciona.",
-    "cta": "Consulta Gratuita",
-    "ctaSecondary": "Ver Nuestro Trabajo"
+    "availability": "Disponibles para Q3",
+    "titleLine1": "Soluciones de IA",
+    "titleLine2": "pragmáticas con",
+    "titleAccent": "impacto",
+    "titleLine3": "real.",
+    "subtitle": "Construimos sistemas inteligentes que transforman la operación de los negocios. Desde soluciones de IA a medida hasta desarrollo full-stack — tecnología que funciona.",
+    "cta": "Consulta Gratuita →",
+    "ctaSecondary": "Ver Nuestro Trabajo",
+    "markA": "/// PRAGMA",
+    "markB": "EST. 2018 — CIUDAD DE MÉXICO"
   },
   "Services": {
-    "title": "Lo Que Hacemos",
-    "subtitle": "Soluciones tecnologicas integrales disenadas para dar a tu negocio una ventaja competitiva.",
+    "eyebrow": "/ Lo Que Hacemos",
+    "title": "Soluciones tecnológicas integrales diseñadas para darle a tu negocio una ventaja competitiva.",
     "aiConsulting": {
-      "title": "Consultoria & Estrategia de IA",
-      "description": "Orientacion estrategica para identificar oportunidades de alto impacto en IA, construir hojas de ruta y alinear la tecnologia con tus objetivos de negocio."
+      "title": "Consultoría & Estrategia de IA",
+      "description": "Orientación estratégica para identificar oportunidades de alto impacto en IA, construir hojas de ruta y alinear la tecnología con tus objetivos."
     },
     "customAI": {
-      "title": "Soluciones de IA Personalizadas",
-      "description": "Sistemas de IA a medida — desde chatbots y motores de recomendacion hasta vision por computadora y pipelines de NLP."
+      "title": "Soluciones de IA a Medida",
+      "description": "Sistemas de IA a medida — desde chatbots y motores de recomendación hasta visión por computadora y pipelines de NLP."
     },
     "automation": {
-      "title": "Automatizacion de Procesos",
-      "description": "Optimiza operaciones con automatizacion inteligente que reduce costos, elimina errores y libera a tu equipo para trabajo de mayor valor."
+      "title": "Automatización de Procesos",
+      "description": "Optimiza operaciones con automatización inteligente que reduce costos, elimina errores y libera a tu equipo para trabajo de mayor valor."
     },
     "analytics": {
-      "title": "Analitica de Datos & BI",
+      "title": "Analítica de Datos & BI",
       "description": "Convierte datos crudos en insights accionables con dashboards personalizados, modelos predictivos e infraestructura de datos."
     },
     "webDev": {
       "title": "Desarrollo Web",
-      "description": "Aplicaciones web modernas y de alto rendimiento construidas con tecnologias de vanguardia. Desde landing pages hasta plataformas complejas."
+      "description": "Aplicaciones web modernas y de alto rendimiento construidas con tecnologías de vanguardia."
     },
     "uiux": {
-      "title": "Consultoria de UI/UX",
-      "description": "Diseno centrado en el usuario que convierte. Creamos interfaces intuitivas respaldadas por investigacion, pruebas y refinamiento iterativo."
+      "title": "Consultoría de UI/UX",
+      "description": "Diseño centrado en el usuario que convierte. Interfaces intuitivas respaldadas por investigación, pruebas y refinamiento iterativo."
     }
   },
   "About": {
-    "title": "Por Que PRAGMA",
-    "subtitle": "Tomamos un enfoque pragmatico hacia la tecnologia — sin palabras de moda, sin sobre-ingenieria. Solo soluciones que entregan resultados medibles.",
+    "eyebrow": "/ Por Qué Pragma",
+    "titleLead": "Un enfoque pragmático hacia la tecnología.",
+    "titleTrail": "Sin buzzwords, sin sobre-ingeniería. Solo soluciones que entregan resultados medibles.",
     "diff1Title": "Orientados a Resultados",
-    "diff1Desc": "Cada proyecto comienza con tus objetivos de negocio. Medimos el exito por impacto, no por lineas de codigo.",
+    "diff1Desc": "Cada proyecto comienza con tus objetivos de negocio. Medimos el éxito por impacto, no por líneas de código.",
     "diff2Title": "Expertise Full-Stack",
-    "diff2Desc": "Desde investigacion en IA hasta despliegue en produccion, nuestro equipo cubre todo el espectro tecnologico.",
+    "diff2Desc": "Desde investigación en IA hasta despliegue en producción, nuestro equipo cubre todo el espectro tecnológico.",
     "diff3Title": "Proceso Transparente",
-    "diff3Desc": "Comunicacion clara, plazos realistas y sin sorpresas. Siempre sabes donde esta tu proyecto.",
+    "diff3Desc": "Comunicación clara, plazos realistas y sin sorpresas. Siempre sabes dónde está tu proyecto.",
     "statProjects": "Proyectos Entregados",
     "statClients": "Clientes Satisfechos",
-    "statYears": "Anos de Experiencia"
+    "statYears": "Años de Experiencia"
   },
   "CaseStudies": {
-    "title": "Nuestro Trabajo",
-    "subtitle": "Proyectos reales, resultados reales. Asi es como hemos ayudado a empresas a aprovechar la tecnologia.",
-    "viewDetails": "Ver Detalles",
+    "eyebrow": "/ Nuestro Trabajo",
+    "title": "Proyectos reales, resultados reales.",
+    "selectedCount": "[ 03 SELECCIONADOS ]",
+    "caseImage": "[ IMAGEN ]",
     "case1": {
+      "tag": "Despacho Corporativo",
       "title": "Asistente de Conocimiento con IA para Despacho Legal",
-      "description": "Asistente con RAG que indexa miles de documentos legales, permitiendo a abogados encontrar precedentes y redactar escritos 5 veces mas rapido que la investigacion manual.",
-      "client": "Despacho Corporativo"
+      "description": "Asistente con RAG que indexa miles de documentos legales, permitiendo a abogados encontrar precedentes y redactar escritos 5× más rápido."
     },
     "case2": {
-      "title": "Pipeline Automatizado de Facturacion y Cumplimiento",
-      "description": "Automatizacion integral para empresa de logistica: captura de recibos, validacion fiscal, sincronizacion con ERP y reportes regulatorios — reduciendo el cierre mensual de 5 dias a 8 horas.",
-      "client": "Empresa de Logistica"
+      "tag": "Empresa de Logística",
+      "title": "Pipeline Automatizado de Facturación y Cumplimiento",
+      "description": "Automatización integral: captura de recibos, validación fiscal, sincronización con ERP y reportes — reduciendo el cierre mensual de 5 días a 8 horas."
     },
     "case3": {
+      "tag": "Agencia de Tecnología",
       "title": "Portal de Clientes y Plataforma de Cotizaciones",
-      "description": "Aplicacion web full-stack con soporte bilingue, generacion de PDF y panel de administracion — del primer commit a produccion en menos de dos semanas.",
-      "client": "Agencia de Tecnologia"
+      "description": "Aplicación web full-stack con soporte bilingüe, generación de PDF y panel de administración — del primer commit a producción en menos de dos semanas."
     }
   },
   "Testimonials": {
-    "title": "Lo Que Dicen Nuestros Clientes"
+    "eyebrow": "/ Lo Que Dicen Nuestros Clientes",
+    "q1": {
+      "quote": "PRAGMA transformó nuestro soporte con IA. El chatbot maneja el 80% de las consultas y nuestro equipo se enfoca en los casos complejos.",
+      "name": "María González",
+      "role": "CTO, FinServ"
+    },
+    "q2": {
+      "quote": "Su enfoque pragmático nos ahorró meses. Sin complejidad innecesaria, solo soluciones que funcionan y entregan ROI real.",
+      "name": "Carlos Rivera",
+      "role": "VP Ingeniería, LogiTech"
+    },
+    "q3": {
+      "quote": "La plataforma web que PRAGMA construyó es rápida, hermosa y exactamente lo que nuestros usuarios necesitaban. Totalmente recomendados.",
+      "name": "Ana Torres",
+      "role": "Product Manager, RetailCo"
+    }
   },
   "Contact": {
-    "title": "Construyamos Algo Grandioso",
-    "subtitle": "Listo para transformar tu negocio con tecnologia? Cuentanos sobre tu proyecto.",
-    "name": "Tu Nombre",
-    "email": "Correo Electronico",
-    "company": "Empresa (opcional)",
-    "message": "Cuentanos sobre tu proyecto",
-    "send": "Enviar Mensaje",
-    "sending": "Enviando...",
-    "success": "Mensaje enviado! Te responderemos en las proximas 24 horas.",
-    "error": "Algo salio mal. Por favor intenta de nuevo."
+    "eyebrow": "/ Contacto",
+    "title": "Construyamos algo grande.",
+    "subtitle": "¿Listo para transformar tu negocio con tecnología? Cuéntanos sobre tu proyecto — respondemos en un día hábil.",
+    "emailLabel": "Email",
+    "email": "hello@pragma.agency",
+    "locationLabel": "Ubicación",
+    "location": "Ciudad de México, MX",
+    "nameLabel": "Nombre",
+    "emailInputLabel": "Email",
+    "companyLabel": "Empresa",
+    "briefLabel": "Brief del proyecto",
+    "send": "Enviar Mensaje →",
+    "sending": "Enviando…",
+    "success": "Mensaje enviado. Te contactaremos en un día hábil.",
+    "error": "Algo salió mal. Por favor intenta de nuevo."
   },
   "Footer": {
-    "tagline": "Soluciones tecnologicas pragmaticas para negocios visionarios.",
-    "services": "Servicios",
+    "tagline": "Soluciones tecnológicas pragmáticas para negocios visionarios.",
     "company": "Empresa",
-    "about": "Nosotros",
-    "contact": "Contacto",
+    "companyLinks": { "about": "Nosotros", "services": "Servicios", "contact": "Contacto" },
     "legal": "Legal",
-    "privacy": "Politica de Privacidad",
-    "terms": "Terminos de Servicio",
-    "rights": "Todos los derechos reservados."
-  },
-  "Quote": {
-    "title": "Cotizacion",
-    "preparedFor": "Preparado para",
-    "quoteNumber": "Cotizacion",
-    "date": "Fecha",
-    "validUntil": "Valido hasta",
-    "description": "Descripcion",
-    "qty": "Cant",
-    "unitPrice": "Precio Unitario",
-    "total": "Total",
-    "subtotal": "Subtotal",
-    "discount": "Descuento",
-    "notes": "Notas y Terminos",
-    "downloadPdf": "Descargar PDF",
-    "downloadPrint": "Para imprimir",
-    "downloadScreen": "Para pantalla",
-    "acceptQuote": "Aceptar Cotizacion",
-    "accepted": "Aceptada",
-    "rejected": "Rechazada",
-    "sent": "Enviada",
-    "draft": "Borrador",
-    "expired": "Expirada",
-    "poweredBy": "Desarrollado por PRAGMA",
-    "theProblem": "El Problema",
-    "theOpportunity": "La Oportunidad",
-    "deliverables": "Entregables",
-    "timeline": "Timeline",
-    "investment": "Inversion",
-    "originalPrice": "Precio Original",
-    "nextSteps": "Siguientes Pasos",
-    "scopeNote": "Nota de Alcance"
-  },
-  "Admin": {
-    "title": "Panel de Administracion",
-    "login": "Iniciar Sesion",
-    "password": "Contrasena",
-    "loginButton": "Ingresar",
-    "invalidPassword": "Contrasena invalida",
-    "logout": "Cerrar Sesion",
-    "quotes": "Cotizaciones",
-    "newQuote": "Nueva Cotizacion",
-    "editQuote": "Editar Cotizacion",
-    "deleteQuote": "Eliminar",
-    "copyLink": "Copiar Enlace",
-    "linkCopied": "Enlace copiado!",
-    "saveAsDraft": "Guardar como Borrador",
-    "saveAndShare": "Guardar y Obtener Enlace",
-    "preview": "Vista Previa",
-    "clientName": "Nombre del Cliente",
-    "clientEmail": "Correo del Cliente",
-    "clientCompany": "Empresa",
-    "quoteTitle": "Titulo de la Cotizacion",
-    "quoteDescription": "Descripcion",
-    "currency": "Moneda",
-    "locale": "Idioma",
-    "validUntil": "Valido Hasta",
-    "addLineItem": "Agregar Item",
-    "discountLabel": "Descuento (%)",
-    "notesLabel": "Notas y Terminos",
-    "quoteType": "Tipo de Cotizacion",
-    "lineItemsType": "Items Detallados",
-    "blueprintType": "Propuesta",
-    "problem": "Problema",
-    "opportunity": "Oportunidad",
-    "deliverables": "Entregables",
-    "deliverableTitle": "Titulo del Entregable",
-    "deliverableDesc": "Descripcion",
-    "addDeliverable": "Agregar Entregable",
-    "timeline": "Timeline",
-    "fixedPrice": "Precio Fijo",
-    "listPrice": "Precio Lista (opcional)",
-    "preferentialNote": "Nota Preferencial (opcional)",
-    "paymentTerms": "Condiciones de Pago",
-    "nextSteps": "Siguientes Pasos",
-    "nextStep": "Paso",
-    "addNextStep": "Agregar Paso",
-    "scopeNote": "Nota de Alcance (opcional)",
-    "noQuotes": "Aun no hay cotizaciones. Crea la primera!",
-    "status": "Estado",
-    "client": "Cliente",
-    "amount": "Monto",
-    "actions": "Acciones",
-    "contacts": "Formularios de Contacto",
-    "viewContacts": "Contactos",
-    "noContacts": "Aun no hay formularios de contacto.",
-    "contactStatus": "Estado",
-    "contactName": "Nombre",
-    "contactCompany": "Empresa",
-    "contactMessage": "Mensaje",
-    "contactDate": "Fecha",
-    "contactNew": "Nuevo",
-    "contactRead": "Leido",
-    "sendToClient": "Enviar al Cliente",
-    "quoteSent": "Cotizacion enviada!",
-    "searchPlaceholder": "Buscar cotizaciones...",
-    "allStatuses": "Todos los Estados",
-    "allTypes": "Todos los Tipos",
-    "clearFilters": "Limpiar",
-    "statusDraft": "Borrador",
-    "statusSent": "Enviada",
-    "statusAccepted": "Aceptada",
-    "statusRejected": "Rechazada",
-    "aiGeneratedType": "Personalizada IA",
-    "quotePreview": "Vista Previa",
-    "sendQuote": "Enviar al Cliente",
-    "backToQuotes": "← Volver a Cotizaciones",
-    "deleteConfirm": "Estás seguro que quieres eliminar esta cotización? Esta acción no se puede deshacer.",
-    "sending": "Enviando"
+    "legalLinks": { "privacy": "Política de Privacidad", "terms": "Términos de Servicio" },
+    "follow": "Síguenos",
+    "followLinks": { "linkedin": "LinkedIn", "github": "GitHub", "x": "X / Twitter" },
+    "rights": "© {year} PRAGMA. TODOS LOS DERECHOS RESERVADOS.",
+    "coords": "CIUDAD DE MÉXICO — 19.4326° N, 99.1332° W"
   }
 }

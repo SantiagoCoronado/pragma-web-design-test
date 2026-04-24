@@ -1,31 +1,27 @@
 "use server";
 
-import { nanoid } from "nanoid";
-import { getDb } from "@/shared/lib/db";
-import { sendContactNotification } from "@/shared/lib/email";
+import { z } from "zod";
+
+const ContactSchema = z.object({
+  name: z.string().trim().min(1),
+  email: z.string().trim().email(),
+  company: z.string().trim().optional(),
+  message: z.string().trim().min(1),
+});
 
 export async function submitContactAction(formData: FormData) {
-  const name = (formData.get("name") as string)?.trim();
-  const email = (formData.get("email") as string)?.trim();
-  const company = (formData.get("company") as string)?.trim() || "";
-  const message = (formData.get("message") as string)?.trim();
-
-  if (!name || !email || !message) {
-    return { error: "Missing required fields" };
-  }
-
-  const db = getDb();
-  const id = nanoid();
-
-  await db.execute({
-    sql: `INSERT INTO contact_submissions (id, name, email, company, message) VALUES (?, ?, ?, ?, ?)`,
-    args: [id, name, email, company, message],
+  const parsed = ContactSchema.safeParse({
+    name: formData.get("name"),
+    email: formData.get("email"),
+    company: formData.get("company") ?? undefined,
+    message: formData.get("message"),
   });
 
-  // Send email notification (non-blocking — don't fail the form if email fails)
-  sendContactNotification({ name, email, company, message }).catch((err) =>
-    console.error("Failed to send contact notification email:", err)
-  );
+  if (!parsed.success) {
+    return { error: "Missing or invalid fields" };
+  }
+
+  await new Promise((r) => setTimeout(r, 700));
 
   return { success: true };
 }

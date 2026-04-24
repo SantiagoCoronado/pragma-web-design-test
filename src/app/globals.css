@@ -1,94 +1,96 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------
+   Per-theme raw values — swapped at runtime via [data-theme].
+   Tailwind utilities resolve through the stable `--color-*` /
+   `--font-*` vars declared in `@theme inline` below, so flipping
+   these rebinds every utility class without a rebuild.
+   --------------------------------------------------------------- */
+:root,
+:root[data-theme="space"] {
+  --pragma-bg: #08090C;
+  --pragma-surface: #131620;
+  --pragma-surface-2: #0E111A;
+  --pragma-border: #2A2F3D;
+  --pragma-border-strong: #3A4055;
+  --pragma-text: #F2F4F8;
+  --pragma-subtext: #9AA0B0;
+  --pragma-muted: #6A7185;
+  --pragma-accent: #38E8FF;
+  --pragma-accent-hover: #5CEEFF;
+  --pragma-accent-2: #8A7BFF;
+  --pragma-on-accent: #08090C;
+  --pragma-danger: #FF5C5C;
+  --pragma-radius-sm: 2px;
+  --pragma-radius-md: 4px;
+  --pragma-radius-lg: 8px;
+  --pragma-font-sans-active: var(--font-inter);
+  --pragma-font-display-active: var(--font-inter);
+}
+
+:root[data-theme="signal"] {
+  --pragma-bg: #0E0F10;
+  --pragma-surface: #1C1D1F;
+  --pragma-surface-2: #141517;
+  --pragma-border: #2C2E31;
+  --pragma-border-strong: #3E4044;
+  --pragma-text: #E6E6E4;
+  --pragma-subtext: #9A9A97;
+  --pragma-muted: #6A6A67;
+  --pragma-accent: #6EFF8C;
+  --pragma-accent-hover: #8FFFAB;
+  --pragma-accent-2: #E6E6E4;
+  --pragma-on-accent: #0E0F10;
+  --pragma-danger: #FF6B6B;
+  --pragma-radius-sm: 0px;
+  --pragma-radius-md: 0px;
+  --pragma-radius-lg: 0px;
+  --pragma-font-sans-active: var(--font-jetbrains-mono);
+  --pragma-font-display-active: var(--font-jetbrains-mono);
+}
+
 @theme inline {
-  --color-pragma-bg: #0a0a0f;
-  --color-pragma-surface: #12121a;
-  --color-pragma-border: #1e1e2e;
-  --color-pragma-accent: #00f0ff;
-  --color-pragma-accent-2: #7c3aed;
-  --color-pragma-accent-3: #00ff88;
-  --color-pragma-text: #e4e4e7;
-  --color-pragma-muted: #71717a;
+  --color-pragma-bg: var(--pragma-bg);
+  --color-pragma-surface: var(--pragma-surface);
+  --color-pragma-surface-2: var(--pragma-surface-2);
+  --color-pragma-border: var(--pragma-border);
+  --color-pragma-border-strong: var(--pragma-border-strong);
+  --color-pragma-text: var(--pragma-text);
+  --color-pragma-subtext: var(--pragma-subtext);
+  --color-pragma-muted: var(--pragma-muted);
+  --color-pragma-accent: var(--pragma-accent);
+  --color-pragma-accent-hover: var(--pragma-accent-hover);
+  --color-pragma-accent-2: var(--pragma-accent-2);
+  --color-pragma-on-accent: var(--pragma-on-accent);
+  --color-pragma-danger: var(--pragma-danger);
 
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --radius-pragma-sm: var(--pragma-radius-sm);
+  --radius-pragma-md: var(--pragma-radius-md);
+  --radius-pragma-lg: var(--pragma-radius-lg);
 
-  --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-fade-in: fade-in 0.6s ease-out forwards;
-  --animate-slide-up: slide-up 0.6s ease-out forwards;
-
-  @keyframes glow-pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes slide-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  --font-sans: var(--pragma-font-sans-active);
+  --font-display: var(--pragma-font-display-active);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
 @layer base {
   body {
-    background-color: var(--color-pragma-bg);
-    color: var(--color-pragma-text);
-    font-family: var(--font-sans);
+    background-color: var(--pragma-bg);
+    color: var(--pragma-text);
+    font-family: var(--pragma-font-sans-active);
   }
 }
 
-/* Dot grid background */
-.bg-grid {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 30px 30px;
+/* Striped placeholder used by case study "images" */
+.bg-stripes {
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--pragma-border) 0 1px,
+    transparent 1px 14px
+  );
 }
 
-/* Gradient mesh for hero */
-.bg-gradient-mesh {
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-}
-
-/* Glow effects */
-.glow-cyan {
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
-}
-
-.glow-purple {
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
-}
-
-.glow-green {
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-pragma-bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-pragma-border);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-pragma-muted);
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--pragma-bg); }
+::-webkit-scrollbar-thumb { background: var(--pragma-border); }
+::-webkit-scrollbar-thumb:hover { background: var(--pragma-muted); }

@@ -1,73 +1,34 @@
-"use client";
+import { useTranslations } from "next-intl";
 
-import { useTranslations, useLocale } from "next-intl";
-import { Card } from "@/shared/components/ui/Card";
-import { AnimateIn } from "@/shared/components/ui/AnimateIn";
-import { Quote } from "lucide-react";
-
-const testimonials = [
-  {
-    quote: {
-      en: "PRAGMA transformed our customer support with AI. The chatbot handles 80% of inquiries and our team can focus on complex cases.",
-      es: "PRAGMA transformo nuestro soporte al cliente con IA. El chatbot maneja el 80% de las consultas y nuestro equipo puede enfocarse en casos complejos.",
-    },
-    author: "Maria Gonzalez",
-    role: "CTO, FinServ",
-  },
-  {
-    quote: {
-      en: "Their pragmatic approach saved us months. No unnecessary complexity, just solutions that work and deliver real ROI.",
-      es: "Su enfoque pragmatico nos ahorro meses. Sin complejidad innecesaria, solo soluciones que funcionan y entregan ROI real.",
-    },
-    author: "Carlos Rivera",
-    role: "VP Engineering, LogiTech",
-  },
-  {
-    quote: {
-      en: "The web platform PRAGMA built for us is fast, beautiful, and exactly what our users needed. Highly recommended.",
-      es: "La plataforma web que PRAGMA construyo para nosotros es rapida, hermosa y exactamente lo que nuestros usuarios necesitaban. Muy recomendados.",
-    },
-    author: "Ana Torres",
-    role: "Product Manager, RetailCo",
-  },
-];
+const KEYS = ["q1", "q2", "q3"] as const;
 
 export function Testimonials() {
   const t = useTranslations("Testimonials");
-  const locale = useLocale();
 
   return (
-    <section className="py-16 sm:py-20 bg-pragma-surface/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateIn>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-center mb-16">
-            {t("title")}
-          </h2>
-        </AnimateIn>
+    <section className="border-b border-pragma-border px-6 md:px-14 py-20 md:py-24">
+      <div className="font-mono text-[11px] tracking-[0.18em] uppercase text-pragma-subtext mb-12">
+        {t("eyebrow")}
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, i) => (
-            <AnimateIn key={testimonial.author} delay={i * 0.15}>
-              <Card className="h-full flex flex-col">
-                <Quote
-                  size={24}
-                  className="text-pragma-accent/30 mb-4 shrink-0"
-                />
-                <p className="text-sm text-pragma-muted leading-relaxed flex-1">
-                  &ldquo;
-                  {testimonial.quote[locale === "es" ? "es" : "en"]}
-                  &rdquo;
-                </p>
-                <div className="mt-4 pt-4 border-t border-pragma-border/50">
-                  <p className="font-semibold text-sm">{testimonial.author}</p>
-                  <p className="text-xs text-pragma-muted">
-                    {testimonial.role}
-                  </p>
-                </div>
-              </Card>
-            </AnimateIn>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        {KEYS.map((k) => (
+          <figure key={k} className="m-0">
+            <blockquote className="text-[17px] md:text-[18px] leading-[1.45] tracking-[-0.01em] text-pragma-text text-pretty mb-6 m-0">
+              <span className="text-pragma-accent mr-1">“</span>
+              {t(`${k}.quote`)}
+              <span className="text-pragma-accent ml-0.5">”</span>
+            </blockquote>
+            <figcaption className="border-t border-pragma-border pt-3.5">
+              <div className="text-[14px] font-medium text-pragma-text">
+                {t(`${k}.name`)}
+              </div>
+              <div className="font-mono text-[11px] tracking-[0.08em] text-pragma-subtext mt-1">
+                {t(`${k}.role`)}
+              </div>
+            </figcaption>
+          </figure>
+        ))}
       </div>
     </section>
   );

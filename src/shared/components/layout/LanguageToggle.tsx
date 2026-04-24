@@ -13,23 +13,22 @@ export function LanguageToggle() {
   }
 
   return (
-    <div className="flex items-center gap-1 bg-pragma-surface border border-pragma-border rounded-lg p-0.5">
+    <div className="flex items-center gap-2 font-mono text-[12px] text-pragma-subtext">
       <button
+        type="button"
         onClick={() => switchLocale("en")}
-        className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
-          locale === "en"
-            ? "bg-pragma-accent text-pragma-bg"
-            : "text-pragma-muted hover:text-pragma-text"
+        className={`cursor-pointer transition-colors ${
+          locale === "en" ? "text-pragma-text" : "hover:text-pragma-text"
         }`}
       >
         EN
       </button>
+      <span className="opacity-40">/</span>
       <button
+        type="button"
         onClick={() => switchLocale("es")}
-        className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all cursor-pointer ${
-          locale === "es"
-            ? "bg-pragma-accent text-pragma-bg"
-            : "text-pragma-muted hover:text-pragma-text"
+        className={`cursor-pointer transition-colors ${
+          locale === "es" ? "text-pragma-text" : "hover:text-pragma-text"
         }`}
       >
         ES
