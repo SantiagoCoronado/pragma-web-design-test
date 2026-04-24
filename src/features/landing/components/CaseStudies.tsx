@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { RevealCard } from "@/shared/components/motion/RevealCard";
 
 const CASES = [
   { key: "case1", stack: ["AI", "RAG", "Next.js"] },
@@ -33,17 +34,17 @@ export function CaseStudies() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {CASES.map((c, i) => (
-          <article
+          <RevealCard
             key={c.key}
+            as="article"
+            delay={i * 120}
             className="bg-pragma-surface border border-pragma-border rounded-[var(--radius-pragma-md)] p-7 flex flex-col min-h-[360px]"
           >
             <div className="font-mono text-[11px] tracking-[0.1em] uppercase text-pragma-accent mb-5">
               {String(i + 1).padStart(2, "0")} — {t(`${c.key}.tag`)}
             </div>
 
-            <div
-              className="h-[120px] mb-6 bg-stripes border border-pragma-border flex items-center justify-center font-mono text-[10px] tracking-[0.1em] text-pragma-muted"
-            >
+            <div className="h-[120px] mb-6 bg-stripes border border-pragma-border flex items-center justify-center font-mono text-[10px] tracking-[0.1em] text-pragma-muted">
               {t("caseImage")}
             </div>
 
@@ -64,7 +65,7 @@ export function CaseStudies() {
                 </span>
               ))}
             </div>
-          </article>
+          </RevealCard>
         ))}
       </div>
     </section>

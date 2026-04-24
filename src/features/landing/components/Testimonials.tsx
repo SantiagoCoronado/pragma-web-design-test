@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { RevealCard } from "@/shared/components/motion/RevealCard";
 
 const KEYS = ["q1", "q2", "q3"] as const;
 
@@ -12,8 +13,8 @@ export function Testimonials() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-        {KEYS.map((k) => (
-          <figure key={k} className="m-0">
+        {KEYS.map((k, i) => (
+          <RevealCard key={k} as="figure" delay={i * 100} className="m-0">
             <blockquote className="text-[17px] md:text-[18px] leading-[1.45] tracking-[-0.01em] text-pragma-text text-pretty mb-6 m-0">
               <span className="text-pragma-accent mr-1">“</span>
               {t(`${k}.quote`)}
@@ -27,7 +28,7 @@ export function Testimonials() {
                 {t(`${k}.role`)}
               </div>
             </figcaption>
-          </figure>
+          </RevealCard>
         ))}
       </div>
     </section>

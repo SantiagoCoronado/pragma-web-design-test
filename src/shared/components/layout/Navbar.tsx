@@ -5,10 +5,13 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LanguageToggle } from "./LanguageToggle";
 import { ThemeToggle } from "@/shared/components/theme/ThemeToggle";
+import { MotionToggle } from "@/shared/components/motion/MotionToggle";
+import { useMotionActive } from "@/shared/components/motion/MotionProvider";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const motionActive = useMotionActive();
 
   const navLinks = [
     { href: "#services", label: t("services") },
@@ -20,8 +23,21 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-pragma-bg border-b border-pragma-border">
       <div className="flex items-center justify-between px-6 md:px-14 h-16">
-        <Link href="/" className="font-mono text-[15px] font-semibold tracking-[0.12em] text-pragma-text">
-          PRAGMA<span className="text-pragma-accent ml-0.5">.</span>
+        <Link
+          href="/"
+          className="font-mono text-[15px] font-semibold tracking-[0.12em] text-pragma-text"
+        >
+          PRAGMA
+          <span
+            className="text-pragma-accent ml-0.5"
+            style={
+              motionActive
+                ? { animation: "pragmaBlink 1.2s steps(1) infinite" }
+                : undefined
+            }
+          >
+            .
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -37,13 +53,15 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
+          <MotionToggle />
           <ThemeToggle />
           <LanguageToggle />
         </div>
 
         {/* Mobile: always show toggles + hamburger */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex md:hidden items-center gap-2">
+          <MotionToggle />
           <ThemeToggle />
           <LanguageToggle />
           <button

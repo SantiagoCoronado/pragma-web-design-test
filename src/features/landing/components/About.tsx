@@ -1,4 +1,6 @@
 import { useTranslations } from "next-intl";
+import { RevealCard } from "@/shared/components/motion/RevealCard";
+import { CountUp } from "@/shared/components/motion/CountUp";
 
 export function About() {
   const t = useTranslations("About");
@@ -10,10 +12,10 @@ export function About() {
   ];
 
   const stats = [
-    ["50+", t("statProjects")],
-    ["30+", t("statClients")],
-    ["8+", t("statYears")],
-  ] as const;
+    { to: 50, suffix: "+", label: t("statProjects") },
+    { to: 30, suffix: "+", label: t("statClients") },
+    { to: 8, suffix: "+", label: t("statYears") },
+  ];
 
   return (
     <section
@@ -32,9 +34,10 @@ export function About() {
       </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 mb-20">
-        {pillars.map((p) => (
-          <div
+        {pillars.map((p, i) => (
+          <RevealCard
             key={p.title}
+            delay={i * 100}
             className="border-t border-pragma-accent pt-5"
           >
             <h3 className="font-display text-[20px] font-medium tracking-[-0.01em] text-pragma-text mb-3">
@@ -43,21 +46,21 @@ export function About() {
             <p className="text-[14px] leading-[1.55] text-pragma-subtext m-0">
               {p.body}
             </p>
-          </div>
+          </RevealCard>
         ))}
       </div>
 
       <div className="border-t border-pragma-border pt-9 grid grid-cols-1 md:grid-cols-3 gap-10">
-        {stats.map(([value, label]) => (
-          <div key={label}>
+        {stats.map((s) => (
+          <div key={s.label}>
             <div
               className="font-display text-pragma-text font-medium leading-[0.95] tracking-[-0.035em] mb-2.5"
               style={{ fontSize: "clamp(48px, 6.5vw, 72px)" }}
             >
-              {value}
+              <CountUp to={s.to} suffix={s.suffix} />
             </div>
             <div className="font-mono text-[11px] tracking-[0.15em] uppercase text-pragma-subtext">
-              {label}
+              {s.label}
             </div>
           </div>
         ))}

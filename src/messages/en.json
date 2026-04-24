@@ -5,7 +5,9 @@
     "caseStudies": "Case Studies",
     "contact": "Contact",
     "themeSpace": "SPACE",
-    "themeSignal": "SIGNAL"
+    "themeSignal": "SIGNAL",
+    "motionOn": "MOTION",
+    "motionOff": "STATIC"
   },
   "Hero": {
     "availability": "Available for Q3 engagements",
@@ -114,11 +116,18 @@
     "briefLabel": "Project brief",
     "send": "Send Message →",
     "sending": "Sending…",
+    "sendingLabel": "Indexing request",
     "success": "Message sent. We'll be in touch within one business day.",
     "error": "Something went wrong. Please try again."
   },
   "Footer": {
     "tagline": "Pragmatic technology solutions for forward-thinking businesses.",
+    "tickerItems": [
+      "Q3 engagements open",
+      "New case study — legal RAG",
+      "Hiring senior ML engineers",
+      "63% cost reduction — LogiTech"
+    ],
     "company": "Company",
     "companyLinks": { "about": "About", "services": "Services", "contact": "Contact" },
     "legal": "Legal",

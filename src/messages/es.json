@@ -5,7 +5,9 @@
     "caseStudies": "Proyectos",
     "contact": "Contacto",
     "themeSpace": "SPACE",
-    "themeSignal": "SIGNAL"
+    "themeSignal": "SIGNAL",
+    "motionOn": "MOTION",
+    "motionOff": "ESTÁTICO"
   },
   "Hero": {
     "availability": "Disponibles para Q3",
@@ -114,11 +116,18 @@
     "briefLabel": "Brief del proyecto",
     "send": "Enviar Mensaje →",
     "sending": "Enviando…",
+    "sendingLabel": "Procesando solicitud",
     "success": "Mensaje enviado. Te contactaremos en un día hábil.",
     "error": "Algo salió mal. Por favor intenta de nuevo."
   },
   "Footer": {
     "tagline": "Soluciones tecnológicas pragmáticas para negocios visionarios.",
+    "tickerItems": [
+      "Disponibles para Q3",
+      "Nuevo caso — RAG legal",
+      "Contratando ingenieros ML senior",
+      "63% menos costos — LogiTech"
+    ],
     "company": "Empresa",
     "companyLinks": { "about": "Nosotros", "services": "Servicios", "contact": "Contacto" },
     "legal": "Legal",

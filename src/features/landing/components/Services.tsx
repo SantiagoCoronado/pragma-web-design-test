@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { RevealCard } from "@/shared/components/motion/RevealCard";
 
 const SERVICE_KEYS = [
   "aiConsulting",
@@ -33,8 +34,9 @@ export function Services() {
 
       <div className="border-t border-l border-pragma-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {SERVICE_KEYS.map((key, i) => (
-          <div
+          <RevealCard
             key={key}
+            delay={i * 80}
             className="relative border-r border-b border-pragma-border p-7 md:p-8 min-h-[240px]"
           >
             <div className="font-mono text-[11px] tracking-[0.1em] text-pragma-accent mb-5">
@@ -46,7 +48,7 @@ export function Services() {
             <p className="text-[14px] leading-[1.55] text-pragma-subtext text-pretty m-0">
               {t(`${key}.description`)}
             </p>
-          </div>
+          </RevealCard>
         ))}
       </div>
     </section>

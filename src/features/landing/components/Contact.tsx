@@ -6,6 +6,7 @@ import { Button } from "@/shared/components/ui/Button";
 import { Input } from "@/shared/components/ui/Input";
 import { Textarea } from "@/shared/components/ui/Textarea";
 import { useToast } from "@/shared/components/ui/Toaster";
+import { LoadingBar } from "@/shared/components/motion/LoadingBar";
 import { submitContactAction } from "@/features/landing/actions";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -105,14 +106,20 @@ export function Contact() {
             placeholder="We're exploring AI to reduce support workload…"
             required
           />
-          <Button
-            type="submit"
-            size="lg"
-            disabled={status === "sending"}
-            className="justify-start mt-1"
-          >
-            {status === "sending" ? t("sending") : t("send")}
-          </Button>
+          <div className="mt-1 grid gap-3">
+            <Button
+              type="submit"
+              size="lg"
+              animated
+              disabled={status === "sending"}
+              className="justify-start"
+            >
+              {status === "sending" ? t("sending") : t("send")}
+            </Button>
+            {status === "sending" && (
+              <LoadingBar label={t("sendingLabel")} />
+            )}
+          </div>
         </form>
       </div>
     </section>
