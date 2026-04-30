@@ -4,8 +4,6 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LanguageToggle } from "./LanguageToggle";
-import { ThemeToggle } from "@/shared/components/theme/ThemeToggle";
-import { MotionToggle } from "@/shared/components/motion/MotionToggle";
 import { useMotionActive } from "@/shared/components/motion/MotionProvider";
 
 export function Navbar() {
@@ -54,15 +52,11 @@ export function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <MotionToggle />
-          <ThemeToggle />
           <LanguageToggle />
         </div>
 
         {/* Mobile: always show toggles + hamburger */}
         <div className="flex md:hidden items-center gap-2">
-          <MotionToggle />
-          <ThemeToggle />
           <LanguageToggle />
           <button
             onClick={() => setMobileOpen((v) => !v)}

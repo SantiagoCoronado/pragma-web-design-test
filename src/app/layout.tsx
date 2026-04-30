@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Pragmatic AI solutions for real-world impact. Custom AI, web development, automation, and consulting.",
 };
 
-const themeInitScript = `try{var t=localStorage.getItem("pragma-theme")||"space";document.documentElement.dataset.theme=t;var m=localStorage.getItem("pragma-motion")||"on";document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.theme="space";document.documentElement.dataset.motion="on"}`;
+const themeInitScript = `document.documentElement.dataset.theme="signal";document.documentElement.dataset.motion="on";try{localStorage.setItem("pragma-theme","signal");localStorage.setItem("pragma-motion","on")}catch(e){}`;
 
 export default function RootLayout({
   children,
